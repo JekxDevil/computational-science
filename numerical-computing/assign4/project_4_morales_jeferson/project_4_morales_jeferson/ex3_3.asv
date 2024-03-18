@@ -1,0 +1,26 @@
+clear all;
+close all;
+clc;
+
+% Load matrix A_test
+A_test = load('./test_data/A_test.mat').A_test;
+eigenvalues = eig(A_test);
+
+figure;
+semilogy(eigenvalues);
+title('Matrix A eigenvalues');
+xlabel('Eigenvalue Index');
+ylabel('Eigenvalues (log scale)');
+grid on;
+
+% condition_number = cond(A_test);
+% fprintf('Condition Number of A_test: %.4e\n', condition_number);
+% 
+% max_eigenvalue = max(abs(eigenvalues));
+% min_eigenvalue = min(abs(eigenvalues));
+% 
+% fprintf('Max Eigenvalue: %.4f\n', max_eigenvalue);
+% fprintf('Min Eigenvalue: %.4f\n', min_eigenvalue);
+% 
+% convergence_rate = max_eigenvalue / min_eigenvalue;
+% fprintf('Convergence Rate: %.4f\n', convergence_rate);

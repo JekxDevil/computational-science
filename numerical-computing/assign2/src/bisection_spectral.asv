@@ -1,0 +1,52 @@
+function [part1,part2] = bisection_spectral(A,xy,picture)
+% bisection_spectral: Spectral partition of a graph.
+%
+% [part1,part2] = bisection_spectral(A) returns a partition of the n vertices
+%                 of A into two lists part1 and part2 according to the
+%                 spectral bisection algorithm of Simon et al:  
+%                 Label the vertices with the components of the Fiedler vector
+%                 (the second eigenvector of the Laplacian matrix) and partition
+%                 them around the median value or 0.
+% 
+% bisection_spectral(A,xy,1) also draws a picture.
+
+fprintf('\n Numerical Computing @ USI Lugano:');
+fprintf('\n Implement inertial bisection \n');
+
+% Steps
+% 1. Construct the Laplacian.
+W = A; % no particular weight, corresponding to edge presence
+D = sum(A(:,:), 2);
+L = D - W;
+
+% 2. Calculate its eigensdecomposition.
+[eigenvals_diag, eigenvecs_mat] = eig(A);
+eigenvals = sum(eigenvals_diag);
+[eigenvals_sort, perm_sort] = sort(eigenvals);
+eigenvecs_mat = eigenvecs_mat(perm_sort, perm_sort);
+fiedler_vec = eigenvecs_mat(:,2);
+
+% 3. Label the vertices with the components of the Fiedler vector.
+m 
+part1 = find(fiedler_vec > 0);
+part2 = find(fiedler_vec <= 0);
+
+% 4. Partition them around their median value, or 0.
+
+
+% <<<< Dummy implementation to generate a partitioning
+n = size(A,1);
+map = zeros(n,1);
+map(1:round((n/2))) = 0; 
+map((round((n/2))+1):n) = 1;
+[part1,part2] = other(map);
+
+if picture == 1
+    gplotpart(A,xy,part1);
+    title('Spectral bisection (dummy) using the Fiedler Eigenvector');
+end
+
+% Dummy implementation to generate a partitioning >>>>
+
+
+end

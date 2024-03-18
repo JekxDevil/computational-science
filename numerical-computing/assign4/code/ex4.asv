@@ -1,0 +1,54 @@
+clear all;
+close all;
+clc;
+
+% data
+load('blur_data/B.mat');
+load('blur_data/A.mat');
+B=double(B);
+A=double(A);
+
+% image show
+showImage(B);
+title('Blurred Image')
+
+% row-wise vectorization
+b=B';
+b=b(:);
+
+A_aug = A'*A;
+b_aug = A'*b;
+
+condest(A_aug)
+guess = zeros(length(b), 1);
+[x, rvec] = myCG(A_aug, b_aug, guess, 500, 1e-7);
+X = reshape(x, size(B))';
+
+figure();
+showImage(B);
+title("Image blurred");
+
+figure();
+showImage(X);
+title("Image deblurred using Conjugate Gradient method");
+
+figure();
+semilogy(rvec);
+title("Residual squared magnitude using CG method");
+xlabel("Iteration");
+ylabel("Residual squared magnitude");
+
+L = ichol(A_aug, struct('type','nofill','diagcomp', 0.01));
+[x, flag, relvec, iterz,rvec] = pcg(A_aug, b_aug, tol, max_iter, L, L');
+X = reshape(x,size(B))';
+
+figure();
+showImage(B);
+title("Image Blurred");
+
+figure();
+showImage(X);
+title("Image deblurred using pcg");
+
+figure();
+plot(rvec);
