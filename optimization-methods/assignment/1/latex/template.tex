@@ -57,10 +57,10 @@ and Hessian $H_f : \mathbb{R}^2 \rightarrow \mathbb{R}^{2 \times 2}$. \newline
              \frac{\partial f}{\partial x_1} \\
              \frac{\partial f}{\partial x_2}
          \end{bmatrix}
-    = \begin{bmatrix}
+        = \begin{bmatrix}
           -800 x_2 x_1 + 800 x_1^3 + 2x_1 - 2 \\
           400 x_2 - 400 x_1^2
-      \end{bmatrix} \\
+        \end{bmatrix} \\
     H_f
      & =\begin{bmatrix}
             \frac{\partial^2 f}{\partial x_1^2}            
@@ -68,10 +68,10 @@ and Hessian $H_f : \mathbb{R}^2 \rightarrow \mathbb{R}^{2 \times 2}$. \newline
             \frac{\partial^2 f}{\partial x_2 \partial x_1} 
             & \frac{\partial^2 f}{\partial x_2^2}            \\
         \end{bmatrix}
-    = \begin{bmatrix}
+        = \begin{bmatrix}
           -800 x_2 + 2400 x_1^2 + 2 & - 800 x_1 \\
           -800 x_1                  & 400
-      \end{bmatrix}
+        \end{bmatrix}
 \end{aligned}
 \end{equation*}
 
@@ -220,7 +220,7 @@ closer contour lines mean that the function changes rapidly.
 Considering that $A$ is a symmetric positive-definite matrix, find the exact optimal step-length $\alpha$.
 Show your computations.\newline
 
-Recalling the formula to compute the step length:
+Recalling the formula to compute the step length in ideal case for quadratic forms:
 \myex{
     \alpha_k = \frac{\nabla f_k^T \nabla f_k}{\nabla f_k^T A \nabla f_k}
 }
@@ -250,13 +250,79 @@ For $\mu = 10$:
 
 \subsection{}
 Write a Matlab code for the gradient method with maximum number of iterations $N = 100$ and a tolerance $tol = 10-8$. 
-Minimize $f$ for $\mu = (1, 10)$ and starting points: $(x_0 , y_0) = (10, 0), (0, 10), (10, 10)$.
+Minimize $f$ for $\mu = (1, 10)$ and starting points: $(x_0 , y_0) = (10, 0), (0, 10), (10, 10)$. \newline
 
-
+The matlab code is contained and extensively documented in the script \textit{code/ex3\_4.m}.
+All the generated plots for the next exercise $3.5$ are done through such script. 
 
 \subsection{}
 For each case plot the iterations on the energy landscape in 2D (the plot of the objective function),
 the log10 of the norm of the gradient and the value of the energy function (objective function) as functions of the iterations. 
 Comment the results.
+
+\begin{figure}[H]
+    \centering
+    \caption{Case $\mu = 1, x_0 = (10, 0)$}
+    \label{fig:ex3-5-mu1-x1000}
+    \includegraphics[width=\textwidth, trim={5cm 3cm 5cm 1cm}, clip]{./figures/ex3-5-mu1-x1000.eps}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Case $\mu = 1, x_0 = (0, 10)$}
+    \label{fig:ex3-5-mu1-x0010}
+    \includegraphics[width=\textwidth, trim={5cm 3cm 5cm 1cm}, clip]{./figures/ex3-5-mu1-x0010.eps}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Case $\mu = 1, x_0 = (10, 10)$}
+    \label{fig:ex3-5-mu1-x1010}
+    \includegraphics[width=\textwidth, trim={5cm 3cm 5cm 1cm}, clip]{./figures/ex3-5-mu1-x1010.eps}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Case $\mu = 10, x_0 = (10, 0)$}
+    \label{fig:ex3-5-mu10-x1000}
+    \includegraphics[width=\textwidth, trim={5cm 3cm 5cm 1cm}, clip]{./figures/ex3-5-mu10-x1000.eps}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Case $\mu = 10, x_0 = (0, 10)$}
+    \label{fig:ex3-5-mu10-x0010}
+    \includegraphics[width=\textwidth, trim={5cm 3cm 5cm 1cm}, clip]{./figures/ex3-5-mu10-x0010.eps}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Case $\mu = 10, x_0 = (10, 0)$}
+    \label{fig:ex3-5-mu10-x1010}
+    \includegraphics[width=\textwidth, trim={5cm 3cm 5cm 1cm}, clip]{./figures/ex3-5-mu10-x1010.eps}
+\end{figure}
+
+\textbf{$\mu$ values} \newline
+The parameter $\mu$ can be either the value $1$ or $10$.
+As previously stated in exercise $3.2$, the plots are clustered in 2 groups of 3 samples with respect to 
+$\mu$ value, and whenever it is 1, it's value allows for a radially symmetric expansion of the function 
+as a symmetric paraboloid from the origin which is the local minimizer $x^*$.
+\newline
+
+\textbf{Convergence \& Isocontours} \newline
+Related to $\mu$ values, isocontours and the energy landscape clearly suggest the change in steepness.
+The convergence of the gradient method is reflected through the isolines and the initial point 
+in every test case since they are important for the method performance.
+Moreover, from Th 3.3 notice that the eigenvalues $\lambda \in \Lambda = spectrum(A)$ for $\mu \neq 1$ are 
+not equal $\lambda_i \neq \lambda_j \text{ for } i \neq j$, meaning that it cannot exploit one-iteration convergence.
+\newline
+
+\textbf{Number of Iterations} \newline
+For the last plot $\mu = 10, \, x_0 = (10, 0)$, 
+the eigenvalues $\lambda \in \Lambda$ are not all equal and the convergence happens after zigzagging 
+when searching for the local minima.
+This emphasize that the starting point $x_0$ heavily impacts the convergence rate of 
+the steepest descent method,
+despite the function is writable in Quadratic Form and hence strongly convex.
 
 \end{document}

@@ -11,15 +11,12 @@ figure(1)
 subplot(2,2,1)
 surf(X, Y, f(X, Y, 1));
 title("function for \mu = 1")
-
 subplot(2,2,2)
 contour(X, Y, f(X, Y, 1));
 title("isocontours for \mu = 1")
-
 subplot(2,2,3)
-surf(X, Y, f(X, Y, 10));
+surf(X, Y, f(X,Y, 10));
 title("function for \mu = 10")
-
 subplot(2,2,4)
 contour(X, Y, f(X, Y, 10));
 title("isocontours for \mu = 10")
