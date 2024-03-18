@@ -14,7 +14,7 @@
 % vector shortcut
 \newcommand{\myvec}[1]{\begin{bmatrix} #1 \end{bmatrix}}
 \newcommand{\myex}[1]{\begin{equation*}\begin{aligned} #1 \end{aligned}\end{equation*}}
-
+\newcommand{\myexthreeA}{\myvec{2 & 0 \\ 0 & 2\mu}}
 
 \input{assignment.sty}
 \begin{document}
@@ -185,7 +185,7 @@ Write down its quadratic form. \newline
     f(x, y) 
     & = x^2 + \mu y^2 \\
     & = \myvec{x & \mu y} \myvec{x \\ y} \\
-    & = \frac{1}{2} \myvec{x & y} \myvec{2 & 0 \\ 0 & 2 \mu} \myvec{x & y} - \myvec{0 \\ 0} \vec{x} \\
+    & = \frac{1}{2} \myvec{x & y} \myexthreeA \myvec{x \\ y} - \myvec{0 & 0} \myvec{x \\ y} \\
     & = \frac{1}{2} \vec{x}^T A \vec{x} - \vec{b}^T \vec{x}
 }
 
@@ -198,13 +198,61 @@ In both cases use the square $[-10, 10] \times [-10, 10]$.
 Comment on the behaviour of the isolines.
 % Matlab function: surf, contour
 
-\subsection{}
-Considering that $A$ is a symmetric positive-definite matrix, find the exact optimal step-length $\alpha$.
-Show your computations.
+\begin{figure}[H]
+    \centering
+    \caption{Plot of function with $\mu = 1,10$}
+    \label{fig:ex3-2}
+    \includegraphics[width=\textwidth, trim={3cm 3cm 3cm 1cm}, clip]{./figures/ex3-2.eps}
+\end{figure}
+
+The matlab script is contained in \textit{code/ex3\_2.m} file. \newline
+The behavior of the isolines $\propto \mu$ parameter that affects the steepness of the function in the y-dimension.
+For $\mu = 1$, the isolines are circular, indicating that the function increases evenly in all directions from the origin.
+A symmetric paraboloid from the origin is the result of our isotropic quadratic function where its coefficients
+are equal, resulting in a radially symmetric growth.
+For $\mu = 10$, the isolines are ellipses because the function grows faster on the y-dimension resulting in a paraboloid
+steeper along the y-axis and flatter on the x-axis. 
+This behavior is due to the scalar coefficient $\mu$.
+Generally, the isolines indicates how the function behave in the space: 
+closer contour lines mean that the function changes rapidly. 
 
 \subsection{}
-Write a Matlab code for the gradient method with maximum number of iterations $N = 100$ and a tolerance $tol = 10-8$ . 
-Minimize $f$ for $\mu = (1, 10)$ and starting points: $(x0 , y0 ) = (10, 0), (0, 10), (10, 10)$.
+Considering that $A$ is a symmetric positive-definite matrix, find the exact optimal step-length $\alpha$.
+Show your computations.\newline
+
+Recalling the formula to compute the step length:
+\myex{
+    \alpha_k = \frac{\nabla f_k^T \nabla f_k}{\nabla f_k^T A \nabla f_k}
+}
+Note that $A$ is SPD $\therefore \, A = A^T$. 
+$A = \myexthreeA$. $\nabla f_k = Ax - b = \myexthreeA \myvec{x \\ y}$ with $b = \vec{0}$. \newline
+By plugging the previously obtained values into the definition:
+\myex{
+    \alpha_k 
+    & = \frac{\nabla f_k^T \nabla f_k}{\nabla f_k^T A \nabla f_k} \\
+    & = \frac{\myvec{x & y} \myexthreeA \myexthreeA \myvec{x \\ y}} 
+            {\myvec{x & y} \myexthreeA \myexthreeA \myexthreeA \myvec{x \\ y}} \\
+    & = \frac{4x^2 + 4 \mu^2 y^2}{8x^2 + 8 \mu^3 y^2} \\
+    & = \frac{1}{2} \cdot \frac{x^2 + \mu^2 y^2}{x^2 + \mu^3 y^2} \\
+    & = \alpha_{opt} \text{ for quadratic forms}
+}
+For $\mu = 1$:
+\myex{
+    \alpha_k 
+    = \frac{1}{2} \cdot \frac{x^2 + y^2}{x^2 + y^2}
+    = \frac{1}{2}
+}
+For $\mu = 10$:
+\myex{
+    \alpha_k 
+    & = \frac{1}{2} \cdot \frac{x^2 + 100 y^2}{x^2 + 1000 y^2} \\
+}
+
+\subsection{}
+Write a Matlab code for the gradient method with maximum number of iterations $N = 100$ and a tolerance $tol = 10-8$. 
+Minimize $f$ for $\mu = (1, 10)$ and starting points: $(x_0 , y_0) = (10, 0), (0, 10), (10, 10)$.
+
+
 
 \subsection{}
 For each case plot the iterations on the energy landscape in 2D (the plot of the objective function),

@@ -1,0 +1,20 @@
+% Assignment 1
+% exercise 3
+f = @(x, y, mu) x.^2 + mu .* y.^2;
+
+figure(1)
+subplot(2,2,1)
+x0 = -10:0.1:10; 
+y0 = -10:0.1:10;
+[X, Y] = meshgrid(x0, y0);
+surf(X, Y, f(X,Y, 1));
+hold off;
+
+subplot(2,2,2)
+contour(X, Y, f(X, Y, 1));
+
+subplot(2,2,3)
+surf(X, Y, f(X,Y, 10));
+
+subplot(2,2,4)
+contour(X, Y, f(X, Y, 10));
