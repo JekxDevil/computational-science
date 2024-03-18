@@ -1,64 +1,81 @@
 clc;
-clear all;
+clear variables;
 close all;
 
-% gradient method: min f for mu = (1, 10) and x0 = (10,0), (0,10), (10,10)
+% gradient method: min f for mu = 1, 10 and x0 = (10,0), (0,10), (10,10)
 max_iter = 100;
 tol = 1e-8;
-mus = [1 10];
-start_points = [[10, 0], [0, 10], [10, 10]];
+mus = [1, 10];
+starting_points = [[10, 0]; [0, 10]; [10, 10]];
 
 % definition of function and its gradient
 syms fx fy
-f = fx.^2 + mus(1) .* fy.^2; % TODO mus
-f_gradient = gradient(f, [fx, fy]);
+f = fx.^2 + mus(2) * fy.^2;
+f_gradient = gradient(f, symvar(f));
+f_hessian = hessian(f, symvar(f));
 
-% ex3.5 stats
-% plot energy landscape in 2D (colored isocontours)
-log10norms = zeros(max_iter, 2);
-energyfunctionvalues = zeros(max_iter, 2);
+% build optimal step length [optional, done by the steepest descent]
+x0 = starting_points(3,:);
+f_gradient_eval = subs(f_gradient, symvar(f), x0);
+f_hessian_eval = subs(f_hessian, symvar(f), x0);
+A = f_hessian_eval;
+step = (f_gradient_eval' * f_gradient_eval) ...
+        / (f_gradient_eval' * A * f_gradient_eval);
 
-xvec = steepest_descent([10, 10], 0.1, f_gradient, [fx, fy], max_iter, tol);
+[x_star, funcvals, gradient_norms, iterations] = steepest_descent(x0, f, max_iter, tol);
 
-
-% PLOT
+% plot
 figure(1)
 x0 = -10:0.1:10; 
 y0 = -10:0.1:10;
-[X, Y] = meshgrid(x0, y0);
-
-% Convert symbolic gradient to function handle for numerical computation
-f_gradient_func = matlabFunction(f_gradient, 'Vars', [fx, fy]);
-
-% Then, in your steepest_descent function, replace symbolic subs with the function handle call
-% Example:
-% Instead of this: subs(f_gradient, f_vars, x)
-% Use this: f_gradient_func(x(1), x(2))
-
+[X, Y] = meshgrid(linspace(-10, 10, 100), linspace(-10, 10, 100));
 % For the surface plot
-f_func = matlabFunction(f, 'Vars', [fx, fy]);
+f_func = matlabFunction(f, 'Vars', symvar(f));
 Z = f_func(X, Y);
-
+subplot(2,2,1);
 surf(X, Y, Z);
-% ...
-
-%surf(X, Y, subs(f, [fx fy], [X,Y]));
 hold on
-disp(size(xvec))
-for i=0:size(xvec)[1]
-    disp(i);
-end
-plot3(xvec(:,1),xvec(:,2),f_func(xvec(:,1),xvec(:,2)),'ro','LineWidth',5)
+plot3(funcvals(:,1), funcvals(:,2), f_func(funcvals(:,1), funcvals(:,2)), ...
+    'ro-', 'LineWidth', 1);
+subplot(2,2,2);
+contourf(X, Y, f_func(X, Y));
+hold on;
+plot(funcvals(:,1), funcvals(:,2), 'ro-');
 
-function xvec = steepest_descent(start_point, step, f_gradient, f_vars, max_iter, tol)
-    x = start_point;
-    xvec = zeros(max_iter, 2);
-    xvec(1,:) = start_point;
-    for i = 1:max_iter
-        x = x - step * subs(f_gradient, f_vars, x)';
-        xvec(i+1,:) = x;
-        if norm(subs(f_gradient, f_vars, x), 2) <= tol
-            break;
-        end
+
+subplot(2,2,3);
+semilogy(gradient_norms(1:iterations));
+
+subplot(2,2,4);
+plot(1:iterations, f_func(funcvals(1:iterations,1), funcvals(1:iterations,2)));
+
+
+%% Steepest Descent
+% works only for quadratic forms since I used its step length computation
+% formula and exploits Hessian = A, true only for quadratic forms
+function [x_star, funcvals, gradient_norms, iterations, alphas] = steepest_descent(start_point, f, max_iter, tol)
+    funcvals = zeros(max_iter, 2);
+    gradient_norms = zeros(max_iter, 1);
+    f_gradient = matlabFunction(gradient(f, symvar(f)), "Vars", symvar(f));
+    f_hessian = matlabFunction(hessian(f, symvar(f)), "Vars", symvar(f));
+    alphas = zeros(max_iter, 1);
+    iterations = 1;
+
+    x_star = start_point;
+    funcvals(1,:) = start_point;
+    gradient_norms(1,:) = norm(f_gradient(x_star(1), x_star(2)));
+    df = f_gradient(x_star(1), x_star(2));
+
+
+    while iterations < max_iter && norm(f_gradient(x_star(1), x_star(2))) > tol
+        df = f_gradient(x_star(1), x_star(2));
+        step = (df' * df) / (df' * f_hessian(x_star(1), x_star(2)) * df);
+
+        x_star = x_star - step * f_gradient(x_star(1), x_star(2))';
+        funcvals(iterations+1,:) = x_star;
+        gradient_norms(iterations+1,:) = norm(f_gradient(x_star(1), x_star(2)));
+        alphas(iterations) = step;
+
+        iterations = iterations + 1;
     end
 end
