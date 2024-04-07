@@ -1,0 +1,45 @@
+%% Assignment 2
+% Student: Jeferson Morales Mariciano
+clc; clear variables; close all;
+%% Exercise 1.2
+
+% GRADIENT METHOD: min f for mu = 1, 10 and x0 = (10,0), (0,10), (10,10)
+max_iter = 50000;
+tol = 1e-6;
+mus = [1, 10];
+starting_points = [[10, 0]; [0, 10]; [10, 10]];
+x0 = [0,0];
+mu = mus(2);
+
+%% Steepest Descent
+% works only for quadratic forms since I used its step length computation
+% formula and exploits Hessian = A, true only for quadratic forms
+function [x_star, funcvals, gradient_norms, iterations, alphas] = steepest_descent(start_point, f, max_iter, tol)
+    % init results
+    funcvals = zeros(max_iter, 2);
+    gradient_norms = zeros(max_iter, 1);
+    iterations = 1;
+    alphas = zeros(max_iter, 1);
+
+    % computation and conversion of gradient and hessian
+    f_gradient = matlabFunction(gradient(f, symvar(f)), "Vars", symvar(f));
+    f_hessian = matlabFunction(hessian(f, symvar(f)), "Vars", symvar(f));
+
+    % store starting point in metrics
+    x_star = start_point;
+    funcvals(1,:) = start_point;
+    gradient_norms(1,:) = norm(f_gradient(x_star(1), x_star(2)));
+
+    while iterations < max_iter && norm(f_gradient(x_star(1), x_star(2))) > tol
+        % compute alpha step length and x(k)
+        df = f_gradient(x_star(1), x_star(2));
+        step = (df' * df) / (df' * f_hessian(x_star(1), x_star(2)) * df);
+        x_star = x_star - step * f_gradient(x_star(1), x_star(2))';
+
+        % compute and store metrics
+        funcvals(iterations+1,:) = x_star;
+        gradient_norms(iterations+1,:) = norm(f_gradient(x_star(1), x_star(2)));
+        alphas(iterations) = step;
+        iterations = iterations + 1;
+    end
+end

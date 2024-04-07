@@ -1,0 +1,31 @@
+function [alpha, iters] = backtracking(f, gradient, x, p, alpha0, rho, c)
+% INPUTS
+% - f: function
+% - g: gradient
+% - x: start point
+% - p: directional derivative row-wise (-gradient)
+% - n: init alpha
+% - rho: contraction factor
+% - c: sufficient decrease constant factor on l(alpha)
+%      suggested val 1e-4 from pag 33 Nocedal book
+
+alpha = alpha0; % initial alpha
+%fka = f(x(1) + alpha * p(1), x(2) + alpha * p(2)); % lhs Wolfe 1st condition
+%fk = f(x(1), x(2)); % A part of the rhs of 1st Wolfe condition
+gp = p * gradient(x(1), x(2)); % dot product between gradient and direction, to complete rhs 1st Wolfe condition
+iters = 0;
+
+%while f(x + alpha*p) ...
+%        > f(x) + c*alpha*gradient'*p
+%end
+
+while f( x(1) + alpha*p(1) , x(2) + alpha*p(2) ) ...
+        > f(x(1), x(2)) + c*alpha*gradient(x(1), x(2))'*p'
+        %fk + (c * alpha * gp) && iters < 1000) % we check conditions 
+    alpha = rho*alpha; % we reduce alpha
+    %
+    % fka = f(x(1) + alpha * p(1), x(2) + alpha * p(2)); % new lhs 1st Wolfe condition
+    iters = iters + 1;
+end
+
+end
