@@ -83,7 +83,7 @@ function [x_star, funcvals, gradient_norms, iters, steps] = ...
 
     while iters <= max_iters && tol < norm(f_gradient(x_star(1), x_star(2)))
         % compute alpha step length and x(k)
-        pk = (-1) * inv(f_hessian(x_star(1), x_star(2))) * f_gradient(x_star(1), x_star(2));
+        pk = (-1) * f_hessian(x_star(1), x_star(2)) \ f_gradient(x_star(1), x_star(2));
 
         [step, ~] = ...
             backtracking(f, f_gradient, x_star, pk, alpha_tilde, rho, c);
