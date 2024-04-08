@@ -15,7 +15,7 @@
 % vector shortcut
 \newcommand{\myvec}[1]{\begin{bmatrix} #1 \end{bmatrix}}
 \newcommand{\myex}[1]{\begin{equation*}\begin{aligned} #1 \end{aligned}\end{equation*}}
-\newcommand{\myexthreeA}{\myvec{2 & 0 \\ 0 & 2\mu}}
+%\newcommand{\myexthreeA}{\myvec{2 & 0 \\ 0 & 2\mu}}
 
 \input{assignment.sty}
 \begin{document}
@@ -285,6 +285,15 @@ with $A$ symmetric positive definite.
 How many iterations does the SD method take to minimize the function $f$ 
 if we use the optimal step length? 
 Please, prove your answer.
+\\\newline
+Theorem 3.3
+\myex{
+    ||x_{k+1} - x^*||_Q^2 \leq \left( \frac{\lambda_{n} - \lambda_{1}}{\lambda_{n} + \lambda_{1}} \right)^2 ||x_k - x^*||_Q^2
+    \;\;\;\;\;\;\;
+    0 < \lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_n
+}
+
+exact line search? exact minimizer $\alpha_{opt}$
 
 % Function
 
