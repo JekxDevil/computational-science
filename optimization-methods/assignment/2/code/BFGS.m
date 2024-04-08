@@ -55,7 +55,7 @@ ylabel('$f(x)$', 'Interpreter','latex');
 
 figure;
 plot(f_vals(:,1), f_vals(:,2), 'bo-');
-title("Convergence of Steepest Descent with Backtracking");
+title("Convergence of BFGS with Backtracking");
 xlabel("$x_1$", "Interpreter", "latex"); 
 ylabel("$x_2$", "Interpreter", "latex");
 

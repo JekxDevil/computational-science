@@ -24,7 +24,7 @@ y = linspace(-3, 3, 100);
 Z = double(subs(f_rosenbrock_sym, [fx, fy], {X, Y}));
 
 figure;
-sgtitle("Steepest Descent with Backtracking");
+sgtitle("Steepest Descent without Backtracking");
 subplot(2,2,1);
 sc = surfc(X,Y,Z); 
 hold on; 
@@ -84,9 +84,9 @@ function [x_star, funcvals, gradient_norms, iters, steps] = ...
         % compute alpha step length and x(k)
         pk = -1 * f_gradient(x_star(1), x_star(2))';
 
-        [step, ~] = ...
+        [step, ~] = ... 
             backtracking(f, f_gradient, x_star, pk, alpha_tilde, rho, c);
-
+ 
         x_star = x_star + step * pk;
 
         % compute and store metrics

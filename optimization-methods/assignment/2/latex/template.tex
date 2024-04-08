@@ -8,6 +8,7 @@
 \usepackage{float}
 \usepackage[export]{adjustbox}
 \usepackage{multirow}
+\usepackage{booktabs}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -21,7 +22,7 @@
 
 
 \setassignment
-\setduedate{Tuesday, 9 April 2024, 12:00 AM}
+\setduedate{Friday, 12 April 2024, 12:00 AM}
 
 \serieheader
 {Optimization Methods}
@@ -67,10 +68,29 @@ Analyze convergence behaviour of the methods by plotting the gradient norm and t
 value at each iteration.
 Compare and comment on the the performances of the different methods.
 \\\newline
-Chosen $c_1 = 0.5$.
-...
-Chosen $c_1 = 1e-4$. 
+\begin{figure}[H]
+    \centering
+    \caption{Visualization of Steepest Descent}
+    \label{fig:ex1-sd-energy}
+    \includegraphics[width=\textwidth, trim={4cm 2.5cm 4cm 1.5cm}, clip]{./figures/ex1-sd-backtracking-energy.eps}
+\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \caption{Comparison of convergence}
+    \label{fig:ex1-convergence-comparison}
+    \includegraphics[width=.5\textwidth, trim={0cm 0cm 0cm 0cm}, clip]{./figures/ex1-sd-backtracking-convergence.eps}
+    \includegraphics[width=.49\textwidth, trim={0cm 0cm 0cm 0cm}, clip]{./figures/ex1-newton-backtracking-convergence.eps}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Visualization of Newton Method}
+    \label{fig:ex1-newton-energy}
+    \includegraphics[width=\textwidth, trim={4cm 2.5cm 4cm 1.5cm}, clip]{./figures/ex1-newton-backtracking-energy.eps}
+\end{figure}
+
+Chosen $c_1 = 1e-4$. 
 
 
 % Vector-valued function $f : \mathbb{R}^2 \rightarrow \mathbb{R}$
@@ -150,10 +170,35 @@ Plot the obtained iterates on the energy landscape in 2D.
 Analyze convergence behaviour of the methods by plotting the gradient norm and the function
 value at each iteration.
 
+\begin{figure}[H]
+    \centering
+    \caption{Visualization of BFGS}
+    \label{fig:ex2-bfgs-energy}
+    \includegraphics[width=\textwidth, trim={4cm 2.5cm 4cm 1.5cm}, clip]{./figures/ex2-bfgs-energy.eps}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Convergence of BFGS}
+    \label{fig:ex2-bfgs-convergence}
+    \includegraphics[width=.5\textwidth, trim={0cm 0cm 0cm 0cm}, clip]{./figures/ex2-bfgs-convergence.eps}
+\end{figure}
+
 \subsection*{5}
 Produce a table in which you compare the number of iterations required by BFGS, by Newton's
 method (with backtracking) and by Steepest descent method (with backtracking). You can use the
 results from the previous exercise. Comment the results by comparing the different methods.
+
+\begin{table*} \centering
+\caption{Comparison of Iterations for Rosenbrock's Function}
+\begin{tabular}{@{}ccc@{}}
+    \toprule
+    Steepest Descent & Newton & BFGS \\
+    \midrule
+    21102 & 12  & 26 \\
+    \bottomrule
+\end{tabular}
+\end{table*}
 
 
 % Quadratic minimization problem with $A \in \mathbb{R}^{n \times n}$ is SPD 
