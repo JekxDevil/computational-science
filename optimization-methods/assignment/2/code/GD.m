@@ -24,7 +24,9 @@ y = linspace(-3, 3, 100);
 Z = double(subs(f_rosenbrock_sym, [fx, fy], {X, Y}));
 
 figure;
-sgtitle("Steepest Descent without Backtracking");
+sgtitle("Steepest Descent with Backtracking");
+% sgtitle("Steepest Descent without Backtracking");
+
 subplot(2,2,1);
 sc = surfc(X,Y,Z); 
 hold on; 
@@ -39,7 +41,7 @@ plot(f_vals(:,1), f_vals(:,2), 'ro-', 'LineWidth', 2);
 title("Energy landscape in 2D");
 
 subplot(2,2,3);
-semilogy(1:iters, grad_norms, 'b-');
+semilogy(1:iters, grad_norms, 'bo-');
 hold on; grid on;
 title('Gradient norms along iterations');
 xlabel('# iterations');
@@ -54,9 +56,11 @@ ylabel('$f(x)$', 'Interpreter','latex');
 
 figure;
 plot(f_vals(:,1), f_vals(:,2), 'bo-');
-title("Convergence of Steepest Descent with Backtracking");
 xlabel("$x_1$", "Interpreter", "latex"); 
 ylabel("$x_2$", "Interpreter", "latex");
+title("Convergence of Steepest Descent with Backtracking");
+% title("Convergence of Steepest Descent without Backtracking");
+
 
 %% Steepest Descent with Backtracking
 % supports only 2 variables functions.
@@ -86,6 +90,7 @@ function [x_star, funcvals, gradient_norms, iters, steps] = ...
 
         [step, ~] = ... 
             backtracking(f, f_gradient, x_star, pk, alpha_tilde, rho, c);
+        % step = 1; % step beta = 1, without backtracking variant
  
         x_star = x_star + step * pk;
 
@@ -97,8 +102,7 @@ function [x_star, funcvals, gradient_norms, iters, steps] = ...
     end
 
     % resize metrics to iters
-    iters = iters - 1;
     funcvals = funcvals(1:iters,:);
     gradient_norms = gradient_norms(1:iters);
-    steps = steps(1:iters);
+    steps = steps(1:iters-1); % init step does not exist, hence -1
 end

@@ -25,6 +25,7 @@ Z = double(subs(f_rosenbrock_sym, [fx, fy], {X, Y}));
 
 figure;
 sgtitle("Newton Method with Backtracking");
+% sgtitle("Newton Method without Backtracking");
 subplot(2,2,1);
 sc = surfc(X,Y,Z); 
 hold on; 
@@ -54,9 +55,10 @@ ylabel('$f(x)$', 'Interpreter','latex');
 
 figure;
 plot(f_vals(:,1), f_vals(:,2), 'bo-');
-title("Convergence of Newton Method with Backtracking");
 xlabel("$x_1$", "Interpreter", "latex"); 
 ylabel("$x_2$", "Interpreter", "latex");
+title("Convergence of Newton Method with Backtracking");
+% title("Convergence of Newton Method without Backtracking");
 
 %% Newton method with Backtracking
 % supports only 2 variables functions.
@@ -87,6 +89,7 @@ function [x_star, funcvals, gradient_norms, iters, steps] = ...
 
         [step, ~] = ...
             backtracking(f, f_gradient, x_star, pk, alpha_tilde, rho, c);
+        % step = 1; % step beta = 1, without backtracking variant
 
         x_star = x_star + step * pk';
 
@@ -98,8 +101,7 @@ function [x_star, funcvals, gradient_norms, iters, steps] = ...
     end
 
     % resize metrics to iters
-    iters = iters - 1;
     funcvals = funcvals(1:iters,:);
     gradient_norms = gradient_norms(1:iters);
-    steps = steps(1:iters);
+    steps = steps(1:iters-1); % init step does not exist, hence -1
 end

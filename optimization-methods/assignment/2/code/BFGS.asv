@@ -55,9 +55,10 @@ ylabel('$f(x)$', 'Interpreter','latex');
 
 figure;
 plot(f_vals(:,1), f_vals(:,2), 'bo-');
-title("Convergence of Steepest Descent with Backtracking");
+hold on; grid on;
 xlabel("$x_1$", "Interpreter", "latex"); 
 ylabel("$x_2$", "Interpreter", "latex");
+
 
 %% BFGS Method with Backtracking
 % supports only 2 variables functions.
@@ -103,8 +104,7 @@ function [x_star, funcvals, gradient_norms, iters, steps] = ...
     end
 
     % resize metrics to iters
-    iters = iters - 1;
     funcvals = funcvals(1:iters,:);
     gradient_norms = gradient_norms(1:iters);
-    steps = steps(1:iters);
+    steps = steps(1:iters); % init step does not exist, hence -1
 end
