@@ -24,8 +24,8 @@ y = linspace(-3, 3, 100);
 Z = double(subs(f_rosenbrock_sym, [fx, fy], {X, Y}));
 
 figure;
-sgtitle("Newton Method with Backtracking");
-% sgtitle("Newton Method without Backtracking");
+% sgtitle("Newton Method with Backtracking");
+sgtitle("Newton Method without Backtracking");
 subplot(2,2,1);
 sc = surfc(X,Y,Z); 
 hold on; 
@@ -40,14 +40,14 @@ plot(f_vals(:,1), f_vals(:,2), 'ro-', 'LineWidth', 2);
 title("Energy landscape in 2D");
 
 subplot(2,2,3);
-semilogy(grad_norms, 'bo-');
+semilogy(max(eps, grad_norms), 'bo-');
 hold on; grid on;
 title('Gradient norms along iterations');
 xlabel('# iterations');
 ylabel('$||\nabla f||$','Interpreter','latex');
 
 subplot(2,2,4);
-semilogy(f_vals(:,3), 'bo-');
+semilogy(max(eps, f_vals(:,3)), 'bo-');
 hold on; grid on;
 title('Function values along iterations');
 xlabel('# iterations');
@@ -87,9 +87,9 @@ function [x_star, funcvals, gradient_norms, iters, steps] = ...
         % compute alpha step length and x(k)
         pk = (-1) * f_hessian(x_star(1), x_star(2)) \ f_gradient(x_star(1), x_star(2));
 
-        [step, ~] = ...
-            backtracking(f, f_gradient, x_star, pk, alpha_tilde, rho, c);
-        % step = 1; % step beta = 1, without backtracking variant
+        % [step, ~] = ...
+        %     backtracking(f, f_gradient, x_star, pk, alpha_tilde, rho, c);
+        step = 1; % step beta = 1, wiRthout backtracking variant
 
         x_star = x_star + step * pk';
 
