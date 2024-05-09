@@ -110,12 +110,9 @@ Consider the following theorem:
     converges to the solution $x^*$ of the linear system $Ax = b$ in at most $n$ steps.
 }
 
-\noindent Prove the theorem and explain casrefully every step of your reasoning.\\
+\noindent Prove the theorem and explain carefully every step of your reasoning.\\
 
 
-Matlab scripts are provided in \textit{/code} folder.
-The main file to run is \textit{BFGS.m}.
-It handles both computations and visualization of the Rosenbrock's function with the corresponding method.
 
 % \begin{table*}[h]
 %     \centering
@@ -151,6 +148,10 @@ How many distinct eigenvalues has each matrix?
 
 \subsection*{2.}
 Implement the CG method (CG.m).
+
+Matlab scripts are provided in \textit{/code} folder.
+The main file to run is \textit{CG.m}.
+It handles both computations and visualization of the Rosenbrock's function.
 
 \subsection*{3.}
 Construct a right-hand side $b = rand(10,1)$ and apply the Conjugate Gradient method to solve the
@@ -188,9 +189,56 @@ Consider the following lemma (Lemma 4.2, page 75 Numerical optimization, Nocedal
     \end{itemize}
 }
 
-Read carefully the proof and explain in detail how each step is obtained.\\\newline
+Read carefully the proof and explain in detail how each step is obtained.\\
 
 \noindent
-My answer begins here.
+Recalling:
+
+\myex{false}{eq:dogleg-path}{
+    \tilde{p}(\tau) = \begin{cases}
+        \tau p^U & 0 \leq \tau \leq 1 \\
+        p^U + (\tau - 1)(p^B - p^U) & 1 \leq \tau \leq 2 \\
+    \end{cases}
+}
+
+\noindent First, let's prove that $|| \tilde{p}(\tau) ||$ is an increasing function of 
+$\tau \in [0, 1]$.
+
+\begin{proof}
+    We have that $|| \tilde{p}(\tau) || = || \tau p^U || = \tau || p^U ||$.
+    Since $|| p^U ||$ is a positive constant, 
+    then $|| \tilde{p}(\tau) ||$ is an increasing function of $\tau$.
+    Moreover, 
+
+    \myex{false}{eq:ex4-3-1}{
+        \phi(\tau) &= || \tilde{p}(\tau) || = \tau || p^U || \\
+        \frac{\partial \phi}{\partial \tau} &= || p^U || \geq 0
+    }
+
+    thus, $\phi(\tau)$ is an increasing function of $\tau$.
+\end{proof}
+
+\noindent Second, let's prove that $m(\tilde{p}(\tau))$ is a decreasing function of
+$\tau \in [0, 1]$.
+
+\begin{proof}
+    \myex{false}{eq:ex4-3-2}{
+        m(\tilde{p}(\tau)) &= f + \tau g^T p^U + \frac{1}{2} \tau^2 p^{UT} B p^U \\
+        \frac{\partial m}{\partial \tau} &= \underbrace{g^T p^U}_{\leq 0} 
+        + \underbrace{\tau p^{UT} B p^U}_{\geq 0}
+        \leq \tau p^{UT} B p^U
+        \leq 0
+    }
+    thus, $m(\tilde{p}(\tau))$ is a decreasing function of $\tau$.
+\end{proof}
+
+
+\noindent Third, let's prove that $|| \tilde{p}(\tau) ||$ is an increasing function of 
+$\tau \in [1, 2]$.
+
+
+
+\noindent Lastly, let's prove that $m(\tilde{p}(\tau))$ is a decreasing function of
+$\tau \in [1, 2]$.
 
 \end{document}
