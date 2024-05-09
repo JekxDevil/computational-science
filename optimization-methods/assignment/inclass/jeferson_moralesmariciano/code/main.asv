@@ -1,0 +1,63 @@
+%% In-class exercise
+% Student: Jeferson Morales Mariciano
+clc; clear variables; close all;
+
+%% Trust Region
+max_iters = 50000;
+tol = 1e-6;
+x0 = [0 ; 0];
+alpha_tilde = 1;
+rho = 0.9;
+c = 1e-4; % (0.5, 1e-4)
+
+syms fx fy
+f_sym = (1 - fx).^2 + 100*(fy - fx.^2).^2;
+
+%[x_star, f_vals, grad_norms, iters, steps] = ...
+%    newton(x0, f_rosenbrock_sym, max_iters, tol, alpha_tilde, rho, c);
+f = @(x, y) (1-x).^2 + 100*(y - x.^2).^2;
+f_vars = symvar(f_sym);
+g = matlabFunction(gradient(f_sym, f_vars), "Vars", f_vars);
+h = matlabFunction(hessian(f_sym, f_vars), "Vars", f_vars);
+[vecx, itr, vecgrad] = trustRegion(f, g, h, x0, 2, 1, 1/4, max_iters, tol);
+
+% plottings: energy function 3d & 2d
+x = linspace(-2, 2, 100);
+y = linspace(-3, 3, 100);
+[X,Y] = meshgrid(x, y);
+Z = double(subs(f_sym, [fx, fy], {X, Y}));
+
+figure;
+sgtitle("Trust Region - Dogleg Method");
+subplot(2,2,1);
+sc = surfc(X,Y,Z); 
+hold on; 
+colorbar; sc(1).EdgeColor = 'none';
+plot3(vecx(1,:), vecx(2,:), f(vecx(1,:), vecx(2,:)), 'ro-', 'LineWidth', 2);
+title("Energy landscape in 3D");
+
+subplot(2,2,2);
+contourf(X, Y, Z);
+hold on;
+plot(vecx(1,:), vecx(2,:), 'ro-', 'LineWidth', 2);
+title("Energy landscape in 2D");
+
+subplot(2,2,3);
+semilogy(max(eps, vecgrad), 'bo-');
+hold on; grid on;
+title('Gradient norms along iterations');
+xlabel('# iterations');
+ylabel('$||\nabla f||$','Interpreter','latex');
+
+subplot(2,2,4);
+semilogy(max(eps, f(vecx(1,:), vecx(2,:)), 'bo-');
+hold on; grid on;
+title('Function values along iterations');
+xlabel('# iterations');
+ylabel('$f(x)$', 'Interpreter','latex');
+
+figure;
+plot(f_vals(:,1), f_vals(:,2), 'bo-');
+xlabel("$x_1$", "Interpreter", "latex"); 
+ylabel("$x_2$", "Interpreter", "latex");
+title("Convergence of Dogleg method");

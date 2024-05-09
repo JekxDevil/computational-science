@@ -1,0 +1,14 @@
+function [p] = dogleg(h, g, delta)
+
+    % newton step pB
+    pB = -h\g;
+
+    if norm(pB) <= delta
+        return
+
+    % cauchy point pU
+    pU = - ((g' * g) / (g' * h * g)) * g;
+
+    % step p
+    p = pU + (tau - 1) * (pB - pU);
+end

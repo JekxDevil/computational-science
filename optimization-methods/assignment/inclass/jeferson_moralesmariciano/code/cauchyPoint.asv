@@ -1,0 +1,5 @@
+function [p] = cauchyPoint(h, g, delta)
+    psk = - delta * g / norm(g);
+    gHg = g' * H * g;
+    if gHg > 0
+    tau = min(tau, 1);
