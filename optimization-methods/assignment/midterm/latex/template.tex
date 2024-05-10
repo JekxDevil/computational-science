@@ -145,7 +145,16 @@ constructed in three different ways:
 \end{itemize}
 
 \subsection*{1.}
-How many distinct eigenvalues has each matrix?
+How many distinct eigenvalues has each matrix?\\
+
+The following matrices has the following number of distinct eigenvalues $| \Lambda |$,
+which correspond to the number of different elements in the diagonal of the matrix $A$:
+\begin{itemize}
+    \item[ ] $A = diag([1:10]) \rightarrow 10$
+    \item[ ] $A = diag(ones(1,10)) \rightarrow 1$
+    \item[ ] $A = diag([1, 1, 1, 3, 4, 5, 5, 5, 10, 10]) \rightarrow 5$
+    \item[ ] $A = diag([1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0]) \rightarrow 10$
+\end{itemize}
 
 \subsection*{2.}
 Implement the CG method (CG.m).
