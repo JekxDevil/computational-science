@@ -1,14 +1,10 @@
-%% Midterm assignment
-% Student: Jeferson Morales Mariciano
-clc; clear variables; close all;
-
 %% Exercise 3.2
-function [x, rvec] = myCG(A, b, x0, max_itr, tol)
-% conjugate gradient solver
+function [x, rvec, vecx] = CG(A, b, x0, max_itr, tol)
 % output:
-% - x solution value
-% - rvec vectror containing the residual at every iteration
+% - x solution
+% - rvec vectror containing the residual foreach iteration
     rvec = [];
+    
     r = b - A*x0;
     x = x0;
     d = r;

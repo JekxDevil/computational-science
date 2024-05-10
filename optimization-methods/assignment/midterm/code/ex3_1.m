@@ -22,5 +22,7 @@ rng(20020309);
 b = rand(10,1);
 mysolutions = zeros(4,1);
 for i = 1:numel(myl)
-    [mysolutions(i), ] = CG(myl{i}, b, 50000, 1e-7);
+    [mysolutions(i), residuals, vecx] = CG(myl{i}, b, 50000, 1e-7);
 end
+
+figure;

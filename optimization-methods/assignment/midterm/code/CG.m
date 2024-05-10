@@ -1,11 +1,13 @@
 %% Exercise 3.2
-function [x, rvec] = CG(A, b, x0, max_itr, tol)
+function [x, rvec, vecx] = CG(A, b, x0, max_itr, tol)
 % output:
 % - x solution
 % - rvec vectror containing the residual foreach iteration
     rvec = [];
+    vecx = [];
     r = b - A*x0;
     x = x0;
+    vecx = [vecx, x];
     d = r;
     p_old = dot(r, r);
     
@@ -19,6 +21,7 @@ function [x, rvec] = CG(A, b, x0, max_itr, tol)
         d = r + beta*d;
         p_old = p_new;
         rvec = [rvec, p_new];
+        vecx = [vecx, x];
         
         if p_new <= tol
             disp('Iteration Converged');

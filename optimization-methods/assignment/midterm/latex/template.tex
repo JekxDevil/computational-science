@@ -76,7 +76,25 @@ Suppose that we use Stepeest Descent (SD) method to minimize $f$
 and the starting point for the SD algorithm is $x_0 = x_m + v$.
 
 \subsection*{1.}
-Prove that the gradient at $x_0$ is $\nabla f(x_0) = \lambda v$.
+Prove that the gradient at $x_0$ is $\nabla f(x_0) = \lambda v$. \\
+
+Recall that for eigenvalue $\lambda$ and eigenvector $v$ of matrix $A$,
+we have the following property $Av = \lambda v$ (1).
+Moreover, for minimizer $x_m$ of quadratic function $f$ 
+holds $\nabla f(x_m) = Ax_m - b = 0$ (2).
+Then:
+
+\myex{false}{eq:ex1-1}{
+    \nabla f(x) &= Ax - b \\
+    \nabla f(x_0) &= A(x_m + v) - b \\
+    &= Ax_m + Av - b \\
+    &\overset{(2)}{=} Av \\
+    &\overset{(1)}{=} \lambda v
+}
+
+% alpha opt = 1/lambda
+% se ti muovi lungo autovettore, converge in un sola iterata
+% riduzione del modello quadratico e' maggiore della riduzione offerta da cauchy
 
 \subsection*{2.}
 How many iterations does the SD method take to minimize the function $f$
