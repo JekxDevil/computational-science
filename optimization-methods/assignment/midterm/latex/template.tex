@@ -78,6 +78,7 @@ and the starting point for the SD algorithm is $x_0 = x_m + v$.
 \subsection*{1.}
 Prove that the gradient at $x_0$ is $\nabla f(x_0) = \lambda v$. \\
 
+\begin{proof}
 Recall that for eigenvalue $\lambda$ and eigenvector $v$ of matrix $A$,
 we have the following property $Av = \lambda v$ (1).
 Moreover, for minimizer $x_m$ of quadratic function $f$ 
@@ -88,9 +89,11 @@ Then:
     \nabla f(x) &= Ax - b \\
     \nabla f(x_0) &= A(x_m + v) - b \\
     &= Ax_m + Av - b \\
+    &= Ax_m - b + Av  \\
     &\overset{(2)}{=} Av \\
     &\overset{(1)}{=} \lambda v
 }
+\end{proof}
 
 % alpha opt = 1/lambda
 % se ti muovi lungo autovettore, converge in un sola iterata
@@ -177,25 +180,35 @@ which correspond to the number of different elements in the diagonal of the matr
 \subsection*{2.}
 Implement the CG method (CG.m).\\
 
-
-
 Matlab scripts are provided in \textit{/code} folder.
-The main file to run is \textit{CG.m}.
-It handles both computations and visualization of the Rosenbrock's function.
+Inside you will find the \textit{CG.m} implementation.
 
 \subsection*{3.}
-Construct a right-hand side $b = rand(10,1)$ and apply the Conjugate Gradient method to solve the
-system for each $A$.
+Construct a right-hand side $b = rand(10,1)$ 
+and apply the Conjugate Gradient method to solve the system for each $A$.\\
+
+The main file to run is \textit{ex3.m}, which uses the \textit{CG.m} implementation.
+It handles the computation of the Conjugate Gradient to the previously defined matrices.
 
 \subsection*{4.}
 Compute the logarithm energy norm of the error (i.e. $log((x - x^*)^T A(x - x^*))$)
-for each matrix and plot it with respect to the number of iteration.
+for each matrix and plot it with respect to the number of iteration.\\
+
+The same main file \textit{ex3.m} handles the visualization of the logarithm energy norm 
+of the error.
+Figures %ref ref
 
 \subsection*{5.}
 Comment on the convergence of the method for the different matrices.
 What can you say observing the number of iterations obtained
-and the number of clusters of the eigenvalues of the related matrix?
+and the number of clusters of the eigenvalues of the related matrix?\\
 
+The convergence of the method is directly related to the number of distinct eigenvalues
+and their distribution in the matrix $A$.
+Uniform distribution of the eigenvalues in the matrix $A$ leads to a balanced convergence
+while a skewed distribution leads to a potentially slower or higher convergence,
+dependent on the starting point and how many clusters of eigenvalues are there.
+Figure %ref ref
 
 % EXERCISE 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Exercise 4}
