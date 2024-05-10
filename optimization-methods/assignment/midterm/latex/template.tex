@@ -208,7 +208,7 @@ is an increasing function with. $\tau \in [0, 1]$.
 \begin{proof}
     Let's define $\phi(\tau) = \norm{\tilde{p}(\tau)}$.
     By computing $\frac{\partial \phi}{\partial \tau}$,
-    since $\norm{p^U}$ is a positive constant,
+    since $\norm{p^U}$ is positive,
     the derivative is always positive and the function is monotonically increasing.
 
     \myex{false}{eq:ex4-3-1}{
@@ -263,9 +263,10 @@ $\tau \in [1, 2]$.
     why we have the scalar $\frac{1}{2}$ in $\phi(\alpha)$.
     Remember $B$ is SPD.
     Afterwards, we compute $\frac{\partial \phi}{\partial \alpha}$
-    and then prove $\left( p^U \right)^T \left( p^B - p^U \right) \geq 0$
-    using the Cauchy-Schwarz inequality
-    to show that $\phi$ is monotonically increasing.
+    and then prove $\left( p^U \right)^T \left( p^B - p^U \right) \geq 0$.
+    To do so, we use the Cauchy-Schwarz inequality and exploit the $B$ matrix SPD properties,
+    raising it to the square root to easy the computation of the norm of $u, v$ variables.
+    Finally, this concludes the proof to show that $\phi$ is monotonically increasing.
 
 
     \myex{false}{eq:ex4-3-3}{
@@ -291,9 +292,13 @@ $\tau \in [1, 2]$.
         \cdot \left( 1 - \frac{\norm{g}^4}{
             \left( g^T B g \right) \left( g^T B^{-1} g \right)
         } \right) \\
-        \text{let } u = B^{-1} g, v = B g
+        \text{let } u = B^{- \frac{1}{2}} g, v = B^{\frac{1}{2}} g
         &\Rightarrow \abs{u^T v}^2 \leq \norm{u}^2 \cdot \norm{v}^2 \\
-        &\Rightarrow \abs{g^T B^{-1} B g}^2 \leq \norm{B^{-1} g}^2 \cdot \norm{B g}^2 \\
+        &\Rightarrow \abs{g^T B^{- \frac{1}{2}} B^{\frac{1}{2}} g}^2
+        \leq \norm{B^{- \frac{1}{2}} g}^2 \cdot \norm{B^{\frac{1}{2}} g}^2 \\
+        &\Rightarrow \abs{g^T g}^2
+        \leq \left( g^T B^{- \frac{1}{2}} B^{- \frac{1}{2}} g \right)
+        \left( g^T B^{\frac{1}{2}} B^{\frac{1}{2}} g \right) \\
         &\Rightarrow \norm{g}^4 \leq \left( g^T B^{-1} g \right) \left( g^T B g \right) \\
         &\Rightarrow \frac{\norm{g}^4}{
             \left( g^T B g \right) \left( g^T B^{-1} g \right)
@@ -303,13 +308,60 @@ $\tau \in [1, 2]$.
         } \geq 0
     }
 
+    thus, $\phi(\tau)$ is an increasing function with $\tau \in [1, 2]$.
 \end{proof}
 
 \noindent Lastly, let's prove that $m(\tilde{p}(\tau))$ is a decreasing function with
 $\tau \in [1, 2]$.
 
 \begin{proof}
-    the proof
+    Let's define again $\alpha = \tau - 1$, for $m(\tilde{p}(\alpha))$
+    with $\alpha \in [0, 1]$.
+
+    \myex{false}{eq:ex4-3-4}{
+    \phi(\alpha) &= m(\tilde{p}(\alpha)) \\
+    &= f + g^T \tilde{p}(\alpha) + \frac{1}{2} \tilde{p}(\alpha)^T B \tilde{p}(\alpha) \\
+    &= f + g^T \left[ p^U + \alpha \left( p^B - p^U \right) \right]
+    + \frac{1}{2} \left[ p^U + \alpha \left( p^B - p^U \right) \right]^T B
+    \left[ p^U + \alpha \left( p^B - p^U \right) \right] \\
+    &= f + g^T p^U + \alpha g^T \left( p^B - p^U \right)
+    + \frac{1}{2} \left( p^U + \alpha p^B - \alpha p^U \right) B
+    \left( p^U + \alpha p^B - \alpha p^U \right) \\
+    &= f + g^T p^U + \alpha g^T \left( p^B - p^U \right)
+    + \frac{1}{2} [
+        (p^U)^T B p^U + \alpha (p^U)^T B p^B - \alpha (p^U)^T B p^U + \alpha (p^B)^T B p^U \\
+        &+ \alpha^2 (p^B)^T B p^B - \alpha^2 (p^B)^T B p^U - \alpha (p^U)^T B p^U
+        - \alpha^2 (p^U)^T p^B + \alpha^2 (p^U)^T B p^U
+    ] \\
+    &= f + g^T p^U + \alpha g^T \left( p^B - p^U \right)
+    + \frac{1}{2} (
+    \alpha^2 \left[ (p^B)^T B p^B - (p^B)^T B p^U - (p^U)^T B p^B + (p^U)^T B p^U \right] \\
+    &+ \alpha \left[ (p^U)^T B p^B - (p^U)^T B p^U + (p^B)^T B p^U - (p^U)^T B p^U \right]
+    + (p^U)^T B p^U
+    ) \\
+    &= f + g^T p^U + \alpha g^T \left( p^B - p^U \right)
+    +
+    \frac{\alpha^2}{2} \left[ (p^B)^T B p^B + (p^U)^T B p^U - 2 (p^B)^T B p^U \right] \\
+    &+ \alpha \left[ (p^U)^T B p^B - (p^U)^T B p^U \right]
+    + (p^U)^T B p^U \\
+    \frac{\partial \phi}{\partial \alpha}
+    &= g^T \left( p^B - p^U \right)
+    + \alpha \left[ (p^B)^T B p^B + (p^U)^T B p^U - 2 (p^B)^T B p^U \right]
+    + \left[ (p^U)^T B p^B - (p^U)^T B p^U \right] \\
+    &= g^T p^B - g^T p^U + \left[ (p^B)^T B p^U - (p^U)^T B p^U \right]
+    + \alpha \left[ (p^B)^T B p^B - (p^U)^T B p^B + (p^U)^T B p^U - (p^B)^T B p^U \right] \\
+    &= (p^B)^T g - (p^U)^T g + (p^B)^T B p^U - (p^U)^T B p^U
+    + \alpha \left[ (p^B)^T B p^B - (p^U)^T B p^B + (p^U)^T B p^U - (p^B)^T B p^U \right] \\
+    &= \left( p^B - p^U \right)^T \left(g + B p^U \right)
+    + \alpha \left( p^B - p^U \right) B \left( p^B - p^U \right) \\
+    \frac{\partial \phi}{\partial \alpha}
+    &\leq \left( p^B - p^U \right)^T \left( g + B p^U + B \left( p^B - p^U \right) \right) \\
+    &= \left( p^B - p^U \right)^T \left( g + B p^B \right) \\
+    &= \left( p^B - p^U \right)^T \left[ g + B \left( - B^{-1} g \right) \right] =
+    \left( p^B - p^U \right)^T \cdot \left( g - g \right) = 0
+    }
+
+    thus, $m(\tilde{p}(\tau))$ is a decreasing function with $\tau \in [1, 2]$.
 \end{proof}
 
 \end{document}
