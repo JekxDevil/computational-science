@@ -11,6 +11,7 @@
 \usepackage{booktabs}
 \usepackage{amsthm} % math theorems
 \usepackage{ifthen}
+\usepackage{physics} % responsive norm, abs, ...
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -196,49 +197,119 @@ Recalling:
 
 \myex{false}{eq:dogleg-path}{
     \tilde{p}(\tau) = \begin{cases}
-        \tau p^U & 0 \leq \tau \leq 1 \\
-        p^U + (\tau - 1)(p^B - p^U) & 1 \leq \tau \leq 2 \\
+        \tau p^U                                              & 0 \leq \tau \leq 1 \\
+        p^U + \left( \tau - 1 \right) \left(p^B - p^U \right) & 1 \leq \tau \leq 2 \\
     \end{cases}
 }
 
-\noindent First, let's prove that $|| \tilde{p}(\tau) ||$ is an increasing function of 
-$\tau \in [0, 1]$.
+\noindent First, let's prove that $\norm{\tilde{p}(\tau)}$
+is an increasing function with. $\tau \in [0, 1]$.
 
 \begin{proof}
-    We have that $|| \tilde{p}(\tau) || = || \tau p^U || = \tau || p^U ||$.
-    Since $|| p^U ||$ is a positive constant, 
-    then $|| \tilde{p}(\tau) ||$ is an increasing function of $\tau$.
-    Moreover, 
+    Let's define $\phi(\tau) = \norm{\tilde{p}(\tau)}$.
+    By computing $\frac{\partial \phi}{\partial \tau}$,
+    since $\norm{p^U}$ is a positive constant,
+    the derivative is always positive and the function is monotonically increasing.
 
     \myex{false}{eq:ex4-3-1}{
-        \phi(\tau) &= || \tilde{p}(\tau) || = \tau || p^U || \\
-        \frac{\partial \phi}{\partial \tau} &= || p^U || \geq 0
+        \phi(\tau) &= \norm{\tilde{p}(\tau)}
+        = \abs{\tau} \cdot \norm{p^U}
+        = \tau \norm{p^U} \\
+        \frac{\partial \phi}{\partial \tau} &= \norm{p^U} \geq 0
     }
 
-    thus, $\phi(\tau)$ is an increasing function of $\tau$.
+    thus, $\phi(\tau)$ is an increasing function with $\tau \in [0, 1]$.
 \end{proof}
 
-\noindent Second, let's prove that $m(\tilde{p}(\tau))$ is a decreasing function of
+\noindent Second, let's prove that $m(\tilde{p}(\tau))$ is a decreasing function with
 $\tau \in [0, 1]$.
 
 \begin{proof}
+    Let's expand the function $m(\tilde{p}(\tau))$.
+    After computing its $\frac{\partial m}{\partial \tau}$,
+    we expand $p^U$ by its definition and simplify the expression.
+    Remember $B$ is SPD.
+    At the end, since $\tau \in [0, 1]$, the expression $(\tau - 1) \leq 0$,
+    thus the function is monotonically decreasing.
+
     \myex{false}{eq:ex4-3-2}{
-        m(\tilde{p}(\tau)) &= f + \tau g^T p^U + \frac{1}{2} \tau^2 p^{UT} B p^U \\
-        \frac{\partial m}{\partial \tau} &= \underbrace{g^T p^U}_{\leq 0} 
-        + \underbrace{\tau p^{UT} B p^U}_{\geq 0}
-        \leq \tau p^{UT} B p^U
-        \leq 0
+        m(\tilde{p}(\tau))
+        &= f + g^T \tilde{p}(\tau) + \frac{1}{2} \tilde{p}(\tau)^T B \tilde{p}(\tau) \\
+        &= f + \tau g^T p^U + \frac{1}{2} \tau^2 (p^U)^T B p^U \\
+        \frac{\partial m}{\partial \tau} &= g^T p^U + \tau (p^U)^T B p^U \\
+        &= g^T \cdot \left( - \frac{g^T g}{g^T B g} g \right)
+        + \tau \left( - \frac{g^T g}{g^T B g} g \right)^T B \left( - \frac{g^T g}{g^T B g} g \right) \\
+        &= g^T \cdot \left( - \frac{\norm{g}^2}{g^T B g} g \right)
+        + \tau \left( - \frac{\norm{g}^2}{g^T B g} g \right)^T B \left( - \frac{\norm{g}^2}{g^T B g} g \right) \\
+        &= - \frac{\norm{g}^4}{g^T B g} +\tau \frac{\norm{g}^4}{(g^T B g)^2} g^T B g \\
+        &= - \frac{\norm{g}^4}{g^T B g} +\tau \frac{\norm{g}^4}{g^T B g} \\
+        &= \underbrace{\left( \tau - 1 \right)}_{\leq 0}
+        \underbrace{\frac{\norm{g}^4}{g^T B g}}_{\geq 0} \leq 0 \\
     }
-    thus, $m(\tilde{p}(\tau))$ is a decreasing function of $\tau$.
+
+    thus, $m(\tilde{p}(\tau))$ is a decreasing function with $\tau \in [0, 1]$.
 \end{proof}
 
 
-\noindent Third, let's prove that $|| \tilde{p}(\tau) ||$ is an increasing function of 
+\noindent Third, let's prove that $\norm{\tilde{p}(\tau)}$ is an increasing function with
 $\tau \in [1, 2]$.
 
+\begin{proof}{}
+    Let's define $\alpha = \tau - 1$,
+    and $\phi(\alpha) = \frac{1}{2} \norm{\tilde{p}(\alpha)}^2$ with $\alpha \in [0, 1]$.
+    Inside $\phi(\alpha)$ we defined the squared norm $\norm{\cdot}^2$
+    to delete the square root from the calculations.
+    Then, simplify the expression by collecting using the square of sum which is the reason
+    why we have the scalar $\frac{1}{2}$ in $\phi(\alpha)$.
+    Remember $B$ is SPD.
+    Afterwards, we compute $\frac{\partial \phi}{\partial \alpha}$
+    and then prove $\left( p^U \right)^T \left( p^B - p^U \right) \geq 0$
+    using the Cauchy-Schwarz inequality
+    to show that $\phi$ is monotonically increasing.
 
 
-\noindent Lastly, let's prove that $m(\tilde{p}(\tau))$ is a decreasing function of
+    \myex{false}{eq:ex4-3-3}{
+        \phi(\alpha) &= \frac{1}{2} \norm{\tilde{p}(\alpha)}^2 \\
+        &= \frac{1}{2} \norm{p^U + \alpha \left( p^B - p^U \right)}^2 \\
+        &= \frac{1}{2} \norm{p^U}^2 + \alpha \left( p^U \right)^T \left( p^B - p^U \right)
+        + \frac{1}{2} \alpha^2 \norm{p^B - p^U}^2 \\
+        \frac{\partial \phi}{\partial \alpha}
+        &= \left( p^U \right)^T \left( p^B - p^U \right)
+        + \underbrace{\alpha \norm{p^B - p^U}^2}_{\geq 0} \\
+        &\geq \left( p^U \right)^T \left( p^B - p^U \right) \\
+        \left( p^U \right)^T \left( p^B - p^U \right)
+        &= - \left( p^U \right)^T \left( p^U - p^B \right) \\
+        &=  \frac{g^T g}{g^T B g} g^T
+        \cdot \left[ \left( - \frac{g^T g}{g^T B g} g \right)
+            - \left( - B^{-1} g \right) \right] \\
+        &= \frac{\norm{g}^2}{g^T B g} g^T
+        \cdot  \left( B^{-1} g
+        - \frac{\norm{g}^2}{g^T B g} g \right) \\
+        &= \frac{\norm{g}^2}{g^T B g} g^T B^{-1} g
+        \cdot  \left( 1 - \frac{\norm{g}^2}{g^T B g B^{-1} g} g \right) \\
+        &= \underbrace{\frac{\norm{g}^2}{g^T B g} g^T B^{-1} g}_{\geq 0}
+        \cdot \left( 1 - \frac{\norm{g}^4}{
+            \left( g^T B g \right) \left( g^T B^{-1} g \right)
+        } \right) \\
+        \text{let } u = B^{-1} g, v = B g
+        &\Rightarrow \abs{u^T v}^2 \leq \norm{u}^2 \cdot \norm{v}^2 \\
+        &\Rightarrow \abs{g^T B^{-1} B g}^2 \leq \norm{B^{-1} g}^2 \cdot \norm{B g}^2 \\
+        &\Rightarrow \norm{g}^4 \leq \left( g^T B^{-1} g \right) \left( g^T B g \right) \\
+        &\Rightarrow \frac{\norm{g}^4}{
+            \left( g^T B g \right) \left( g^T B^{-1} g \right)
+        } \leq 1 \\
+        &\Rightarrow 1 - \frac{\norm{g}^4}{
+            \left( g^T B g \right) \left( g^T B^{-1} g \right)
+        } \geq 0
+    }
+
+\end{proof}
+
+\noindent Lastly, let's prove that $m(\tilde{p}(\tau))$ is a decreasing function with
 $\tau \in [1, 2]$.
+
+\begin{proof}
+    the proof
+\end{proof}
 
 \end{document}
