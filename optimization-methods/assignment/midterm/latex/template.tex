@@ -79,20 +79,20 @@ and the starting point for the SD algorithm is $x_0 = x_m + v$.
 Prove that the gradient at $x_0$ is $\nabla f(x_0) = \lambda v$. \\
 
 \begin{proof}
-Recall that for eigenvalue $\lambda$ and eigenvector $v$ of matrix $A$,
-we have the following property $Av = \lambda v$ (1).
-Moreover, for minimizer $x_m$ of quadratic function $f$ 
-holds $\nabla f(x_m) = Ax_m - b = 0$ (2).
-Then:
+    Recall that for eigenvalue $\lambda$ and eigenvector $v$ of matrix $A$,
+    we have the following property $Av = \lambda v$ (1).
+    Moreover, for minimizer $x_m$ of quadratic function $f$
+    holds $\nabla f(x_m) = Ax_m - b = 0$ (2).
+    Then:
 
-\myex{false}{eq:ex1-1}{
-    \nabla f(x) &= Ax - b \\
-    \nabla f(x_0) &= A(x_m + v) - b \\
-    &= Ax_m + Av - b \\
-    &= Ax_m - b + Av  \\
-    &\overset{(2)}{=} Av \\
-    &\overset{(1)}{=} \lambda v
-}
+    \myex{false}{eq:ex1-1}{
+        \nabla f(x) &= Ax - b \\
+        \nabla f(x_0) &= A(x_m + v) - b \\
+        &= Ax_m + Av - b \\
+        &= Ax_m - b + Av  \\
+        &\overset{(2)}{=} Av \\
+        &\overset{(1)}{=} \lambda v
+    }
 \end{proof}
 
 % alpha opt = 1/lambda
@@ -104,10 +104,66 @@ How many iterations does the SD method take to minimize the function $f$
 if we use the optimal step length?
 Show the computations behind your reasoning.\\
 
+It will converge in a single iteration for quadratic function $f$, with $x_0 = x_m + v$
+where $x_m$ is the function minimizer
+and $v$ being an eigenvector with associated eigenvalue $\lambda$.
 
-Matlab scripts are provided in \textit{/code} folder.
-The 2 main files to run are: \textit{GD.m, Newton.m}.
-They handle both computations and visualization of the Rosenbrock's function with the corresponding methods.
+\begin{proof}
+    Recalling the definition of optimal step length $\alpha_{opt}$ for quadratic functions:
+
+    \myex{false}{eq:ex1-alpha-opt}{
+        \alpha_{opt} = \left(
+        \frac{\nabla f_k^T \nabla f_k}{\nabla f_k^T A \nabla f_k}
+        \right)
+    }
+
+    and the Steepest Descent iteration defintion of subsequent points $ \left\{ x_k \right\} $:
+
+    \myex{false}{ex1-sd-x}{
+        x_{k+1} = x_k - \alpha_k \nabla f_k
+    }
+
+    We compute $x_1$:
+
+    \myex{false}{eq:ex1-proof}{
+        x_1 &= x_0 - \alpha_{opt} \nabla f_0
+        = x_m + v - \frac{\nabla f_0^T \nabla f_0}{\nabla f_0^T A \nabla f_0} \nabla f_0 \\
+        &\overset{1.1}{=} x_m + v - \frac{
+            \left( \lambda v \right)^T \left( \lambda v \right)
+        }{
+            \left( \lambda v \right)^T A \left( \lambda v \right)
+        } \lambda v
+        = x_m + v - \frac{
+            \lambda^2 v^T v
+        }{
+            \lambda^2 v^T A v
+        } \lambda v
+        = x_m + v - \frac{
+            \norm{v}^2
+        }{
+            v^T A v
+        } \lambda v \\
+        &\overset{(1)}{=} x_m + v - \frac{
+            \norm{v}^2
+        }{
+            v^T \lambda v
+        } \lambda v
+        = x_m + v - \frac{
+            \norm{v}^2
+        }{
+            \lambda \norm{v}^2
+        } \lambda v
+        = x_m + v - \frac{1}{\lambda} \lambda v
+        = x_m + v - v \\
+        &= x_m
+    }
+
+    Where $x_m$ is the minimizer of the function $f$, thus the Steepest Descent method
+    converges in the first single iteration exploiting the eigenvector $v$,
+    hence moving along its direction,
+    and using the optimal step length $\alpha_{opt}$.
+\end{proof}
+
 
 \clearpage
 
@@ -184,7 +240,7 @@ Matlab scripts are provided in \textit{/code} folder.
 Inside you will find the \textit{CG.m} implementation.
 
 \subsection*{3.}
-Construct a right-hand side $b = rand(10,1)$ 
+Construct a right-hand side $b = rand(10,1)$
 and apply the Conjugate Gradient method to solve the system for each $A$.\\
 
 The main file to run is \textit{ex3.m}, which uses the \textit{CG.m} implementation.
@@ -194,7 +250,7 @@ It handles the computation of the Conjugate Gradient to the previously defined m
 Compute the logarithm energy norm of the error (i.e. $log((x - x^*)^T A(x - x^*))$)
 for each matrix and plot it with respect to the number of iteration.\\
 
-The same main file \textit{ex3.m} handles the visualization of the logarithm energy norm 
+The same main file \textit{ex3.m} handles the visualization of the logarithm energy norm
 of the error.
 Figures %ref ref
 
