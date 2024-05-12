@@ -53,10 +53,10 @@
 \newcommand{\DrawBox}[1]{%
   \begin{tikzpicture}[overlay,remember picture]
     \draw[->, shorten >=5pt, shorten <=5pt, out=70, in=130, distance=0.5cm, #1] 
-    (MarkA.south) .. controls +(down:15mm) .. (MarkB.east);
+    (MarkA.south) .. controls +(down:17mm) .. (MarkB.east);
 
     \draw[->, shorten >=5pt, shorten <=5pt, out=70, in=130, distance=0.5cm, #1] 
-    (MarkA.south) .. controls +(down:17mm) .. (MarkC.east);
+    (MarkA.south) .. controls +(down:15mm) .. (MarkC.east);
   \end{tikzpicture}
 }
 
@@ -283,23 +283,36 @@ Consider the following theorem:
     in Formula \ref{eq:ex2-alphak}, \ref{eq:ex2-sigma}:
 
     \myex{false}{eq:ex2-comparison}{
-    \alpha_k
-    \overset{(\ref{eq:ex2-alphak})}{=}
-    \frac{\overbrace{- r_k^T p_k}^{\tikzmark{MarkB}}}{p_k^T A p_k}
-    = \frac{- p_k^T r_k}{p_k^T A p_k}
-    \overset{(\ref{eq:ex2-conjugacy-pkrk})}{=}
+    \sigma_k
+    \overset{(\ref{eq:ex2-sigma})}{=}
     \frac{
     \overbrace{p_k^T A \left( x^* - x_0 \right)}^{\tikzmark{MarkC}}
     }{
     p_k^T A p_k
     }
-    \overset{(\ref{eq:ex2-sigma})}{=}
-    \sigma_k
+    \overset{(\ref{eq:ex2-conjugacy-pkrk})}{=}
+    \frac{- p_k^T r_k}{p_k^T A p_k}
+    = 
+    \frac{\overbrace{- r_k^T p_k}^{\tikzmark{MarkB}}}{p_k^T A p_k}
+    \overset{(\ref{eq:ex2-alphak})}{=}
+    \alpha_k
     \DrawBox{black}
     }
 
     we conclude that $\sigma_k = \alpha_k$, giving the result to prove the theorem
     of convergence in at most $n$ steps, with $A \in \mathbb{R}^{n \times n}$ being SPD.
+
+    \myex{false}{eq:ex2-conclusion}{
+        x^* - x_0 
+        &= 
+        \sum_{k=0}^{n-1} \sigma_k p_k
+        = 
+        \sum_{k=0}^{n-1} \alpha_k p_k
+        \\
+        x^* 
+        &= 
+        x_0 + \sum_{k=0}^{n-1} \alpha_k p_k
+    }
 \end{proof}
 
 % \begin{table*}[h]
