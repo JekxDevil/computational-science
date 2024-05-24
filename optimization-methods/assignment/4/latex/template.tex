@@ -1,0 +1,136 @@
+\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany, draft]{scrartcl}
+
+% Required package
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{matlab-prettifier}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{amsthm} % math theorems
+\usepackage{ifthen}
+\usepackage{physics} % responsive norm, abs, ...
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+% 1: command name, 2: Title, 3: subtitle, 4: label, 5: content
+\newcommand{\mytheorem}[5]{\newtheorem*{#1}{#2} \begin{#1}[#3]\label{#4} #5 \end{#1}}
+
+% 1: if numbered equation, 2: label, 3: content
+\newcommand{\myex}[3]{
+    \ifthenelse{\equal{#1}{true}}{
+        \begin{equation} \label{#2} \begin{aligned} #3 \end{aligned} \end{equation}
+    }{
+        \begin{equation*} \label{#2} \begin{aligned} #3 \end{aligned} \end{equation*}
+    }
+}
+
+% vector shortcut
+\newcommand{\myvec}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+
+% 1: caption, 2: label, 3: trim, 4: figure within figures folder
+\newcommand{\myfigure}[4]{
+    \begin{figure}[htbp]
+    \centering
+    \caption{#1}
+    \label{#2}
+    \includegraphics[width=\paperwidth, trim=#3]{./figures/#4}
+    \end{figure}
+}
+
+\input{assignment.sty}
+\begin{document}
+
+\setassignment
+\setduedate{Monday, 3 June 2024, 12:00 AM}
+
+\serieheader
+{Optimization Methods}
+{2024}
+{\textbf{Student:} Jeferson Morales Mariciano \\\\}
+{\textbf{Discussed with:} }
+{Assignment 4}{}
+\newline
+
+%----------------------------------------------------------------------------------
+\section{Exercise (20/100)}
+
+Consider the quadratic function \( f: \mathbb{R}^2 \rightarrow \mathbb{R} \) defined as:
+
+\myex{true}{eq:ex1-f}{
+    f(\mathbf{x}) = 7 x^2 + 4 xy + y^2
+}
+
+where \( \mathbf{x} = (x, y)^T \).
+
+\begin{enumerate}
+    \item Write this function in canonical form, i.e. 
+    \( f( \mathbf{x} ) = \frac{1}{2} \mathbf{x}^T \mathbf{A} \mathbf{x} + \mathbf{b}^T \mathbf{x} + c \),
+    where \( A \) is a symmetric matrix.
+
+    \item Descrive briefly how th Conjugate Gradient (CG) Method works 
+    and discuss whether it is suitable to minimize \( f \) from equation \ref{eq:ex1-f}.
+    Explain your reasoning in detail (max. 30 lines).
+\end{enumerate}
+
+
+
+%----------------------------------------------------------------------------------
+\section{Exercise (20/100)}
+
+Consider the following constrained minimization problem for \( \mathbf{x} = (x, y, z)^T \)
+
+\myex{true}{eq:ex2-min-f}{
+    &\min_{\mathbf{x}} f(\mathbf{x}) := -3x^2 + y^2 + 2z^2 + 2(x + y + z) \\
+    &\text{subject to} \quad c(\mathbf{x}) = x^2 + y^2 + z^2 - 1 = 0
+}
+
+Write down the Lagrangian function and derive th KKT conditions for \ref{eq:ex2-min-f}
+
+
+
+
+%----------------------------------------------------------------------------------
+\section{Exercise (60/100)}
+
+\begin{enumerate}
+    \item Read the chapter on Simplex method, in particular the section 13.3 The Simplex Method, 
+    in Numerical Optimization, Nocedal and Wright. 
+    Explain how the method works, with a particular attention to the search direction.
+
+    \item Consider the following contrained minimization problem,
+    \( \mathbf{x} = (x_1, x_2)^T \);
+
+    \myex{true}{eq:ex3-min-f}{
+        \min_{\mathbf{x}} f(\mathbf{x}) := 4x_1 + 3x_2
+    }
+
+    subect to:
+
+    \myex{true}{eq:ex3-constraints}{
+        6 - 2x_1 - 3x_2 \geq 0 \\
+        3 + 3x_1 - 2x_2 \geq 0 \\
+        5 - 2x_2 \geq 0 \\
+        4 - 2x_1 - x_2 \geq 0 \\
+        x_2 \geq 0 \\
+        x_1 \geq 0 \\
+    }
+
+    \begin{enumerate}
+        \item Sketch the feasible region for this problem.
+
+        \item Which are the basic feasible points of the problem \ref{eq:ex3-min-f}? 
+        Compute them by hand using the geometrical interpretation 
+        and find the optimal point \( \mathbf{x^*} \) 
+        that minimizes \( f \) subject to the constraints.
+
+        \item Prove that the first order necessary conditions holds for the optimal point.
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
