@@ -9,9 +9,6 @@ A2 = diag(ones(1,10));
 A3 = diag([1, 1, 1, 3, 4, 5, 5, 5, 10, 10]);
 A4 = diag([1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0]);
 
-% Step 2: Compute the eigenvalues
-eigenvalues = eig(A3);
-
 % Extract only the real parts of the eigenvalues
 real_parts = real(eigenvalues);
 
@@ -101,9 +98,8 @@ for i=1:size(eigenvalues,1)
 end
 yidx = find(abs(y)==min(abs(y)));
 %idx = 
-scatter3(real_parts, zeros(size(real_parts)), log_det(), 100, 'r', 'filled');
+scatter3(real_parts, zeros(size(real_parts)), log_det(yidx(1), xidx), 100, 'r', 'filled');
 legend('Surface', 'Real Eigenvalues', 'Location', 'Best');
-
 
 % compute and print unique eigenvalues
 myl = {A1, A2, A3, A4};
@@ -119,6 +115,7 @@ b = rand(10,1);
 mysolutions = zeros(length(b),1);
 myresiduals = cell(size(myl));
 myvecxs = cell(size(myl));
+
 for i = 1:numel(myl)
     guess = ones(length(b), 1);
     [mysolutions(:,i), myresiduals{i}, myvecxs{i}] = CG(myl{i}, b, guess, 50000, 1e-7);

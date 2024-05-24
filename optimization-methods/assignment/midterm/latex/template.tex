@@ -12,6 +12,9 @@
 \usepackage{amsthm} % math theorems
 \usepackage{ifthen}
 \usepackage{physics} % responsive norm, abs, ...
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -373,7 +376,31 @@ for each matrix and plot it with respect to the number of iteration.\\
 
 The same main file \textit{ex3.m} handles the visualization of the logarithm energy norm
 of the error.
-Figures %ref ref
+
+\begin{figure}[htbp]
+\centering
+\caption{error of A1}
+\includegraphics[width=0.7\textwidth, trim={0cm 0cm 0cm 0cm}]{./figures/ex3-a1.eps}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\caption{error of A2, (convergence in 1 iteration in log scale)}
+\includegraphics[width=0.7\textwidth, trim={0cm 0cm 0cm 0cm}]{./figures/ex3-a2.eps}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\caption{error of A3}
+\includegraphics[width=0.7\textwidth, trim={0cm 0cm 0cm 0cm}]{./figures/ex3-a3.eps}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\caption{error of A4}
+\includegraphics[width=0.7\textwidth, trim={0cm 0cm 0cm 0cm}]{./figures/ex3-a4.eps}
+\end{figure}
+
 
 \subsection*{5.}
 Comment on the convergence of the method for the different matrices.
@@ -385,7 +412,10 @@ and their distribution in the matrix $A$.
 Uniform distribution of the eigenvalues in the matrix $A$ leads to a balanced convergence
 while a skewed distribution leads to a potentially slower or higher convergence,
 dependent on the starting point and how many clusters of eigenvalues are there.
-Figure %ref ref
+
+The convergence of the matrices are related to the distribution and the number of their 
+eigenvalues.
+All convergence in less than $n$ iterations as expected by the conjugate gradient method. 
 
 \clearpage
 % EXERCISE 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -396,8 +426,143 @@ Nocedal and Wright.
 \subsection*{1.}
 Explain  Cauchy point method and Dogleg method, as well as the connection between them.
 
+Starting with the Cauchy Point method,
+from the analogy of the globally convergence of linear search methods
+even when the optimal step length was not choosen, 
+we have a similar situation in Trust Region methods.
+The Cauche Point described in Algorithm \ref{eq:cauchy-point} is inexpensive to calculate 
+because no matrix factorization is required
+although is of crucial important to understand if an approximate solution of the trus region 
+subproblem $p_k$ is acceptable.
+Specifically, the Cauchy Point method will be globally convergent if its steps $p_k$ 
+give a reduction in the model $m_m$ that is at least some fixed positive multiple of the
+decrease attained by the Cauchy step.
+
+\begin{figure}[htbp]
+\centering
+\caption{Dogleg schema}
+\label{fig:dogleg-schema}
+\includegraphics[width=\textwidth, trim={0cm 0cm 0cm 0cm}]{./figures/dogleg-schema.png}
+\end{figure}
+
+Regarding the Dogleg method, Figure \ref{fig:dogleg-schema} shows how more sophisticated approach 
+is to the Trust Region problem.
+The dogleg method finds an approximate solution by rplacing the curved trajectory for $p(\Delta)$
+with a path consisting of two line segments as described in Algorithm \ref{alg:dogleg}.
+The first line segment runs from the origin to the minimizer of $m$ along the steepest descent direction $p^U$.
+While the second line segment runs from $p^U$ to $p^B$.
+Such trajectory is described with as $\tilde{p}(\tau)$ in Equation \ref{eq:dogleg-path},
+where $\tau$ is a parameter that varies from 0 to 2 and choosen based on Algorithm \ref{alg:choose-tau}.
+
+The connection between the Cauchy Point and Dogleg methods is that the Dogleg method is a more sophisticated
+approach to the Trust Region problem, where the Cauchy Point method is a simpler and less expensive method
+to calculate the approximate solution of the Trust Region subproblem.
+
 \subsection*{2.}
 Write down the Trust-Region algorithm, along with Dogleg and Cauchy-point computations.
+
+% \begin{algorithm}
+% \KwData{$\hat{\Delta} > 0, 
+% \Delta_0 \in ( 0, \hat{\Delta} ), 
+% \eta \in [ 0, \frac{1}{4} )$}
+
+% %\KwResult{Write here the expected result}
+
+%  \For{$k = 0, 1, 2, \ldots$}
+% %   instructions\;
+% %   \eIf{condition}{
+% %    instructions1\;
+% %    instructions2\;
+% %    }{
+% %    instructions3\;
+% %   }
+%     \State asdf
+%   \EndFor
+ 
+% \end{algorithm}
+
+\begin{algorithm}
+\caption{Trust Region}\label{alg:trust-region}
+  \begin{algorithmic}[1]
+    \State $\hat{\Delta} > 0$: a set of authentic users
+    \State $\Delta_0 \in ( 0, \hat{\Delta} )$: a set of authentic users
+    \State $\eta \in [ 0, \frac{1}{4} )$: a set of authentic users
+
+    \For{$k = 0, 1, 2, \ldots$}
+        \State Obtain approximately of $p_k$ using either Cauchy Point or Dogleg method 
+        \State Evaluate $\rho_k$ from the ration between actual and predicted reduction
+
+        \If{$\rho_k < \frac{1}{4}$}
+            \State $\Delta_{k+1} = \frac{1}{4} \Delta_k$
+        \Else
+            \If{$\rho_k > \frac{3}{4}$ \textbf{and} $\norm{p_k} = \Delta_k$}
+                \State $\Delta_{k+1} = \min(2 \Delta_k, \hat{\Delta})$
+            \Else
+                \State $\Delta_{k+1} = \Delta_k$
+            \EndIf
+        \EndIf
+
+        \If{$\rho_k > \eta$}
+            \State $x_{k+1} = x_k + p_k$
+        \Else
+            \State $x_{k+1} = x_k$
+        \EndIf
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Cauchy Point method}\label{alg:cauchy-point}
+  \begin{algorithmic}[1]
+    \State $h$: hessian of the function
+    \State $g$: gradient of the function
+    \State $\Delta$: radius
+
+    \State $p_k^S = - \frac{\Delta}{\norm{g}} g$
+    \State $\tau = \begin{cases} 1 \qquad \text{if } g^T h g \leq 0 \\ \min \left( \norm{g}^3 / (\Delta g^T h g), 1 \right) \end{cases}$
+    \State $p_k^C = - \tau \frac{\Delta}{\norm{g}} g$
+  \end{algorithmic}
+\end{algorithm}
+
+Figure \ref{alg:dogleg} shows the Dogleg method algorithm, where the function $chooseTau$ is described in Algorithm \ref{alg:choose-tau}.
+The Newton step is choosen for $p^B$.
+
+\begin{algorithm}
+\caption{Dogleg method}\label{alg:dogleg}
+  \begin{algorithmic}[1]
+    \State $h$: hessian of the function
+    \State $g$: gradient of the function
+    \State $\Delta$: radius
+
+    \State $p^B = - h^{-1} g$
+
+    \If{$\norm{p^B} \leq \Delta$}
+        \State $p_k^D = p^B$
+        \State return
+    \EndIf
+
+    \State $p^U = - \frac{g^T g}{g^T h g} g$
+
+    \If{$\norm{p^U} \geq \Delta$}
+        \State $p_k^D = \frac{\Delta p^U}{\norm{p^U}}$
+        \State return
+    \EndIf
+
+    \State $p_k^D = p^U + $ chooseTau$(p^U, p^B, \Delta) \cdot (p^B - p^U)$
+  \end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+\caption{chooseTau}\label{alg:choose-tau}
+  \begin{algorithmic}[1]
+    \State Solve $\norm{p^U + \tau (p^N - p^U)}^2 = \Delta^2$
+    \Comment{Choose Tau such that $\norm{p}^2 = \Delta^2$}
+    \State $\tau = \max (\tau_1, \tau2)$
+  \end{algorithmic}
+\end{algorithm}
+
+\clearpage
 
 \subsection*{3.}
 Consider the following lemma (Lemma 4.2, page 75 Numerical optimization, Nocedal and Wright)
