@@ -66,18 +66,56 @@ Consider the quadratic function \( f: \mathbb{R}^2 \rightarrow \mathbb{R} \) def
     f(\mathbf{x}) = 7 x^2 + 4 xy + y^2
 }
 
-where \( \mathbf{x} = (x, y)^T \).
+\noindent where \( \mathbf{x} = (x, y)^T \).
 
 \begin{enumerate}
-    \item Write this function in canonical form, i.e. 
-    \( f( \mathbf{x} ) = \frac{1}{2} \mathbf{x}^T \mathbf{A} \mathbf{x} + \mathbf{b}^T \mathbf{x} + c \),
-    where \( A \) is a symmetric matrix.
+    \item Write this function in canonical form, i.e.
+          \( f( \mathbf{x} ) = \frac{1}{2} \mathbf{x}^T \mathbf{A} \mathbf{x} + \mathbf{b}^T \mathbf{x} + c \),
+          where \( A \) is a symmetric matrix.
 
-    \item Descrive briefly how th Conjugate Gradient (CG) Method works 
-    and discuss whether it is suitable to minimize \( f \) from equation \ref{eq:ex1-f}.
-    Explain your reasoning in detail (max. 30 lines).
+    \item Descrive briefly how the Conjugate Gradient (CG) Method works
+          and discuss whether it is suitable to minimize \( f \) from equation \ref{eq:ex1-f}.
+          Explain your reasoning in detail (max. 30 lines).
 \end{enumerate}
 
+\subsection{Answer}
+
+The function written in canonical form correspond to:
+
+\myex{false}{eq:ex1-f-quadratic}{
+    f( \mathbf{x} )
+    &= 7 x^2 + 4 xy + y^2 \\
+    &= \myvec{7x + 2y & 2x + y} \myvec{x \\ y} \\
+    &= \myvec{x & y} \myvec{7 & 2 \\ 2 & 1} \myvec{x \\ y} \\
+    &= \frac{1}{2} \myvec{x & y} \myvec{14 & 4 \\ 4 & 2} \myvec{x \\ y} \\
+    &= \frac{1}{2} \mathbf{x}^T \mathbf{A} \mathbf{x}
+}
+
+\noindent With \( \mathbf{b} = \mathbf{0}, \; c = 0 \),
+and \( A \) being clearly a symmetric matrix:
+
+\myex{false}{}{
+    \mathbf{A} = \myvec{14 & 4 \\ 4 & 2}
+}
+
+\noindent Let's verify if \( A \) is positive define as required by the quadratic form:
+
+\myex{false}{}{
+    \det \left( \lambda I - \mathbf{A} \right)
+    &= \mdet{\lambda - 14 & -4 \\ -4 & \lambda - 2} \\
+    &= \lambda^2 - 16 + 12 \\
+    &\Rightarrow \lambda_{1,2} = 8 \pm 2 \sqrt{13} > 0
+}
+
+\noindent Finally, since all eigenvalues are positive, \( \mathbf{A} \) is SPD.
+
+\subsection{Answer}
+
+The CG method is an algorithm to find the numerical solution of linear equation systems,
+with specific application to the minimization of quadratic functions
+whose Hessian matrix is symmetric and positive definite.
+
+The CG method is appropriate and effective for minimizing the quadratic function.
 
 
 %----------------------------------------------------------------------------------
@@ -90,7 +128,7 @@ Consider the following constrained minimization problem for \( \mathbf{x} = (x, 
     &\text{subject to} \quad c(\mathbf{x}) = x^2 + y^2 + z^2 - 1 = 0
 }
 
-Write down the Lagrangian function and derive th KKT conditions for \ref{eq:ex2-min-f}
+\noindent Write down the Lagrangian function and derive th KKT conditions for \ref{eq:ex2-min-f}
 
 
 
@@ -99,38 +137,38 @@ Write down the Lagrangian function and derive th KKT conditions for \ref{eq:ex2-
 \section{Exercise (60/100)}
 
 \begin{enumerate}
-    \item Read the chapter on Simplex method, in particular the section 13.3 The Simplex Method, 
-    in Numerical Optimization, Nocedal and Wright. 
-    Explain how the method works, with a particular attention to the search direction.
+    \item Read the chapter on Simplex method, in particular the section 13.3 The Simplex Method,
+          in Numerical Optimization, Nocedal and Wright.
+          Explain how the method works, with a particular attention to the search direction.
 
     \item Consider the following contrained minimization problem,
-    \( \mathbf{x} = (x_1, x_2)^T \);
+          \( \mathbf{x} = (x_1, x_2)^T \);
 
-    \myex{true}{eq:ex3-min-f}{
-        \min_{\mathbf{x}} f(\mathbf{x}) := 4x_1 + 3x_2
-    }
+          \myex{true}{eq:ex3-min-f}{
+              \min_{\mathbf{x}} f(\mathbf{x}) := 4x_1 + 3x_2
+          }
 
-    subect to:
+          subect to:
 
-    \myex{true}{eq:ex3-constraints}{
-        6 - 2x_1 - 3x_2 \geq 0 \\
-        3 + 3x_1 - 2x_2 \geq 0 \\
-        5 - 2x_2 \geq 0 \\
-        4 - 2x_1 - x_2 \geq 0 \\
-        x_2 \geq 0 \\
-        x_1 \geq 0 \\
-    }
+          \myex{true}{eq:ex3-constraints}{
+              6 - 2x_1 - 3x_2 \geq 0 \\
+              3 + 3x_1 - 2x_2 \geq 0 \\
+              5 - 2x_2 \geq 0 \\
+              4 - 2x_1 - x_2 \geq 0 \\
+              x_2 \geq 0 \\
+              x_1 \geq 0 \\
+          }
 
-    \begin{enumerate}
-        \item Sketch the feasible region for this problem.
+          \begin{enumerate}
+              \item Sketch the feasible region for this problem.
 
-        \item Which are the basic feasible points of the problem \ref{eq:ex3-min-f}? 
-        Compute them by hand using the geometrical interpretation 
-        and find the optimal point \( \mathbf{x^*} \) 
-        that minimizes \( f \) subject to the constraints.
+              \item Which are the basic feasible points of the problem \ref{eq:ex3-min-f}?
+                    Compute them by hand using the geometrical interpretation
+                    and find the optimal point \( \mathbf{x^*} \)
+                    that minimizes \( f \) subject to the constraints.
 
-        \item Prove that the first order necessary conditions holds for the optimal point.
-    \end{enumerate}
+              \item Prove that the first order necessary conditions holds for the optimal point.
+          \end{enumerate}
 \end{enumerate}
 
 \end{document}
