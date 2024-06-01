@@ -122,6 +122,8 @@ The CG method is appropriate and effective for minimizing the quadratic function
 
 
 %----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
 \section{Exercise (20/100)}
 
 Consider the following constrained minimization problem for \( \mathbf{x} = (x, y, z)^T \)
@@ -182,17 +184,39 @@ So, at a feasible point \( \mathbf{x} \), the inequality constraint \( i \in \ma
 is said to be active if \( c_i ( \mathbf{x} ) = 0 \)
 and inactive if the strict inequality \( c_i ( \mathbf{x} ) > 0 \) is satisfied.
 
+\noindent Assuming a single equality scenario,
+at the solution \( \mathbf{x}^* \),
+the constraint normal \( \nabla c_1 ( \mathbf{x}^* ) \) is parallel to
+\( \nabla f ( \mathbf{x}^* ) \), meaning that there is a scalar \( \lambda_1^* \)
+called Lagrangian multiplier such that:
+
+\myex{true}{eq:ex2-def-lagrangian-multiplier}{
+    \nabla f ( \mathbf{x}^* ) = \lambda_1^* \nabla c_1 ( \mathbf{x}^* )
+}
+
+\noindent Finally, the Langragian function:
+
+\myex{true}{eq:ex2-lagrangian}{
+    \mathcal{L} (\mathbf{x}, \lambda)
+    = f(\mathbf{x}) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i c_i(\mathbf{x})
+}
+
+\noindent If assuming a single equality constraint scenario,
+note that
+\( \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}, \lambda_1)
+= \nabla f( \mathbf{x} ) - \lambda_1 \nabla c_1 ( \mathbf{x} )\),
+allowing to write the condition (\ref{eq:ex2-def-lagrangian-multiplier})
+equivalently as follows: at the solution \( \mathbf{x}^*, \; \exists \; \lambda_1^* \):
+
+\myex{true}{eq:ex2-lagrangian-gradient-simple}{
+    \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}^*, \lambda_1^*) = \mathbf{0}
+}
+
+
 \noindent We can search for solutions of the equality-constrained problem by seeking stationary
 points of the Lagrangian function.
 
 The scalar quantity \( \lambda \) is called the Lagrange multiplier.
-
-The Lagrangian function is given by:
-
-\myex{true}{eq:ex2-lagrangian}{
-    L(\mathbf{x}, \lambda)
-    = f(\mathbf{x}) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i c_i(\mathbf{x})
-}
 
 \myex{true}{eq:ex2-lagrangian-gradient}{
     \nabla_x L(\mathbf{x}, \lambda)
@@ -213,6 +237,8 @@ or KKT conditions for short.
 }
 
 
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 \section{Exercise (60/100)}
 
