@@ -73,7 +73,7 @@ Consider the quadratic function \( f: \mathbb{R}^2 \rightarrow \mathbb{R} \) def
           \( f( \mathbf{x} ) = \frac{1}{2} \mathbf{x}^T \mathbf{A} \mathbf{x} + \mathbf{b}^T \mathbf{x} + c \),
           where \( A \) is a symmetric matrix.
 
-    \item Descrive briefly how the Conjugate Gradient (CG) Method works
+    \item Describe briefly how the Conjugate Gradient (CG) Method works
           and discuss whether it is suitable to minimize \( f \) from equation \ref{eq:ex1-f}.
           Explain your reasoning in detail (max. 30 lines).
 \end{enumerate}
@@ -111,10 +111,13 @@ and \( A \) being clearly a symmetric matrix:
 
 \subsection{Answer}
 
-The CG method is an algorithm to find the numerical solution of linear equation systems,
-with specific application to the minimization of quadratic functions
-whose Hessian matrix is symmetric and positive definite.
-
+The CG method is an iterative algorithm for solving a linear system of equations
+\( A x = b \) where \( A \in \mathbb{R}^{n \times n} \) is a symmetric positive definite matrix.
+% with specific application to the minimization of quadratic functions
+whose Hessian matrix is symmetric and \textbf{positive definite}.
+The performance of the linear CG method is determined
+by the \textbf{distribution of the eigenvalues} of the coefficient matrix,
+which are 2 so is a good candidate already.
 The CG method is appropriate and effective for minimizing the quadratic function.
 
 
@@ -128,9 +131,86 @@ Consider the following constrained minimization problem for \( \mathbf{x} = (x, 
     &\text{subject to} \quad c(\mathbf{x}) = x^2 + y^2 + z^2 - 1 = 0
 }
 
-\noindent Write down the Lagrangian function and derive th KKT conditions for \ref{eq:ex2-min-f}
+\noindent Write down the Lagrangian function
+and derive the KKT conditions for (\ref{eq:ex2-min-f}).
 
+\subsection*{Answer}
 
+The constrained optimization problem can be written as:
+
+\myex{true}{eq:ex2-def-f-constrained}{
+    \min_{\mathbf{x} \in {\mathbb{R}^n}} f(\mathbf{x})
+    \quad \text{subject to}
+    \quad
+    \begin{cases}
+        c_i (\mathbf{x}) = 0 \quad i \in \mathcal{E}    \\
+        c_i (\mathbf{x}) \geq 0 \quad i \in \mathcal{I} \\
+    \end{cases}
+}
+
+\noindent where the objective function \( f \)
+and the constraint functions on the variables \( c_i \)
+are all smooth and real-valued defined
+on a subset of \( \mathbb{R}^n \).
+The problem defines two finite sets of indices:
+\( \mathcal{I} \) for the equality constraints
+and \( \mathcal{E} \) for the inequality contraints.
+In addition, the set of points \( \mathbf{x} \) that satisfy the constraints
+is defined as the feasible region \( \Omega \):
+
+\myex{true}{eq:ex2-def-feasible-region}{
+    \Omega = \{ \mathbf{x} \mid c_i ( \mathbf{x} ) = 0, \; i \in \mathcal{E};
+    \; c_i ( \mathbf{x} ) \geq 0, \; i \in \mathcal{I} \}
+}
+
+\noindent Allowing to coincisely write the constrained optimization problem as:
+
+\myex{true}{eq:ex2-def-f-constrained-coincise}{
+    \min_{\mathbf{x} \in \Omega} f(\mathbf{x})
+}
+
+\noindent Then, the active set \( \mathcal{A}( \mathbf{x} ) \)
+at any feasible \( \mathbf{x} \) consists of the equality constraints indices from
+\( \mathcal{E} \) together with the indices of the inequality constraints \( i \)
+for which \( c_i ( \mathbf{x} ) = 0 \):
+
+\myex{true}{eq:ex2-def-active-set}{
+    \mathcal{A}( \mathbf{x} ) = \mathcal{E} \cup \{ i \in \mathcal{I} \mid c_i ( \mathbf{x} ) = 0 \}
+}
+
+So, at a feasible point \( \mathbf{x} \), the inequality constraint \( i \in \mathcal{I} \)
+is said to be active if \( c_i ( \mathbf{x} ) = 0 \)
+and inactive if the strict inequality \( c_i ( \mathbf{x} ) > 0 \) is satisfied.
+
+\noindent We can search for solutions of the equality-constrained problem by seeking stationary
+points of the Lagrangian function.
+
+The scalar quantity \( \lambda \) is called the Lagrange multiplier.
+
+The Lagrangian function is given by:
+
+\myex{true}{eq:ex2-lagrangian}{
+    L(\mathbf{x}, \lambda)
+    = f(\mathbf{x}) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i c_i(\mathbf{x})
+}
+
+\myex{true}{eq:ex2-lagrangian-gradient}{
+    \nabla_x L(\mathbf{x}, \lambda)
+    = \nabla f(\mathbf{x})
+    - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i \nabla c_i(\mathbf{x})
+}
+
+The First-Order Necessary Conditions are often known as the Karush-Kuhn-Tucker conditions,
+or KKT conditions for short.
+
+\myex{false}{}{
+    \nabla_{\mathbf{x}} L(\mathbf{x}^*, \lambda^*) &= \mathbf{0} \\
+    c_i( \mathbf{x}^* ) &= \mathbf{0} \quad \forall i \in \mathcal{E} \\
+    c_i( \mathbf{x}^* ) &\geq \mathbf{0} \quad \forall i \in \mathcal{I} \\
+    \lambda_i^* &\geq 0 \quad \forall i \in \mathcal{I} \\
+    \lambda_i^* c_i( \mathbf{x}^* ) &= \mathbf{0} \quad \forall i \in \mathcal{E} \cup \mathcal{I}
+    \quad \text{(complementary conditions)}
+}
 
 
 %----------------------------------------------------------------------------------
@@ -170,5 +250,21 @@ Consider the following constrained minimization problem for \( \mathbf{x} = (x, 
               \item Prove that the first order necessary conditions holds for the optimal point.
           \end{enumerate}
 \end{enumerate}
+
+\subsection{Answer}
+
+The Simplex method is \dots
+
+The algorithm works by \dots
+
+Algorithm block \dots
+
+The search direction \dots
+
+\subsection{Answer}
+
+\subsection*{a)}
+\subsection*{b)}
+\subsection*{c)}
 
 \end{document}
