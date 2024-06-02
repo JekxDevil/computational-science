@@ -1,4 +1,4 @@
-\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
+\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany, draft]{scrartcl}
 
 % Required package
 \usepackage{amssymb}
@@ -32,6 +32,9 @@
 
 % vector shortcut
 \newcommand{\myvec}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+
+% 1: letter of vector, 2: 
+\newcommand\vibar[2]{\mathbf{\overline{#1}}_#2}
 
 % 1: caption, 2: label, 3: trim, 4: figure within figures folder
 \newcommand{\myfigure}[4]{
@@ -366,7 +369,7 @@ then condition \( \lambda^* c(\mathbf{x}^*) = 0 \) is also satisfied.
           \begin{enumerate}
               \item Sketch the feasible region for this problem.
 
-              \item Which are the basic feasible points of the problem \ref{eq:ex3-min-f}?
+              \item Which are the basic feasible points of the problem (\ref{eq:ex3-min-f})?
                     Compute them by hand using the geometrical interpretation
                     and find the optimal point \( \mathbf{x^*} \)
                     that minimizes \( f \) subject to the constraints.
@@ -376,6 +379,36 @@ then condition \( \lambda^* c(\mathbf{x}^*) = 0 \) is also satisfied.
 \end{enumerate}
 
 \subsection{Answer}
+
+% Despite often the situations requiring modeling are nonlinear,
+% linear programming is appealing because of the advanced state of the software,
+% guaranteed convergence to global minimum,
+% and the fact that uncertainty in the model makes linear model more appropriate 
+% than an overly complex nonlinear model.
+
+Linear programs are usually stated and analyzed in the following \textit{standard form}:
+
+\myex{true}{eq:ex3-linear-program}{
+    \min c^T x
+    \quad \text{subject to}
+    \quad
+    \begin{cases}
+        A x = b \\
+        x \geq 0
+    \end{cases}
+}
+
+where \( c, x \in \mathbb{R}^n, \; b \in \mathbb{R}^m, \; A \in \mathbb{R}^{m \times n}\).
+
+
+The Simplex method explaination provided in the book 
+is known as the \textit{revised simplex method}.
+All iterates of the simplex method are basic feasible points 
+for the problem (\ref{eq:ex3-linear-program}),
+and therefore vertices of the feasible polytope.
+Most steps consist of a move from one vertex to an adjacent one 
+for which the basis \( \mathcal{B} \) differs in exactly one component.
+
 
 The Simplex method is \dots
 
@@ -400,6 +433,122 @@ was done with an online tool using geogebra as backend.
 \end{figure}
 
 \subsection*{b)}
+
+The basic feasible points are the vertices of the feasible region described by the polytope
+visible in Figure \ref{fig:feasible-region}.
+The vertices can be computed by solving the system of equations 
+following the geometrical interpretation:
+
+\noindent Let \( \vibar{x}{1} := x_1 \geq 0 \; \cap \; x_2 \geq 0 \),
+the result is trivial since \( x_1 = 0 \) is the y-axis 
+and \( x_2 = 0 \) is the x-axis,
+so the result is the origin \( O \).
+Anyways, the intersection is computed by solving the system:
+
+\myex{false}{}{
+    \begin{cases}
+        x_1 = 0 \\
+        x_2 = 0
+    \end{cases}
+    \quad 
+    \vibar{x}{1} = \myvec{0 \\ 0} = O
+}
+
+\noindent Let \( \vibar{x}{2} := x_1 \geq 0 \; \cap \; 3 + 3 x_1 - 2 x_2 \geq 0 \).
+The intersection is computed by solving the system:
+
+\myex{false}{}{
+    \begin{cases}
+        x_1 = 0 \\
+        3 + 3 x_1 - 2 x_2 = 0
+    \end{cases}
+    \Rightarrow
+    \begin{cases}
+        x_1 = 0 \\
+        x_2 = \frac{3}{2}
+    \end{cases}
+    \quad 
+    \vibar{x}{2} = \myvec{0 \\[3pt] \frac{3}{2}}
+}
+
+\noindent Let \( \vibar{x}{3} := 3 + 3 x_1 - 2 x_2 \geq 0 \; \cap \; 6 - 2 x_1 - 3 x_2 \geq 0 \).
+The intersection is computed by solving the system:
+
+\myex{false}{}{
+    \begin{cases}
+        3 + 3 x_1 - 2 x_2 = 0 \\
+        6 - 2 x_1 - 3 x_2 = 0
+    \end{cases}
+    \Rightarrow
+    \begin{cases}
+        x_1 = \frac{2}{3} x_2 - 1 \\
+        x_2 = \frac{24}{13}
+    \end{cases}
+    \quad 
+    \vibar{x}{3} = \myvec{\frac{3}{13} \\[6pt] \frac{24}{13}}
+}
+
+\noindent Let \( \vibar{x}{4} := 6 - 2 x_1 - 3 x_2 \geq 0 \; \cap \; 4 - 2 x_1 - x_2 \geq 0 \).
+The intersection is computed by solving the system:
+
+\myex{false}{}{
+    \begin{cases}
+        6 - 2 x_1 - 3 x_2 = 0 \\
+        4 - 2 x_1 - x_2 = 0
+    \end{cases}
+    \Rightarrow
+    \begin{cases}
+        4 - 2 x_1 - (1) = 0 \\
+        x_2 = 1
+    \end{cases}
+    \quad 
+    \vibar{x}{4} = \myvec{\frac{3}{2} \\[3pt] 1}
+}
+
+\noindent Let \( \vibar{x}{5} :=  4 - 2 x_1 - x_2 \geq 0 \; \cap \; x_2 \geq 0 \).
+The intersection is computed by solving the system:
+
+\myex{false}{}{
+    \begin{cases}
+        4 - 2 x_1 - x_2 = 0 \\
+        x_2 = 0
+    \end{cases}
+    \Rightarrow
+    \begin{cases}
+        4 - 2 x_1 - (0) = 0 \\
+        x_2 = 0
+    \end{cases}
+    \quad 
+    \vibar{x}{5} = \myvec{2 \\ 0}
+}
+
+To find the optimal point \( \mathbf{x}^* \) that minimizes \( f \) subject to the constraints,
+we evaluate the function \( f \) at each vertex of the polytope in the feasible region:
+
+\myex{false}{}{
+    f(\vibar{x}{1}) &= 4 \cdot 0 + 3 \cdot 0 &&= 0 \\[3pt]
+    f(\vibar{x}{2}) &= 4 \cdot 0 + 3 \cdot \frac{3}{2} &&= \frac{9}{2} \\[3pt]
+    f(\vibar{x}{3}) &= 4 \cdot \frac{3}{13} + 3 \cdot \frac{24}{13} &&= \frac{84}{13} \\[3pt]
+    f(\vibar{x}{4}) &= 4 \cdot \frac{3}{2} + 3 \cdot 1 &&= 9 \\[3pt]
+    f(\vibar{x}{5}) &= 4 \cdot 2 + 3 \cdot 0 &&= 8
+}
+
+The optimal point \( \mathbf{x}^* \) that minimizes \( f \) subject to the constraints
+is the point \( \mathbf{\overline{x}_1} \) vertex of the polytope in the feasible region.
+
+\myex{false}{}{
+    \arg \min_{\mathbf{x} \in \mathcal{\overline{X}} } 
+    f(\mathbf{x}) = \vibar{x}{1}
+    \qquad \mathcal{\overline{X}} 
+    = \{ 
+        \vibar{x}{1}, 
+        \vibar{x}{2}, 
+        \vibar{x}{3}, 
+        \vibar{x}{4}, 
+        \vibar{x}{5} 
+    \}
+}
+
 \subsection*{c)}
 
 \end{document}
