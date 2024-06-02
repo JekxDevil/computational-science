@@ -1,4 +1,4 @@
-\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany, draft]{scrartcl}
+\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
 
 % Required package
 \usepackage{amssymb}
@@ -150,15 +150,15 @@ The constrained optimization problem can be written as:
     \end{cases}
 }
 
-\noindent where the objective function \( f \)
-and the constraint functions on the variables \( c_i \)
+\noindent where the \textbf{objective function} \( f \)
+and the \textbf{constraint functions} on the variables \( c_i \)
 are all smooth and real-valued defined
 on a subset of \( \mathbb{R}^n \).
 The problem defines two finite sets of indices:
-\( \mathcal{I} \) for the equality constraints
-and \( \mathcal{E} \) for the inequality contraints.
+\( \mathcal{I} \) for the \textbf{equality constraints}
+and \( \mathcal{E} \) for the \textbf{inequality contraints}.
 In addition, the set of points \( \mathbf{x} \) that satisfy the constraints
-is defined as the feasible region \( \Omega \):
+is defined as the \textbf{feasible region} \( \Omega \):
 
 \myex{true}{eq:ex2-def-feasible-region}{
     \Omega = \{ \mathbf{x} \mid c_i ( \mathbf{x} ) = 0, \; i \in \mathcal{E};
@@ -171,7 +171,7 @@ is defined as the feasible region \( \Omega \):
     \min_{\mathbf{x} \in \Omega} f(\mathbf{x})
 }
 
-\noindent Then, the active set \( \mathcal{A}( \mathbf{x} ) \)
+\noindent Then, the \textbf{active set} \( \mathcal{A}( \mathbf{x} ) \)
 at any feasible \( \mathbf{x} \) consists of the equality constraints indices from
 \( \mathcal{E} \) together with the indices of the inequality constraints \( i \)
 for which \( c_i ( \mathbf{x} ) = 0 \):
@@ -184,50 +184,69 @@ So, at a feasible point \( \mathbf{x} \), the inequality constraint \( i \in \ma
 is said to be active if \( c_i ( \mathbf{x} ) = 0 \)
 and inactive if the strict inequality \( c_i ( \mathbf{x} ) > 0 \) is satisfied.
 
-\noindent Assuming a single equality scenario,
+\noindent Assuming a single equality scenario part of the active set,
 at the solution \( \mathbf{x}^* \),
 the constraint normal \( \nabla c_1 ( \mathbf{x}^* ) \) is parallel to
 \( \nabla f ( \mathbf{x}^* ) \), meaning that there is a scalar \( \lambda_1^* \)
-called Lagrangian multiplier such that:
+called \textbf{Lagrangian multiplier} such that:
 
 \myex{true}{eq:ex2-def-lagrangian-multiplier}{
     \nabla f ( \mathbf{x}^* ) = \lambda_1^* \nabla c_1 ( \mathbf{x}^* )
 }
 
-\noindent Finally, the Langragian function:
+\noindent Finally, the \textbf{Langragian function} and its gradient
+for the general problem are defined as:
 
 \myex{true}{eq:ex2-lagrangian}{
     \mathcal{L} (\mathbf{x}, \lambda)
-    = f(\mathbf{x}) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i c_i(\mathbf{x})
+    &= f(\mathbf{x}) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i c_i(\mathbf{x}) \\
+    \nabla_x \mathcal{L} (\mathbf{x}, \lambda)
+    &= \nabla f(\mathbf{x})
+    - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i \nabla c_i(\mathbf{x})
 }
 
-\noindent If assuming a single equality constraint scenario,
+\noindent If assuming a single equality constraint scenario part of the active set,
 note that
 \( \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}, \lambda_1)
 = \nabla f( \mathbf{x} ) - \lambda_1 \nabla c_1 ( \mathbf{x} )\),
 allowing to write the condition (\ref{eq:ex2-def-lagrangian-multiplier})
-equivalently as follows: at the solution \( \mathbf{x}^*, \; \exists \; \lambda_1^* \):
+equivalently as follows:
 
 \myex{true}{eq:ex2-lagrangian-gradient-simple}{
+    \text{at solution } \mathbf{x}^*, \; \exists \; \lambda_1^* : \;
     \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}^*, \lambda_1^*) = \mathbf{0}
 }
 
+\noindent This observation suggests that
+we can search for solutions of the equality-constrained problem (\ref{eq:ex2-min-f})
+by seeking stationary points of the Lagrangian function.
+The conditions (\ref{eq:ex2-def-lagrangian-multiplier})
+and (\ref{eq:ex2-lagrangian-gradient-simple})
+are equivalent
+and necessary conditions for an optimal solution of the problem (\ref{eq:ex2-min-f}),
+but clearly not sufficient.
 
-\noindent We can search for solutions of the equality-constrained problem by seeking stationary
-points of the Lagrangian function.
+An important constraint qualification condition is \textbf{LICQ}:
+given the point \( \mathbf{x} \) and the active set \( \mathcal{A}( \mathbf{x} ) \)
+defined in (\ref{eq:ex2-def-active-set}),
+we say that the Linear Independence Contraint Qualification (LICQ) holds
+if the set of active constraint gradients
+\( \{ \nabla c_i ( \mathbf{x} ) \mid i \in \mathcal{A}( \mathbf{x} ) \} \)
+is linearly independent.
+In general, if LICQ holds, none of the active constraints gradients can be zero.
 
-The scalar quantity \( \lambda \) is called the Lagrange multiplier.
+The following necessary conditions defined are called first-order conditions
+because they are concerned with properties of the gradients (first-derivative vectors)
+of the objective and constraint functions.
+\textbf{First-Order Necessary Conditions}:
+suppose that \( \mathbf{x}^* \) is a local solution of (\ref{eq:ex2-min-f}),
+that the functions \( f \) and \( c_i \) in (\ref{eq:ex2-min-f})
+are continuously differentiable, and that the LICQ holds at \( \mathbf{x}^* \).
+Then there is a Lagrange multiplier vector \( \lambda^* \),
+with components \( \lambda_i^*, \; i \in \mathcal{E} \cup \mathcal{I} \),
+such that the following conditions are satisfied at \( (\mathbf{x}^*, \lambda^*) \):
 
-\myex{true}{eq:ex2-lagrangian-gradient}{
-    \nabla_x L(\mathbf{x}, \lambda)
-    = \nabla f(\mathbf{x})
-    - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i \nabla c_i(\mathbf{x})
-}
-
-The First-Order Necessary Conditions are often known as the Karush-Kuhn-Tucker conditions,
-or KKT conditions for short.
-
-\myex{false}{}{
+\myex{true}{eq:ex2-kkt}{
     \nabla_{\mathbf{x}} L(\mathbf{x}^*, \lambda^*) &= \mathbf{0} \\
     c_i( \mathbf{x}^* ) &= \mathbf{0} \quad \forall i \in \mathcal{E} \\
     c_i( \mathbf{x}^* ) &\geq \mathbf{0} \quad \forall i \in \mathcal{I} \\
@@ -236,6 +255,21 @@ or KKT conditions for short.
     \quad \text{(complementary conditions)}
 }
 
+The conditions (\ref{eq:ex2-kkt}) are often known as the Karush-Kuhn-Tucker conditions,
+or \textbf{KKT conditions} for short.
+The last row in (\ref{eq:ex2-kkt}) contains the complementary conditions,
+they imply that either constraint \( i \) is active or \( \lambda_i^* = 0 \),
+or possibly both.
+In particular, the Lagrange multipliers corresponding to inactive inequality constraints are zero,
+we can omit the terms for indices \( i \notin \mathcal{A}( \mathbf{x}^* ) \)
+from the first condition in (\ref{eq:ex2-kkt}) and rewrite it as:
+
+\myex{true}{eq:ex2-computed-complementary-condition}{
+    \mathbf{0}
+    = \nabla_{\mathbf{x}} L(\mathbf{x}^*, \lambda^*)
+    = \nabla f ( \mathbf{x}^* )
+    - \sum_{i \in \mathcal{A}( \mathbf{x}^* )} \lambda_i^* \nabla c_i ( \mathbf{x}^* )
+}
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
@@ -290,6 +324,17 @@ The search direction \dots
 \subsection{Answer}
 
 \subsection*{a)}
+
+The sketch of the feasible region in Figure \ref{fig:feasible-region}
+was done with an online tool using geogebra as backend.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{./figures/ex3-feasible-region.png}
+    \caption{Feasible region for the problem \ref{eq:ex3-min-f} and \ref{eq:ex3-constraints}}
+    \label{fig:feasible-region}
+\end{figure}
+
 \subsection*{b)}
 \subsection*{c)}
 
