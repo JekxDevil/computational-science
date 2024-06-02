@@ -551,4 +551,49 @@ is the point \( \mathbf{\overline{x}_1} \) vertex of the polytope in the feasibl
 
 \subsection*{c)}
 
+To prove that the first order necessary conditions hold for the optimal points,
+we need to verify the KKT conditions from (\ref{eq:ex2-kkt}) 
+for the optimal point \( \vibar{x}{1} = \myvec{0 & 0}^T \).
+The active set \( \mathcal{A}( \vibar{x}{1} ) = \{ 5, 6 \} \) 
+where the constraints \( c_5 := x_2 \geq 0 \) and \( c_6 := x_1 \geq 0 \) 
+from (\ref{eq:ex3-constraints}) are active, both \( c_5, c_6 = 0 \therefore \) 
+the point \( \vibar{x}{1} \) is at a polytope vertex.  
+By checking the LICQ condition, the gradients of the active constraints are linearly independent:
+
+\myex{false}{}{ 
+    \langle \nabla c_5, \nabla c_6 \rangle 
+    = 
+    \langle \myvec{0 \\ 1}, \myvec{1 \\ 0} \rangle 
+    =
+    0
+}
+
+\noindent Find \( \lambda_5, \lambda_6 \):
+
+\myex{false}{}{
+    \nabla f = \myvec{4 \\ 3}, \quad
+    \nabla c_5 = \myvec{0 \\ 1}, \quad
+    \nabla c_6 = \myvec{1 \\ 0} \\
+    \myvec{4 \\ 3} = \lambda_5 \myvec{0 \\ 1} + \lambda_6 \myvec{1 \\ 0}
+    \Rightarrow
+    \begin{cases}
+        \lambda_6 = 4 \\
+        \lambda_5 = 3
+    \end{cases}
+}
+
+\noindent Finally, let's check that the gradient of the Lagrangian function is zero at the optimal point
+\( \mathbf{x}^* = \vibar{x}{1} \),
+as rewritten in (\ref{eq:ex2-computed-complementary-condition}):
+
+\myex{false}{}{
+    \nabla_{x} \mathcal{L}(\mathbf{x}^*, \lambda^*) 
+    &= \nabla f - \sum_{i \in \mathcal{A}( \mathbf{x}^* )} \lambda_i^* \nabla c_i \\
+    &= \myvec{4 \\ 3} - 3 \myvec{0 \\ 1} - 4 \myvec{1 \\ 0} \\
+    &= \myvec{0 \\ 0} = \mathbf{0}
+}
+
+\noindent Hence, the first order necessary conditions hold for the optimal point \( \vibar{x}{1} \).
+
+
 \end{document}
