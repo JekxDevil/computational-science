@@ -115,12 +115,37 @@ and \( A \) being clearly a symmetric matrix:
 
 The CG method is an iterative algorithm for solving a linear system of equations
 \( A x = b \) where \( A \in \mathbb{R}^{n \times n} \) is a symmetric positive definite matrix.
-% with specific application to the minimization of quadratic functions
-whose Hessian matrix is symmetric and \textbf{positive definite}.
+whose \( A \) matrix is symmetric and \textbf{positive definite}.
+For (\ref{eq:ex1-f}) we proved that \( A \) is SPD, which already perfectly fits the requirements.
+The \textbf{iterativeness} of the method builds up a solution over a series of steps,
+each of which improves the approximation to the exact solution.
 The performance of the linear CG method is determined
 by the \textbf{distribution of the eigenvalues} of the coefficient matrix,
-which are 2 so is a good candidate already.
+which are two, so it is already a good candidate anyways, 
+thus reaching immediately the exact solution before mentioned.
+The method exploits the \textbf{conjugate directions} of the matrix \( A \),
+i.e. \( \langle p_i, p_j \rangle = 0, \; i \neq j \).
+Such properties allows the method to \textbf{converge} in at most \( n \) iterations,
+where \( n \) is the dimension of the problem.
+The \textbf{convergence rate} depends on the distance between 
+the current eigval and the largest as the formula suggests:
+\( \norm{x_{k+1} - x^*}_A^2 
+\leq 
+\left( \frac{\lambda_{n-k} - \lambda_1}{\lambda_{n-k} + \lambda_1} \right)^2
+\norm{x_0 - x^*}_A^2 \) 
+if \( A \) has eigenvalues \( \lambda_1 \leq \lambda_2 \leq \dots \leq \lambda_n \).
+Particularly, the CG method allows to compute directions 
+as a \textbf{linear combination} of the residual 
+\( r_{k+1} = Ax_{k+1} - b \) 
+and the previous direction \( p_k \),
+ensuring that the new search directions are conjugate with respect to \( A \),
+thus significantly reducing the number of iterations needed to converge to the minimum 
+when compared \textbf{to other gradient-based methods} like steepest descent.
+Such advantage becomes strongly evident especially in high-dimensional spaces.
 The CG method is appropriate and effective for minimizing the quadratic function.
+In fact, its use case perfectly matches the context of optimization
+for finding the minimum of \textbf{quadratic forms}.
+
 
 
 %----------------------------------------------------------------------------------
