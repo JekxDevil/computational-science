@@ -43,6 +43,8 @@
     \end{figure}
 }
 
+\def\ex2f{f(\mathbf{x}^*)}
+
 \input{assignment.sty}
 \begin{document}
 
@@ -247,7 +249,7 @@ with components \( \lambda_i^*, \; i \in \mathcal{E} \cup \mathcal{I} \),
 such that the following conditions are satisfied at \( (\mathbf{x}^*, \lambda^*) \):
 
 \myex{true}{eq:ex2-kkt}{
-    \nabla_{\mathbf{x}} L(\mathbf{x}^*, \lambda^*) &= \mathbf{0} \\
+    \nabla_{\mathbf{x}} \mathcal{L} (\mathbf{x}^*, \lambda^*) &= \mathbf{0} \\
     c_i( \mathbf{x}^* ) &= \mathbf{0} \quad \forall i \in \mathcal{E} \\
     c_i( \mathbf{x}^* ) &\geq \mathbf{0} \quad \forall i \in \mathcal{I} \\
     \lambda_i^* &\geq 0 \quad \forall i \in \mathcal{I} \\
@@ -266,10 +268,47 @@ from the first condition in (\ref{eq:ex2-kkt}) and rewrite it as:
 
 \myex{true}{eq:ex2-computed-complementary-condition}{
     \mathbf{0}
-    = \nabla_{\mathbf{x}} L(\mathbf{x}^*, \lambda^*)
+    = \nabla_{\mathbf{x}} \mathcal{L} (\mathbf{x}^*, \lambda^*)
     = \nabla f ( \mathbf{x}^* )
     - \sum_{i \in \mathcal{A}( \mathbf{x}^* )} \lambda_i^* \nabla c_i ( \mathbf{x}^* )
 }
+
+\noindent The derived Lagrangian function for the problem (\ref{eq:ex2-min-f}) is:
+
+\myex{false}{}{
+    \mathcal{L} (\mathbf{x}, \lambda)
+    &= f(\mathbf{x}) - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i c_i(\mathbf{x})
+    \qquad \mathcal{E} = \{ 1 \}, \; \mathcal{I} = \emptyset \\
+    &= f(\mathbf{x}) - \lambda c (\mathbf{x}) \\
+    &= -3x^2 + y^2 + 2z^2 + 2(x + y + z) - \lambda \left( x^2 + y^2 + z^2 - 1 \right) \\
+    &= (-3 - \lambda) x^2 + (1 - \lambda) y^2 + (2 - \lambda) z^2 + 2(x + y + z) + \lambda
+}
+
+\noindent Let \( \mathbf{x}^* = \myvec{x^*, y^*, z^*}^T \) be a local solution,
+then the derived KKT conditions are:
+
+\myex{false}{}{
+    \nabla \ex2f = \myvec{-6 x^* + 2 \\ 2 y^* + 2 \\ 4 z^* + 2},
+    \quad \nabla c = \myvec{2 x^* \\ 2 y^* \\ 2 z^*} \\
+    \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}^*, \lambda^*) = \mathbf{0}
+    \Rightarrow
+    \myvec{
+        -6 x^* + 2 - 2 \lambda^* x^* \\
+        2 y^* + 2 - 2 \lambda^* y^* \\
+        4 z^* + 2 - 2 \lambda^* z^*
+    }
+    = \myvec{0 \\ 0 \\ 0} \\
+    c(\mathbf{x}^*) = 0
+    \Rightarrow
+    (x^*)^2 + (y^*)^2 + (z^*)^2 - 1 = 0
+    \\
+    \lambda^* c(\mathbf{x}^*) = 0
+    \Rightarrow
+    \lambda^* \left( (x^*)^2 + (y^*)^2 + (z^*)^2 - 1 \right) = 0
+}
+
+Note that if equality condition \( c(\mathbf{x}^*) = 0 \) holds,
+then condition \( \lambda^* c(\mathbf{x}^*) = 0 \) is also satisfied.
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
