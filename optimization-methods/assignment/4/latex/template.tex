@@ -416,6 +416,8 @@ Linear programs are analyzed in \textit{standard form}:
 }
 
 \noindent where \( c, x \in \mathbb{R}^n, \; b \in \mathbb{R}^m, \; A \in \mathbb{R}^{m \times n}\).
+For the standard formulation of (\ref{eq:ex3-linear-program}),
+we will assume throughout that \( m \le n \) for simplicity.
 Simple devices can be used to transform any linear program to this form.
 For instance, given the problem (\ref{eq:ex3-example-f-constraint})
 without any bounds on \( x \):
@@ -549,14 +551,57 @@ Algebraically, the vertices are exactly the basic feasible points defined above.
     and vice versa.
 }
 
-
-The Simplex method explaination provided in the book
-is known as the \textit{revised simplex method}.
+The \textbf{Simplex method} explaination provided in the book
+is known as the \textbf{revised simplex method}.
 All iterates of the simplex method are basic feasible points
 for the problem (\ref{eq:ex3-linear-program}),
 and therefore vertices of the feasible polytope.
 Most steps consist of a move from one vertex to an adjacent one
 for which the basis \( \mathcal{B} \) differs in exactly one component.
+The major issue at each simplex iteration is to decide which index to remove from the basis 
+\( \mathcal{B} \).
+Unless the step is a \textbf{direction} of unboundedness,
+a single index must be removed from \( \mathcal{B} \) and replaced by another from outside 
+\( \mathcal{B} \).
+More details regarding this exchange of index procedure is presented:
+from \( \mathcal{B} \) and (\ref{eq:ex3-linear-kkt}), we can derive values for not just.
+
+\begin{algorithm}
+\caption{Simplex Method Iteration}\label{alg:ex3-simplex-iter}
+  \begin{algorithmic}[1]
+    \Require \( \mathcal{B}\): the basic index set known as the basis of the problem
+    \Require \( \mathcal{N} \): the nonbasic index set, complement of \( \mathcal{B} \)
+    \Require \( x_B = B^{-1} b \geq 0 \): m-element vector of basic variables
+    \Require \( x_N = 0 \): m-n element vector of nonbasic variables
+
+    \State Solve \( B^T \lambda = c_B \) for \( \lambda \);
+    \State Compute \( s_N = c_N - N^T \lambda \); \Comment{pricing}
+    \State
+
+    \If { \( s_N \geq 0 \) }
+        \State \textbf{stop};  \Comment{optimal point found}
+    \EndIf
+    \State
+
+    \State Select \( q \in \mathcal{N} \), with \( s_q < 0 \) as entering index;
+    \State Solve \( Bd = A_q \) for \( d \);
+    \State
+
+    \If { \( d \leq 0 \) }
+        \State \textbf{stop};  \Comment{problem is unbounded}
+    \EndIf
+    \State
+
+    \State Calculate \( x_q^+ = \min_{i \; \mid \; d_i > 0} \frac{(x_B)_i}{d_i} \),
+    and use \( p \) to denote the minimizing \( i \);
+
+    \State Update \( x_B^+ = x_B - dx_q^+, \;\; x_N^+ = (0, \ldots, 0, x_q^+, 0, \ldots, 0)^T \);
+
+    \State Change \( \mathcal{B} \) by adding \( q \) and removing the basic variable 
+    corresponding to column \( p \) of \( B \);
+
+  \end{algorithmic}
+\end{algorithm}
 
 % 1: command name, 2: Title, 3: subtitle, 4: label, 5: content
 \myth{Optimal Solution of a Linear Programming Problem}{th:linear-programming-solution}{
@@ -580,7 +625,9 @@ The algorithm works by \dots
 
 Algorithm block \dots
 
-The search direction \dots
+The \textbf{search direction} move each iteration among the vertices of the polytope,
+meaning that they correspond to the direction from one vertex to the next choosen, 
+i.e. their directed edge. 
 
 \subsection{Answer}
 
