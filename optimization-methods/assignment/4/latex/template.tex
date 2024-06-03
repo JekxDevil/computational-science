@@ -91,7 +91,7 @@ Consider the quadratic function \( f: \mathbb{R}^2 \rightarrow \mathbb{R} \) def
 
 \subsection{Answer}
 
-The function written in canonical form correspond to:
+The function written in canonical form corresponds to:
 
 \myex{false}{eq:ex1-f-quadratic}{
     f( \mathbf{x} )
@@ -123,8 +123,7 @@ and \( A \) being clearly a symmetric matrix:
 \subsection{Answer}
 
 The CG method is an iterative algorithm for solving a linear system of equations
-\( A x = b \) where \( A \in \mathbb{R}^{n \times n} \) is a symmetric positive definite matrix.
-whose \( A \) matrix is symmetric and \textbf{positive definite}.
+\( A x = b \) where \( A \in \mathbb{R}^{n \times n} \) is a \textbf{symmetric positive definite} matrix.
 For (\ref{eq:ex1-f}) we proved that \( A \) is SPD, which already perfectly fits the requirements.
 The \textbf{iterativeness} of the method builds up a solution over a series of steps,
 each of which improves the approximation to the exact solution.
@@ -137,11 +136,14 @@ i.e. \( \langle p_i, p_j \rangle = 0, \; i \neq j \).
 Such properties allows the method to \textbf{converge} in at most \( n \) iterations,
 where \( n \) is the dimension of the problem.
 The \textbf{convergence rate} depends on the distance between
-the current eigval and the largest as the formula suggests:
-\( \norm{x_{k+1} - x^*}_A^2
+the current eigvalue and the largest as the formula (\ref{eq:ex1-cg-convergence}) suggests:
+
+\myex{true}{eq:ex1-cg-convergence}{
+\norm{x_{k+1} - x^*}_A^2
 \leq
 \left( \frac{\lambda_{n-k} - \lambda_1}{\lambda_{n-k} + \lambda_1} \right)^2
-\norm{x_0 - x^*}_A^2 \)
+\norm{x_0 - x^*}_A^2 
+}
 if \( A \) has eigenvalues \( \lambda_1 \leq \lambda_2 \leq \dots \leq \lambda_n \).
 Particularly, the CG method allows to compute directions
 as a \textbf{linear combination} of the residual
@@ -207,7 +209,7 @@ The constrained optimization problem can be written as:
     \end{cases}
 }
 
-\noindent where the \textbf{objective function} \( f \)
+where the \textbf{objective function} \( f \)
 and the \textbf{constraint functions} on the variables \( c_i \)
 are all smooth and real-valued defined
 on a subset of \( \mathbb{R}^n \).
@@ -222,13 +224,13 @@ is defined as the \textbf{feasible region} \( \Omega \):
     \; c_i ( \mathbf{x} ) \geq 0, \; i \in \mathcal{I} \}
 }
 
-\noindent Allowing to coincisely write the constrained optimization problem as:
+Allowing to coincisely write the constrained optimization problem as:
 
 \myex{true}{eq:ex2-def-f-constrained-coincise}{
     \min_{\mathbf{x} \in \Omega} f(\mathbf{x})
 }
 
-\noindent Then, the \textbf{active set} \( \mathcal{A}( \mathbf{x} ) \)
+Then, the \textbf{active set} \( \mathcal{A}( \mathbf{x} ) \)
 at any feasible \( \mathbf{x} \) consists of the equality constraints indices from
 \( \mathcal{E} \) together with the indices of the inequality constraints \( i \)
 for which \( c_i ( \mathbf{x} ) = 0 \):
@@ -241,7 +243,7 @@ So, at a feasible point \( \mathbf{x} \), the inequality constraint \( i \in \ma
 is said to be active if \( c_i ( \mathbf{x} ) = 0 \)
 and inactive if the strict inequality \( c_i ( \mathbf{x} ) > 0 \) is satisfied.
 
-\noindent Assuming a single equality scenario part of the active set,
+Assuming a single equality scenario part of the active set,
 at the solution \( \mathbf{x}^* \),
 the constraint normal \( \nabla c_1 ( \mathbf{x}^* ) \) is parallel to
 \( \nabla f ( \mathbf{x}^* ) \), meaning that there is a scalar \( \lambda_1^* \)
@@ -251,7 +253,7 @@ called \textbf{Lagrangian multiplier} such that:
     \nabla f ( \mathbf{x}^* ) = \lambda_1^* \nabla c_1 ( \mathbf{x}^* )
 }
 
-\noindent Finally, the \textbf{Langragian function} and its gradient
+Finally, the \textbf{Langragian function} and its gradient
 for the general problem are defined as:
 
 \myex{true}{eq:ex2-lagrangian}{
@@ -262,7 +264,7 @@ for the general problem are defined as:
     - \sum_{i \in \mathcal{E} \cup \mathcal{I}} \lambda_i \nabla c_i(\mathbf{x})
 }
 
-\noindent If assuming a single equality constraint scenario part of the active set,
+If assuming a single equality constraint scenario part of the active set,
 note that
 \( \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}, \lambda_1)
 = \nabla f( \mathbf{x} ) - \lambda_1 \nabla c_1 ( \mathbf{x} )\),
@@ -274,7 +276,7 @@ equivalently as follows:
     \nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}^*, \lambda_1^*) = \mathbf{0}
 }
 
-\noindent This observation suggests that
+This observation suggests that
 we can search for solutions of the equality-constrained problem (\ref{eq:ex2-min-f})
 by seeking stationary points of the Lagrangian function.
 The conditions (\ref{eq:ex2-def-lagrangian-multiplier})
@@ -301,7 +303,7 @@ that the functions \( f \) and \( c_i \) in (\ref{eq:ex2-min-f})
 are continuously differentiable, and that the LICQ holds at \( \mathbf{x}^* \).
 Then there is a Lagrange multiplier vector \( \lambda^* \),
 with components \( \lambda_i^*, \; i \in \mathcal{E} \cup \mathcal{I} \),
-such that the following conditions are satisfied at \( (\mathbf{x}^*, \lambda^*) \):
+such that the following conditions (\ref{eq:ex2-kkt}) are satisfied at \( (\mathbf{x}^*, \lambda^*) \):
 
 \myex{true}{eq:ex2-kkt}{
     \nabla_{\mathbf{x}} \mathcal{L} (\mathbf{x}^*, \lambda^*) &= \mathbf{0} \\
@@ -318,7 +320,7 @@ The last row in (\ref{eq:ex2-kkt}) contains the complementary conditions,
 they imply that either constraint \( i \) is active or \( \lambda_i^* = 0 \),
 or possibly both.
 In particular, the Lagrange multipliers corresponding to inactive inequality constraints are zero,
-we can omit the terms for indices \( i \notin \mathcal{A}( \mathbf{x}^* ) \)
+hence, we can omit the terms for indices \( i \notin \mathcal{A}( \mathbf{x}^* ) \)
 from the first condition in (\ref{eq:ex2-kkt}) and rewrite it as:
 
 \myex{true}{eq:ex2-computed-complementary-condition}{
@@ -328,7 +330,7 @@ from the first condition in (\ref{eq:ex2-kkt}) and rewrite it as:
     - \sum_{i \in \mathcal{A}( \mathbf{x}^* )} \lambda_i^* \nabla c_i ( \mathbf{x}^* )
 }
 
-\noindent The derived Lagrangian function for the problem (\ref{eq:ex2-min-f}) is:
+The derived Lagrangian function for the problem (\ref{eq:ex2-min-f}) is:
 
 \myex{false}{}{
     \mathcal{L} (\mathbf{x}, \lambda)
@@ -339,7 +341,7 @@ from the first condition in (\ref{eq:ex2-kkt}) and rewrite it as:
     &= (-3 - \lambda) x^2 + (1 - \lambda) y^2 + (2 - \lambda) z^2 + 2(x + y + z) + \lambda
 }
 
-\noindent Let \( \mathbf{x}^* = \myvec{x^*, y^*, z^*}^T \) be a local solution,
+Let \( \mathbf{x}^* = \myvec{x^*, y^*, z^*}^T \) be a local solution,
 then the derived KKT conditions are:
 
 \myex{false}{}{
@@ -375,14 +377,14 @@ then condition \( \lambda^* c(\mathbf{x}^*) = 0 \) is also satisfied.
           in Numerical Optimization, Nocedal and Wright.
           Explain how the method works, with a particular attention to the search direction.
 
-    \item Consider the following contrained minimization problem,
+    \item Consider the following constrained minimization problem,
           \( \mathbf{x} = (x_1, x_2)^T \);
 
           \myex{true}{eq:ex3-min-f}{
               \min_{\mathbf{x}} f(\mathbf{x}) := 4x_1 + 3x_2
           }
 
-          subect to:
+          subject to:
 
           \myex{true}{eq:ex3-constraints}{
               6 - 2x_1 - 3x_2 \geq 0 \\
@@ -420,7 +422,7 @@ and the fact that uncertainty in the model makes a linear model more appropriate
 than an overly complex nonlinear model.
 Linear programs have a \textbf{linear objective function}
 and \textbf{linear constraints}, which may include both equalities and inequalities.
-The feasible set is \textbf{polytope}: a convex, connected set with flat, polygonal faces.
+The feasible set is a \textbf{polytope}: a convex, connected set with flat, polygonal faces.
 The contours of the objective function are planar.
 The solution can be unique e.g. a single vertex of the polytope,
 or non unique e.g. an entire edge.
@@ -441,9 +443,9 @@ Linear programs are analyzed in \textit{standard form}:
     \end{cases}
 }
 
-\noindent where \( c, x \in \mathbb{R}^n, \; b \in \mathbb{R}^m, \; A \in \mathbb{R}^{m \times n}\).
+where \( c, x \in \mathbb{R}^n, \; b \in \mathbb{R}^m, \; A \in \mathbb{R}^{m \times n}\).
 For the standard formulation of (\ref{eq:ex3-linear-program}),
-we will assume throughout that \( m \le n \) for simplicity.
+without loss of generality we assume throughout that \( m \le n \).
 Simple devices can be used to transform any linear program to this form.
 For instance, given the problem (\ref{eq:ex3-example-f-constraint})
 without any bounds on \( x \):
@@ -454,7 +456,7 @@ without any bounds on \( x \):
     Ax \leq b
 }
 
-\noindent we can convert the inequality constraints to equalities by introducing a vector of
+we can convert the inequality constraints to equalities by introducing a vector of
 \textbf{slack variables} \( z \) and writing:
 
 \myex{true}{eq:ex3-example-f-constraint-slack}{
@@ -466,7 +468,7 @@ without any bounds on \( x \):
     \end{cases}
 }
 
-\noindent It's not yet in standard form
+It's not yet in standard form
 since not all the variables are constrained to be nonnegative.
 We deal with this by splitting \( x \) into its nonnegative and nonpositive parts:
 
@@ -474,7 +476,7 @@ We deal with this by splitting \( x \) into its nonnegative and nonpositive part
     x = x^+ - x^-, \quad x^+ = \max (x, 0) \geq 0, \quad x^- = \max (-x, 0) \geq 0
 }
 
-\noindent The problem (\ref{eq:ex3-example-f-constraint-slack}) can be written as:
+The problem (\ref{eq:ex3-example-f-constraint-slack}) can be written as:
 
 \myex{false}{}{
     \min \myvec{c \\ -c \\ 0}^T \myvec{x^+ \\ x^- \\ z},
@@ -484,7 +486,7 @@ We deal with this by splitting \( x \) into its nonnegative and nonpositive part
     \myvec{x^+ \\ x^- \\ z} \geq 0
 }
 
-\noindent which clearly has the same form as (\ref{eq:ex3-linear-program}).
+which clearly has the same form as (\ref{eq:ex3-linear-program}).
 For inequality constraints of the form \( Ax \geq b \),
 we subtract the variables from the left hand side as in (\ref{eq:ex3-surplus}),
 such variables are known as \textbf{surplus variables}.
@@ -493,15 +495,15 @@ such variables are known as \textbf{surplus variables}.
     Ax \geq b \Leftrightarrow Ax - y = b, \quad y \geq 0
 }
 
-\noindent The optimality conditions for problem (\ref{eq:ex3-linear-program})
+The optimality conditions for problem (\ref{eq:ex3-linear-program})
 are only the first-order conditions alias \textbf{KKT conditions}.
 The convexity of the problem ensures that these conditions are sufficient for a global minimum.
-The KKT conditions requires linear independence of the active constraint gradients (LICQ).
+The KKT conditions requires the linear independence of the active constraint gradients (LICQ).
 However, the result continues to hold for dependent constraints provided they are linear,
 as is the case here.
 
 We partition the Lagrange multipliers for the problem (\ref{eq:ex3-linear-program})
-into two vectors
+into two vectors:
 \( \lambda \in \mathbb{R}^m \) multiplier vector for equality constraints \( Ax = b \),
 and \( s \in \mathbb{R}^n \) multiplier vector for the bound constraints \( x \geq 0 \).
 The \textbf{Lagrangian function} for the problem (\ref{eq:ex3-linear-program}) is:
@@ -510,7 +512,7 @@ The \textbf{Lagrangian function} for the problem (\ref{eq:ex3-linear-program}) i
     \mathcal{L}(x, \lambda, s) = c^T x + \lambda^T (Ax - b) - s^T x
 }
 
-\noindent Applying Theorem (\ref{eq:ex2-kkt}), we find that the first-order necessary conditions for
+Applying Theorem (\ref{eq:ex2-kkt}), we find that the first-order necessary conditions for
 \( x^* \) to be a solution of (\ref{eq:ex3-linear-program}) are:
 
 \myex{true}{eq:ex3-linear-kkt}{
@@ -522,12 +524,12 @@ The \textbf{Lagrangian function} for the problem (\ref{eq:ex3-linear-program}) i
     x_i s_i &= 0, \; i = 1, 2, \ldots, n
 }
 
-\noindent The multipliers \( \lambda, s \) indicate the sensitivity of the optimal objective value
+The multipliers \( \lambda, s \) indicate the sensitivity of the optimal objective value
 to perturbations in the constraints
 and the process of finding \( ( \lambda, s) \) for a given optimal \( x \)
 is called \textbf{sensitivity analysis}.
 
-We assume for the remainder of the discussion that the matrix \( A \)
+Without loss of generality, we assume for the remainder of the discussion that the matrix \( A \)
 in (\ref{eq:ex3-linear-program}) has full row rank.
 Each iterate generated by the simplex method is a \textbf{basic feasible point}
 of (\ref{eq:ex3-linear-program}).
@@ -591,7 +593,7 @@ a single index must be removed from \( \mathcal{B} \) and replaced by another fr
 \( \mathcal{B} \), 
 as depicted in Algorithm (\ref{alg:ex3-simplex-iter}).
 More details regarding this exchange of index procedure is presented:
-from \( \mathcal{B} \) bein the basis i.e. basic index set,
+from \( \mathcal{B} \) being the basis, i.e. basic index set,
 and (\ref{eq:ex3-linear-kkt}), 
 we can derive values for not just
 the primal variable \( x \) but also the dual variables \( \lambda, s \):
@@ -601,7 +603,7 @@ let's define the nonbasic index set \( \mathcal{N} \) as the complement of \( \m
     \mathcal{N} = \{ 1, 2, \ldots, n \} \backslash \mathcal{B}
 }
 
-\noindent As \( B \) is the basic matrix, whose columns are \( A_i \) for \( i \in \mathcal{B} \),
+As \( B \) is the basic matrix, whose columns are \( A_i \) for \( i \in \mathcal{B} \),
 we use \( \mathcal{N} \) to denote the nonbasic matrix \( N = [A_i]_{i \in \mathcal{N}} \).
 We also partition the n-element vectors \( x, s, c \) 
 according to the index sets \( \mathcal{B}, \mathcal{N} \) using the notation:
@@ -613,13 +615,13 @@ according to the index sets \( \mathcal{B}, \mathcal{N} \) using the notation:
     c_B &= [x_i]_{i \in \mathcal{B}}, & c_N = [x_i]_{i \in \mathcal{N}} \\
 }
 
-\noindent From the KKT conditions (\ref{eq:ex3-linear-kkt}), we have:
+From the KKT conditions (\ref{eq:ex3-linear-kkt}), we have:
 
 \myex{true}{eq:ex3-deriving-kkt-partition}{
     Ax &= B x_B + N x_N = b. \\
 }
 
-\noindent The primal variable \( x \) for this simplex iterate is defined as:
+The primal variable \( x \) for this simplex iterate is defined as:
 
 \myex{true}{eq:ex3-deriving-primal-iterate}{
     x_B = B^{-1} b, \quad x_N = 0.
@@ -762,7 +764,7 @@ was done with an online tool using geogebra as backend.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\textwidth]{./figures/ex3-feasible-region.png}
-    \caption{Feasible region for the problem \ref{eq:ex3-min-f} and \ref{eq:ex3-constraints}}
+    \caption{Feasible region for the problems \ref{eq:ex3-min-f}, \ref{eq:ex3-constraints}}
     \label{fig:feasible-region}
 \end{figure}
 
@@ -773,7 +775,7 @@ visible in Figure \ref{fig:feasible-region}.
 The vertices can be computed by solving the system of equations
 following the geometrical interpretation:
 
-\noindent Let \( \vibar{x}{1} := x_1 \geq 0 \; \cap \; x_2 \geq 0 \),
+Let \( \vibar{x}{1} := x_1 \geq 0 \; \cap \; x_2 \geq 0 \),
 the result is trivial since \( x_1 = 0 \) is the y-axis
 and \( x_2 = 0 \) is the x-axis,
 so the result is the origin \( O \).
@@ -788,7 +790,7 @@ Anyways, the intersection is computed by solving the system:
     \vibar{x}{1} = \myvec{0 \\ 0} = O
 }
 
-\noindent Let \( \vibar{x}{2} := x_1 \geq 0 \; \cap \; 3 + 3 x_1 - 2 x_2 \geq 0 \).
+Let \( \vibar{x}{2} := x_1 \geq 0 \; \cap \; 3 + 3 x_1 - 2 x_2 \geq 0 \).
 The intersection is computed by solving the system:
 
 \myex{false}{}{
@@ -805,7 +807,7 @@ The intersection is computed by solving the system:
     \vibar{x}{2} = \myvec{0 \\[3pt] \frac{3}{2}}
 }
 
-\noindent Let \( \vibar{x}{3} := 3 + 3 x_1 - 2 x_2 \geq 0 \; \cap \; 6 - 2 x_1 - 3 x_2 \geq 0 \).
+Let \( \vibar{x}{3} := 3 + 3 x_1 - 2 x_2 \geq 0 \; \cap \; 6 - 2 x_1 - 3 x_2 \geq 0 \).
 The intersection is computed by solving the system:
 
 \myex{false}{}{
@@ -822,7 +824,7 @@ The intersection is computed by solving the system:
     \vibar{x}{3} = \myvec{\frac{3}{13} \\[6pt] \frac{24}{13}}
 }
 
-\noindent Let \( \vibar{x}{4} := 6 - 2 x_1 - 3 x_2 \geq 0 \; \cap \; 4 - 2 x_1 - x_2 \geq 0 \).
+Let \( \vibar{x}{4} := 6 - 2 x_1 - 3 x_2 \geq 0 \; \cap \; 4 - 2 x_1 - x_2 \geq 0 \).
 The intersection is computed by solving the system:
 
 \myex{false}{}{
@@ -839,7 +841,7 @@ The intersection is computed by solving the system:
     \vibar{x}{4} = \myvec{\frac{3}{2} \\[3pt] 1}
 }
 
-\noindent Let \( \vibar{x}{5} :=  4 - 2 x_1 - x_2 \geq 0 \; \cap \; x_2 \geq 0 \).
+Let \( \vibar{x}{5} :=  4 - 2 x_1 - x_2 \geq 0 \; \cap \; x_2 \geq 0 \).
 The intersection is computed by solving the system:
 
 \myex{false}{}{
@@ -902,7 +904,7 @@ By checking the LICQ condition, the gradients of the active constraints are line
     0
 }
 
-\noindent Find \( \lambda_5, \lambda_6 \):
+Find \( \lambda_5, \lambda_6 \):
 
 \myex{false}{}{
     \nabla f = \myvec{4 \\ 3}, \quad
@@ -916,7 +918,7 @@ By checking the LICQ condition, the gradients of the active constraints are line
     \end{cases}
 }
 
-\noindent Finally, let's check that the gradient of the Lagrangian function is zero at the optimal point
+Finally, let's check that the gradient of the Lagrangian function is zero at the optimal point
 \( \mathbf{x}^* = \vibar{x}{1} \),
 as rewritten in (\ref{eq:ex2-computed-complementary-condition}):
 
@@ -927,7 +929,7 @@ as rewritten in (\ref{eq:ex2-computed-complementary-condition}):
     &= \myvec{0 \\ 0} = \mathbf{0}
 }
 
-\noindent Hence, the first order necessary conditions hold for the optimal point \( \vibar{x}{1} \).
+Hence, the first order necessary conditions hold for the optimal point \( \vibar{x}{1} \).
 
 
 \end{document}
