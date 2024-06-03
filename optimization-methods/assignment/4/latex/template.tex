@@ -466,16 +466,17 @@ such variables are known as \textbf{surplus variables}.
 }
 
 \noindent The optimality conditions for problem (\ref{eq:ex3-linear-program})
-are only the first-order alias KKT conditions.
+are only the first-order conditions alias \textbf{KKT conditions}.
 The convexity of the problem ensures that these conditions are sufficient for a global minimum.
 The KKT conditions requires linear independence of the active constraint gradients (LICQ).
 However, the result continues to hold for dependent constraints provided they are linear,
 as is the case here.
 
 We partition the Lagrange multipliers for the problem (\ref{eq:ex3-linear-program})
-into two vectors \( \lambda \in \mathbb{R}^m \) multiplier vector for equality constraints \( Ax = b \),
+into two vectors
+\( \lambda \in \mathbb{R}^m \) multiplier vector for equality constraints \( Ax = b \),
 and \( s \in \mathbb{R}^n \) multiplier vector for the bound constraints \( x \geq 0 \).
-The Lagrangian function for the problem (\ref{eq:ex3-linear-program}) is:
+The \textbf{Lagrangian function} for the problem (\ref{eq:ex3-linear-program}) is:
 
 \myex{true}{eq:ex3-linear-lagrangian}{
     \mathcal{L}(x, \lambda, s) = c^T x + \lambda^T (Ax - b) - s^T x
