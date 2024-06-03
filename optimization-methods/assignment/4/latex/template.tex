@@ -18,8 +18,14 @@
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
-% 1: command name, 2: Title, 3: subtitle, 4: label, 5: content
-\newcommand{\mytheorem}[5]{\newtheorem*{#1}{#2} \begin{#1}[#3]\label{#4} #5 \end{#1}}
+\newtheorem{theorem}{Theorem}[section]
+% 1: title, 2: label, 3: content
+\newcommand{\myth}[3]{
+    \begin{theorem}[#1] 
+        \label{#2} 
+        #3 
+    \end{theorem}
+}
 
 % 1: if numbered equation, 2: label, 3: content
 \newcommand{\myex}[3]{
@@ -124,25 +130,25 @@ The \textbf{iterativeness} of the method builds up a solution over a series of s
 each of which improves the approximation to the exact solution.
 The performance of the linear CG method is determined
 by the \textbf{distribution of the eigenvalues} of the coefficient matrix,
-which are two, so it is already a good candidate anyways, 
+which are two, so it is already a good candidate anyways,
 thus reaching immediately the exact solution before mentioned.
 The method exploits the \textbf{conjugate directions} of the matrix \( A \),
 i.e. \( \langle p_i, p_j \rangle = 0, \; i \neq j \).
 Such properties allows the method to \textbf{converge} in at most \( n \) iterations,
 where \( n \) is the dimension of the problem.
-The \textbf{convergence rate} depends on the distance between 
+The \textbf{convergence rate} depends on the distance between
 the current eigval and the largest as the formula suggests:
-\( \norm{x_{k+1} - x^*}_A^2 
-\leq 
+\( \norm{x_{k+1} - x^*}_A^2
+\leq
 \left( \frac{\lambda_{n-k} - \lambda_1}{\lambda_{n-k} + \lambda_1} \right)^2
-\norm{x_0 - x^*}_A^2 \) 
+\norm{x_0 - x^*}_A^2 \)
 if \( A \) has eigenvalues \( \lambda_1 \leq \lambda_2 \leq \dots \leq \lambda_n \).
-Particularly, the CG method allows to compute directions 
-as a \textbf{linear combination} of the residual 
-\( r_{k+1} = Ax_{k+1} - b \) 
+Particularly, the CG method allows to compute directions
+as a \textbf{linear combination} of the residual
+\( r_{k+1} = Ax_{k+1} - b \)
 and the previous direction \( p_k \),
 ensuring that the new search directions are conjugate with respect to \( A \),
-thus significantly reducing the number of iterations needed to converge to the minimum 
+thus significantly reducing the number of iterations needed to converge to the minimum
 when compared \textbf{to other gradient-based methods} like steepest descent.
 Such advantage becomes strongly evident especially in high-dimensional spaces.
 The CG method is appropriate and effective for minimizing the quadratic function.
@@ -380,13 +386,24 @@ then condition \( \lambda^* c(\mathbf{x}^*) = 0 \) is also satisfied.
 
 \subsection{Answer}
 
-% Despite often the situations requiring modeling are nonlinear,
-% linear programming is appealing because of the advanced state of the software,
-% guaranteed convergence to global minimum,
-% and the fact that uncertainty in the model makes linear model more appropriate 
-% than an overly complex nonlinear model.
-
-Linear programs are usually stated and analyzed in the following \textit{standard form}:
+Before explaining the Simplex method, let's first introduce the concept of linear programming.
+Despite real-case situation models are often nonlinear,
+linear programming is appealing because of the advanced state of the software,
+guaranteed convergence to global minimum,
+and the fact that uncertainty in the model makes a linear model more appropriate
+than an overly complex nonlinear model.
+Linear programs have a \textbf{linear objective function}
+and \textbf{linear constraints}, which may include both equalities and inequalities.
+The feasible set is \textbf{polytope}: a convex, connected set with flat, polygonal faces.
+The contours of the objective function are planar.
+The solution can be unique e.g. a single vertex of the polytope,
+or non unique e.g. an entire edge.
+In higher dimensions, the set of optimal points can be a single vertex,
+an edge or face, or even the entire feasible set.
+\textbf{Infeasible case}: the problem has no solution if the feasible set is empty.
+\textbf{Unbounded case}: the problem has no solution if the objective function is unbounded
+below on the feasible region.
+Linear programs are analyzed in \textit{standard form}:
 
 \myex{true}{eq:ex3-linear-program}{
     \min c^T x
@@ -398,17 +415,163 @@ Linear programs are usually stated and analyzed in the following \textit{standar
     \end{cases}
 }
 
-where \( c, x \in \mathbb{R}^n, \; b \in \mathbb{R}^m, \; A \in \mathbb{R}^{m \times n}\).
+\noindent where \( c, x \in \mathbb{R}^n, \; b \in \mathbb{R}^m, \; A \in \mathbb{R}^{m \times n}\).
+Simple devices can be used to transform any linear program to this form.
+For instance, given the problem (\ref{eq:ex3-example-f-constraint})
+without any bounds on \( x \):
+
+\myex{true}{eq:ex3-example-f-constraint}{
+    \min c^T x
+    \quad \text{subject to }
+    Ax \leq b
+}
+
+\noindent we can convert the inequality constraints to equalities by introducing a vector of
+\textbf{slack variables} \( z \) and writing:
+
+\myex{true}{eq:ex3-example-f-constraint-slack}{
+    \min c^T x
+    \quad \text{subject to }
+    \begin{cases}
+        Ax + z = b \\
+        z \geq 0
+    \end{cases}
+}
+
+\noindent It's not yet in standard form
+since not all the variables are constrained to be nonnegative.
+We deal with this by splitting \( x \) into its nonnegative and nonpositive parts:
+
+\myex{false}{}{
+    x = x^+ - x^-, \quad x^+ = \max (x, 0) \geq 0, \quad x^- = \max (-x, 0) \geq 0
+}
+
+\noindent The problem (\ref{eq:ex3-example-f-constraint-slack}) can be written as:
+
+\myex{false}{}{
+    \min \myvec{c \\ -c \\ 0}^T \myvec{x^+ \\ x^- \\ z},
+    \quad \text{subject to}
+    \myvec{A & -A & I} \myvec{x^+ \\ x^- \\ z} = b,
+    \quad
+    \myvec{x^+ \\ x^- \\ z} \geq 0
+}
+
+\noindent which clearly has the same form as (\ref{eq:ex3-linear-program}).
+For inequality constraints of the form \( Ax \geq b \),
+we subtract the variables from the left hand side as in (\ref{eq:ex3-surplus}),
+such variables are known as \textbf{surplus variables}.
+
+\myex{true}{eq:ex3-surplus}{
+    Ax \geq b \Leftrightarrow Ax - y = b, \quad y \geq 0
+}
+
+\noindent The optimality conditions for problem (\ref{eq:ex3-linear-program})
+are only the first-order alias KKT conditions.
+The convexity of the problem ensures that these conditions are sufficient for a global minimum.
+The KKT conditions requires linear independence of the active constraint gradients (LICQ).
+However, the result continues to hold for dependent constraints provided they are linear,
+as is the case here.
+
+We partition the Lagrange multipliers for the problem (\ref{eq:ex3-linear-program})
+into two vectors \( \lambda \in \mathbb{R}^m \) multiplier vector for equality constraints \( Ax = b \),
+and \( s \in \mathbb{R}^n \) multiplier vector for the bound constraints \( x \geq 0 \).
+The Lagrangian function for the problem (\ref{eq:ex3-linear-program}) is:
+
+\myex{true}{eq:ex3-linear-lagrangian}{
+    \mathcal{L}(x, \lambda, s) = c^T x + \lambda^T (Ax - b) - s^T x
+}
+
+\noindent Applying Theorem (\ref{eq:ex2-kkt}), we find that the first-order necessary conditions for
+\( x^* \) to be a solution of (\ref{eq:ex3-linear-program}) are:
+
+\myex{true}{eq:ex3-linear-kkt}{
+    \exists \; \lambda, s : \;
+    A^T \lambda + s &= c, \\
+    Ax &= b, \\
+    x &\geq 0, \\
+    s &\geq 0, \\
+    x_i s_i &= 0, \; i = 1, 2, \ldots, n
+}
+
+\noindent The multipliers \( \lambda, s \) indicate the sensitivity of the optimal objective value
+to perturbations in the constraints
+and the process of finding \( ( \lambda, s) \) for a given optimal \( x \)
+is called \textbf{sensitivity analysis}.
+
+We assume for the remainder of the discussion that the matrix \( A \)
+in (\ref{eq:ex3-linear-program}) has full row rank.
+Each iterate generated by the simplex method is a \textbf{basic feasible point}
+of (\ref{eq:ex3-linear-program}).
+A vector \( x \) is a basic feasible point
+if it is feasible and if there exists a subset \( \mathcal{B} \) of the index set
+\( \{ 1, 2, \ldots, n \} \) such that:
+
+\begin{itemize}
+    \item \( \mathcal{B} \) contains exactly \( m \) indices
+    \item \( i \notin \mathcal{B} \Rightarrow x_i = 0 \),
+          meaning the bound \( x_i \geq 0 \) can be inactive only if \( i \in \mathcal{B} \)
+    \item The \( B \in \mathbb{R}^{m \times m}, \; B = [A_i]_{i \in \mathcal{B}} \; \)
+          matrix is nonsingular, where \( A_i \) is the \( i \)th column of \( A \)
+\end{itemize}
+
+A set \( \mathcal{B} \) satisfying these properties is called a \textbf{basis}
+for the problem (\ref{eq:ex3-linear-program}).
+The corresponding matrix \( B \) is called the \textbf{basis matrix}.
+The \textbf{simplex method} strategy is to examine only basic feasible points
+leading to the convergence of the solution of (\ref{eq:ex3-linear-program}).
+Such strategy holds thanks to the following theorem:
+
+% 1: command name, 2: Title, 3: subtitle, 4: label, 5: content
+\myth{Fundamental Theorem of Linear Programming}{th:ex3-linear-programming}{
+    \hfill
+    \begin{enumerate}
+        \item If (\ref{eq:ex3-linear-program}) has a nonempty feasible region,
+              then there is at least one basic feasible point
+        \item If (\ref{eq:ex3-linear-program}) has solutions,
+              then at least one such solution is a basic optimal point
+        \item If (\ref{eq:ex3-linear-program}) is feasible and bounded,
+              then it has an optimal solution
+    \end{enumerate}
+}
+
+The feasible set defined by the linear constraints is a polytope,
+and the \textbf{vertices of the polytope} are the points that do not lie on a straght line
+between two other points in the set.
+Geometrically,
+they are visible as the corners of the polytope in Figure (\ref{fig:feasible-region}).
+Algebraically, the vertices are exactly the basic feasible points defined above.
+
+\myth{}{th:ex3-vertices-polytope}{
+    All basic feasible points for (\ref{eq:ex3-linear-program})
+    are vertices of the feasible polytope
+    \( \{ x \mid Ax = b, x \geq 0 \} \),
+    and vice versa.
+}
 
 
-The Simplex method explaination provided in the book 
+The Simplex method explaination provided in the book
 is known as the \textit{revised simplex method}.
-All iterates of the simplex method are basic feasible points 
+All iterates of the simplex method are basic feasible points
 for the problem (\ref{eq:ex3-linear-program}),
 and therefore vertices of the feasible polytope.
-Most steps consist of a move from one vertex to an adjacent one 
+Most steps consist of a move from one vertex to an adjacent one
 for which the basis \( \mathcal{B} \) differs in exactly one component.
 
+% 1: command name, 2: Title, 3: subtitle, 4: label, 5: content
+\myth{Optimal Solution of a Linear Programming Problem}{th:linear-programming-solution}{
+    If a linear programming problem has a solution,
+    it must occur at a vertex of the set of feasible solutions.
+    If the problem has more than one solution,
+    then at least one of them must occur at a vertex of the set of feasible solutions.
+    In either case, the value of the objective function is unique.
+}
+
+A \textbf{basic solution} of a linear programming problem in standard form is a solution
+\( ( x_1, x_2, \ldots, x_n, s_1, s_2, \ldots, s_m ) \)
+of the constraint equations in which at most m variables are nonzero.
+The nonzero variables are called \textbf{basic variables}.
+A basic solution for which all variables are nonnegative
+is called a \textbf{basic feasible solution}.
 
 The Simplex method is \dots
 
@@ -436,11 +599,11 @@ was done with an online tool using geogebra as backend.
 
 The basic feasible points are the vertices of the feasible region described by the polytope
 visible in Figure \ref{fig:feasible-region}.
-The vertices can be computed by solving the system of equations 
+The vertices can be computed by solving the system of equations
 following the geometrical interpretation:
 
 \noindent Let \( \vibar{x}{1} := x_1 \geq 0 \; \cap \; x_2 \geq 0 \),
-the result is trivial since \( x_1 = 0 \) is the y-axis 
+the result is trivial since \( x_1 = 0 \) is the y-axis
 and \( x_2 = 0 \) is the x-axis,
 so the result is the origin \( O \).
 Anyways, the intersection is computed by solving the system:
@@ -450,7 +613,7 @@ Anyways, the intersection is computed by solving the system:
         x_1 = 0 \\
         x_2 = 0
     \end{cases}
-    \quad 
+    \quad
     \vibar{x}{1} = \myvec{0 \\ 0} = O
 }
 
@@ -467,7 +630,7 @@ The intersection is computed by solving the system:
         x_1 = 0 \\
         x_2 = \frac{3}{2}
     \end{cases}
-    \quad 
+    \quad
     \vibar{x}{2} = \myvec{0 \\[3pt] \frac{3}{2}}
 }
 
@@ -484,7 +647,7 @@ The intersection is computed by solving the system:
         x_1 = \frac{2}{3} x_2 - 1 \\
         x_2 = \frac{24}{13}
     \end{cases}
-    \quad 
+    \quad
     \vibar{x}{3} = \myvec{\frac{3}{13} \\[6pt] \frac{24}{13}}
 }
 
@@ -499,9 +662,9 @@ The intersection is computed by solving the system:
     \Rightarrow
     \begin{cases}
         x_2 = 1 \\
-        4 - 2 x_1 - (1) = 0 
+        4 - 2 x_1 - (1) = 0
     \end{cases}
-    \quad 
+    \quad
     \vibar{x}{4} = \myvec{\frac{3}{2} \\[3pt] 1}
 }
 
@@ -518,7 +681,7 @@ The intersection is computed by solving the system:
         4 - 2 x_1 - (0) = 0 \\
         x_2 = 0
     \end{cases}
-    \quad 
+    \quad
     \vibar{x}{5} = \myvec{2 \\ 0}
 }
 
@@ -537,33 +700,33 @@ The optimal point \( \mathbf{x}^* \) that minimizes \( f \) subject to the const
 is the point \( \mathbf{\overline{x}_1} \) vertex of the polytope in the feasible region.
 
 \myex{false}{}{
-    \arg \min_{\mathbf{x} \in \mathcal{\overline{X}} } 
+    \arg \min_{\mathbf{x} \in \mathcal{\overline{X}} }
     f(\mathbf{x}) = \vibar{x}{1}
-    \qquad \mathcal{\overline{X}} 
-    = \{ 
-        \vibar{x}{1}, 
-        \vibar{x}{2}, 
-        \vibar{x}{3}, 
-        \vibar{x}{4}, 
-        \vibar{x}{5} 
+    \qquad \mathcal{\overline{X}}
+    = \{
+    \vibar{x}{1},
+    \vibar{x}{2},
+    \vibar{x}{3},
+    \vibar{x}{4},
+    \vibar{x}{5}
     \}
 }
 
 \subsection*{c)}
 
 To prove that the first order necessary conditions hold for the optimal points,
-we need to verify the KKT conditions from (\ref{eq:ex2-kkt}) 
+we need to verify the KKT conditions from (\ref{eq:ex2-kkt})
 for the optimal point \( \vibar{x}{1} = \myvec{0 & 0}^T \).
-The active set \( \mathcal{A}( \vibar{x}{1} ) = \{ 5, 6 \} \) 
-where the constraints \( c_5 := x_2 \geq 0 \) and \( c_6 := x_1 \geq 0 \) 
-from (\ref{eq:ex3-constraints}) are active, both \( c_5, c_6 = 0 \therefore \) 
-the point \( \vibar{x}{1} \) is at a polytope vertex.  
+The active set \( \mathcal{A}( \vibar{x}{1} ) = \{ 5, 6 \} \)
+where the constraints \( c_5 := x_2 \geq 0 \) and \( c_6 := x_1 \geq 0 \)
+from (\ref{eq:ex3-constraints}) are active, both \( c_5, c_6 = 0 \therefore \)
+the point \( \vibar{x}{1} \) is at a polytope vertex.
 By checking the LICQ condition, the gradients of the active constraints are linearly independent:
 
-\myex{false}{}{ 
-    \langle \nabla c_5, \nabla c_6 \rangle 
-    = 
-    \langle \myvec{0 \\ 1}, \myvec{1 \\ 0} \rangle 
+\myex{false}{}{
+    \langle \nabla c_5, \nabla c_6 \rangle
+    =
+    \langle \myvec{0 \\ 1}, \myvec{1 \\ 0} \rangle
     =
     0
 }
@@ -587,7 +750,7 @@ By checking the LICQ condition, the gradients of the active constraints are line
 as rewritten in (\ref{eq:ex2-computed-complementary-condition}):
 
 \myex{false}{}{
-    \nabla_{x} \mathcal{L}(\mathbf{x}^*, \lambda^*) 
+    \nabla_{x} \mathcal{L}(\mathbf{x}^*, \lambda^*)
     &= \nabla f - \sum_{i \in \mathcal{A}( \mathbf{x}^* )} \lambda_i^* \nabla c_i \\
     &= \myvec{4 \\ 3} - 3 \myvec{0 \\ 1} - 4 \myvec{1 \\ 0} \\
     &= \myvec{0 \\ 0} = \mathbf{0}
