@@ -1,4 +1,4 @@
-\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany, draft]{scrartcl}
+\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
 
 % Required package
 \usepackage{amssymb}
@@ -150,12 +150,33 @@ and the previous direction \( p_k \),
 ensuring that the new search directions are conjugate with respect to \( A \),
 thus significantly reducing the number of iterations needed to converge to the minimum
 when compared \textbf{to other gradient-based methods} like steepest descent.
+This is depicted in Algorithm (\ref{alg:ex1-cg}).
 Such advantage becomes strongly evident especially in high-dimensional spaces.
 The CG method is appropriate and effective for minimizing the quadratic function.
 In fact, its use case perfectly matches the context of optimization
 for finding the minimum of \textbf{quadratic forms}.
 
+\begin{algorithm}
+\caption{Conjugate Gradient}\label{alg:ex1-cg}
+  \begin{algorithmic}[1]
+    \Require \( x_0 \): the initial starting point
 
+    \State Set \( r_0 \leftarrow A x_0 - b \)
+    \State Set \( p_0 \leftarrow - r_0 \)
+    \State Set \( k \leftarrow 0 \)
+    \State
+
+    \While { \( r_k \neq 0 \) }
+        \State \( \alpha_k \leftarrow \frac{r_k^T r_k}{p_k^T A p_k } \);
+        \State \( x_{k + 1} \leftarrow x_k + \alpha_k p_k \);
+        \State \( r_{k + 1} \leftarrow r_k + \alpha_k A p_k \);
+        \State \( \beta_{k + 1} \leftarrow \frac{ r_{k+1}^T r_{k+1} }{ r_k^T r_k } \);
+        \State \( p_{k + 1} \leftarrow - r_{k+1} + \beta_{k+1} p_k \);
+        \State \( k \leftarrow k + 1 \);
+    \EndWhile
+
+  \end{algorithmic}
+\end{algorithm}
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
@@ -386,7 +407,12 @@ then condition \( \lambda^* c(\mathbf{x}^*) = 0 \) is also satisfied.
 
 \subsection{Answer}
 
-Before explaining the Simplex method, let's first introduce the concept of linear programming.
+The answer I provide give a full complete understanding not only of the Simplex method,
+but the linear programming as a whole and all its components necessary to comprehend it.
+I denoted the useful keywords in bold to facilitate the building of the answer and its prerequisites:
+including how the method works and the search direction at the end.
+I start with introducing the linear programming problem.
+
 Despite real-case situation models are often nonlinear,
 linear programming is appealing because of the advanced state of the software,
 guaranteed convergence to global minimum,
@@ -562,9 +588,113 @@ The major issue at each simplex iteration is to decide which index to remove fro
 \( \mathcal{B} \).
 Unless the step is a \textbf{direction} of unboundedness,
 a single index must be removed from \( \mathcal{B} \) and replaced by another from outside 
-\( \mathcal{B} \).
+\( \mathcal{B} \), 
+as depicted in Algorithm (\ref{alg:ex3-simplex-iter}).
 More details regarding this exchange of index procedure is presented:
-from \( \mathcal{B} \) and (\ref{eq:ex3-linear-kkt}), we can derive values for not just.
+from \( \mathcal{B} \) bein the basis i.e. basic index set,
+and (\ref{eq:ex3-linear-kkt}), 
+we can derive values for not just
+the primal variable \( x \) but also the dual variables \( \lambda, s \):
+let's define the nonbasic index set \( \mathcal{N} \) as the complement of \( \mathcal{B} \):
+
+\myex{true}{eq:ex3-nonbasic-index-set}{
+    \mathcal{N} = \{ 1, 2, \ldots, n \} \backslash \mathcal{B}
+}
+
+\noindent As \( B \) is the basic matrix, whose columns are \( A_i \) for \( i \in \mathcal{B} \),
+we use \( \mathcal{N} \) to denote the nonbasic matrix \( N = [A_i]_{i \in \mathcal{N}} \).
+We also partition the n-element vectors \( x, s, c \) 
+according to the index sets \( \mathcal{B}, \mathcal{N} \) using the notation:
+
+\myex{true}{eq:ex3-partition-variables}{
+    % x = \myvec{x_B \\ x_N}, \quad s = \myvec{s_B \\ s_N}, \quad c = \myvec{c_B \\ c_N}
+    x_B &= [x_i]_{i \in \mathcal{B}}, & x_N = [x_i]_{i \in \mathcal{N}} \\
+    s_B &= [x_i]_{i \in \mathcal{B}}, & s_N = [x_i]_{i \in \mathcal{N}} \\
+    c_B &= [x_i]_{i \in \mathcal{B}}, & c_N = [x_i]_{i \in \mathcal{N}} \\
+}
+
+\noindent From the KKT conditions (\ref{eq:ex3-linear-kkt}), we have:
+
+\myex{true}{eq:ex3-deriving-kkt-partition}{
+    Ax &= B x_B + N x_N = b. \\
+}
+
+\noindent The primal variable \( x \) for this simplex iterate is defined as:
+
+\myex{true}{eq:ex3-deriving-primal-iterate}{
+    x_B = B^{-1} b, \quad x_N = 0.
+}
+
+Since we are dealing only with basic feasible points,
+we know that \( B \) is nonsingular and that \( x_B \geq 0 \), 
+so this choice of \( x \) satisfies already the two KKT conditions (\ref{eq:ex3-linear-kkt}):
+the equality and nonnegativity conditions.
+
+We choose \( s \) to satisfy the complementary condition in (\ref{eq:ex3-linear-kkt})
+by setting \( s_B = 0 \).
+The remaining components \( \lambda, s_N \) can be found by partitioning this condition into
+\( c_B, c_N \) components and using \( s_B = 0 \) to obtain:
+
+\myex{true}{eq:ex3-deriving-dual-iterate}{
+    B^T \lambda = c_B, \quad  N^T \lambda + s_N = c_N.
+}
+
+Since \( B \) is square and nonsingular, the first equation uniquely defines \( \lambda \) as:
+
+\myex{true}{eq:ex3-deriving-dual-iterate-lambda}{
+    \lambda = B^{-T} c_B.
+}
+
+The second equation in (\ref{eq:ex3-deriving-dual-iterate}) implies a value for \( s_N \):
+
+\myex{true}{eq:ex3-deriving-dual-iterate-s}{
+    s_N = c_N - N^T \lambda = c_N - (B^{-1} N)^T c_B.
+}
+
+Computation of the vector \( s_N \) is referred to as \textbf{pricing},
+as denoted also in Algorithm \ref{alg:ex3-simplex-iter}.
+The components of \( s_N \) are often called the \textit{reduced costs} of the nonbasic variables \( x_N \).
+
+The only KKT condition not enforced explicitly is the nonnegativity condition \( s \geq 0 \).
+The basic components \( s_B \) certainly satisfy this condition, 
+by our choice \( s_B = 0 \).
+If the vector \( s_N \) defined by (\ref{eq:ex3-deriving-dual-iterate-s})
+also satisfies \( s_N \geq 0 \), we have found an optimal vector triple \( (x, \lambda, s) \),
+so the algorithm can terminate and declare success.
+
+Usually, however, one or more of the components of \( s_N \) are negative.
+The new index to enter the basis \( \mathcal{B} \), 
+i.e. the \textbf{entering index}, is chosen to be one of the indices \( q \in \mathcal{N} \) 
+for which \( s_q < 0 \).
+
+The objective \( c^T x \) will decrease when we allow \( x_q \) to become positive if:
+
+\begin{enumerate}
+    \item \( s_q < 0 \)
+    \item it is possible to increase \( x_q \) away from zero while maintaining feasibility of \( x \).
+\end{enumerate}
+
+\noindent \textbf{Pivoting}: \underline{Procedure to alter basis \( \mathcal{B} \) }:
+\begin{itemize}
+    \item allow \( x_q \) to increase from zero during the next step;
+
+    \item fix all other components of \( x_N \) at zero, and figure out the effect of increasing
+    \( x_q \) on the current basic vector \( x_B \), 
+    given that we want to stay feasible with respect to the equality contraints
+    \( Ax = b \).
+
+    \item keep increasing \( x_q \) until one of the components of \( x_B \) is driven to zero,
+    or determining that no such component exists for the unbounded case.
+
+    \item remove the \textbf{leaving index} \( p \) from \( \mathcal{B} \) 
+    and replace it with the entering index \( q \).
+\end{itemize}
+
+This process called \textbf{pivoting}, 
+is depicted and commented in Algorithm (\ref{alg:ex3-simplex-iter}), 
+selects entering and leaving indices, and keeps track of the values of the variables 
+\( x, \lambda, s \).
+
 
 \begin{algorithm}
 \caption{Simplex Method Iteration}\label{alg:ex3-simplex-iter}
@@ -583,7 +713,8 @@ from \( \mathcal{B} \) and (\ref{eq:ex3-linear-kkt}), we can derive values for n
     \EndIf
     \State
 
-    \State Select \( q \in \mathcal{N} \), with \( s_q < 0 \) as entering index;
+    \State Select \( q \in \mathcal{N} \), with \( s_q < 0 \) as entering index; 
+    \Comment{deciding index to insert in the basis}
     \State Solve \( Bd = A_q \) for \( d \);
     \State
 
@@ -594,6 +725,7 @@ from \( \mathcal{B} \) and (\ref{eq:ex3-linear-kkt}), we can derive values for n
 
     \State Calculate \( x_q^+ = \min_{i \; \mid \; d_i > 0} \frac{(x_B)_i}{d_i} \),
     and use \( p \) to denote the minimizing \( i \);
+    \Comment{index to remove}
 
     \State Update \( x_B^+ = x_B - dx_q^+, \;\; x_N^+ = (0, \ldots, 0, x_q^+, 0, \ldots, 0)^T \);
 
@@ -612,22 +744,13 @@ from \( \mathcal{B} \) and (\ref{eq:ex3-linear-kkt}), we can derive values for n
     In either case, the value of the objective function is unique.
 }
 
-A \textbf{basic solution} of a linear programming problem in standard form is a solution
-\( ( x_1, x_2, \ldots, x_n, s_1, s_2, \ldots, s_m ) \)
-of the constraint equations in which at most m variables are nonzero.
-The nonzero variables are called \textbf{basic variables}.
-A basic solution for which all variables are nonnegative
-is called a \textbf{basic feasible solution}.
-
-The Simplex method is \dots
-
-The algorithm works by \dots
-
-Algorithm block \dots
-
-The \textbf{search direction} move each iteration among the vertices of the polytope,
-meaning that they correspond to the direction from one vertex to the next choosen, 
-i.e. their directed edge. 
+The \textbf{search direction}, geometrically speaking, 
+move each iteration along the edge of the feasible polytope that decreases \( c^T x \).
+We continue to move along this edge until a new vertex in encountered.
+At this vertex, a new constraint \( x_p \geq 0 \) must have become active,
+i.e. one of the components \( x_p, p \in \mathcal{B} \), has decreased to zero.
+The pivoting procedure then removes this index \( p \) from the basis \( \mathcal{B} \)
+and replace it by \( q \), as in Algorithm (\ref{alg:ex3-simplex-iter}).
 
 \subsection{Answer}
 
