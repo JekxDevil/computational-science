@@ -15,7 +15,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{array} % for table
-
+\usepackage{mathtools} % for \coloneq
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -129,6 +129,90 @@ Prove or disprove that
 
 \noindent by computing and comparing the function tables of the left-hand-side 
 and the right-hand-side formulas.
+\\\newline
+
+From the truth table of the 3 propositional symbols \( A \), \( B \), and \( C \),
+
+\[
+\begin{array}{c|c|c}
+A & B & C \\
+\hline
+0 & 0 & 0 \\
+0 & 0 & 1 \\
+0 & 1 & 0 \\
+0 & 1 & 1 \\
+1 & 0 & 0 \\
+1 & 0 & 1 \\
+1 & 1 & 0 \\
+1 & 1 & 1 \\
+\end{array}
+\]
+
+we compute the left-hand-side formula as follows,
+
+\[
+\begin{array}{c|c|c|c}
+\neg A 
+& \neg A \heartsuit B 
+& B \heartsuit C 
+& (\neg A \heartsuit B) \diamondsuit (B \heartsuit C) \\
+\hline
+1 & 1 & 1 & 1 \\
+1 & 1 & 0 & 0 \\
+1 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 \\
+0 & 1 & 1 & 1 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 \\
+\end{array}
+\]
+
+and the right-hand-side formula as follows,
+
+\[
+\begin{array}{c|c|c|c|c}
+A \diamondsuit B 
+& \neg (A \diamondsuit B) 
+& A \diamondsuit C 
+& \neg (A \diamondsuit C) 
+& \neg (A \diamondsuit B) \heartsuit \neg (A \diamondsuit C) \\
+\hline
+1 & 0 & 1 & 0 & 1 \\
+1 & 0 & 0 & 1 & 0 \\
+0 & 1 & 1 & 0 & 1 \\
+0 & 1 & 0 & 1 & 1 \\
+0 & 1 & 0 & 1 & 1 \\
+0 & 1 & 1 & 0 & 1 \\
+1 & 0 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 1 \\
+\end{array}
+\]
+
+by comparing the left-hand-side and right-hand-side function tables, 
+we can see that \underline{they are not equivalent}, i.e. 
+
+\[
+\begin{array}{c|c}
+(\neg A \heartsuit B) \diamondsuit (B \diamondsuit C) 
+& \neg(A \diamondsuit B) \heartsuit \neg(A \diamondsuit C) \\
+\hline
+1 & 1 \\
+0 & 0 \\
+1 & 1 \\
+1 & 1 \\
+1 & 1 \\
+\textcolor{red}{0} & \textcolor{red}{1} \\
+0 & 0 \\
+\textcolor{red}{0} & \textcolor{red}{1} \\
+\end{array}
+\]
+
+\[
+(\neg A \heartsuit B) \diamondsuit (B \diamondsuit C) 
+\not\equiv 
+\neg(A \diamondsuit B) \heartsuit \neg(A \diamondsuit C)
+\]
 
     
 \subsection{c) (\(\star \star\))} 
@@ -153,6 +237,43 @@ A & B & C & F \\
 in which the propositional symbols \( A \), \( B \), and \( C \) all appear exactly once, 
 and such that \( G \equiv F \). 
 No justification is required.
+\\\newline
+
+Let \( G \) be defined as \( G \coloneq (C \diamondsuit A) \heartsuit B \).
+Then, the truth table of \( G \) is as follows,
+
+\[
+\begin{array}{c|c}
+C \diamondsuit A & (C \diamondsuit A) \heartsuit B \\
+\hline
+1 & 1 \\
+0 & 1 \\
+1 & 1 \\
+0 & 0 \\
+0 & 1 \\
+1 & 1 \\
+0 & 0 \\
+1 & 1 \\
+\end{array}
+\longrightarrow
+\begin{array}{c|c}
+G & F \\
+\hline
+1 & 1 \\
+1 & 1 \\
+1 & 1 \\
+0 & 0 \\
+1 & 1 \\
+1 & 1 \\
+0 & 0 \\
+1 & 1 \\
+\end{array}
+\]
+
+by comparing the function tables of \( F \) and \( G \), 
+we can see that \( G \equiv F \). 
+All constraints are satisfied: only logical operators \( \heartsuit, \diamondsuit \)
+and propositional symbols \( A, B, C \) appear exactly once.
 
 
 % Consider the quadratic function \( f: \mathbb{R}^2 \rightarrow \mathbb{R} \) defined as:
