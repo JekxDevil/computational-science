@@ -106,7 +106,7 @@ A & B & A \diamondsuit B \\
 \end{minipage}
 \end{center}
 
-\subsection{a) (\(\star\))}  
+\subsection*{a) (\(\star\))}  
 Are \(\heartsuit\) and \(\diamondsuit\) commutative, i.e., does it hold
 
 \[
@@ -116,9 +116,52 @@ A \diamondsuit B \equiv B \diamondsuit A ?
 \]
 
 \noindent Argue by comparing function tables.
-    
+\\\newline
 
-\subsection{b) (\(\star\))} 
+Let's compare the function tables of the \( \heartsuit \) operator to check commutativity,
+
+\[
+\begin{array}{c|c}
+A \heartsuit B & B \heartsuit A \\
+\hline
+1 & 1 \\
+\textcolor{red}{0} & \textcolor{red}{1} \\
+\textcolor{red}{1} & \textcolor{red}{0} \\
+1 & 1 \\
+\end{array}
+\]
+
+The function tables are not equivalent, i.e. \( A \heartsuit B \not\equiv B \heartsuit A \),
+because the \( \heartsuit \) operator has an ordering dependency on the propositional symbols:
+only when the left propositional symbol is false, the result is false.
+That's why when swapping the order of the symbols for the operators, 
+the function tables are not equivalent.
+E.g. for \( A = 0 \) and \( B = 1 \), \( A \heartsuit B = 0 \) and \( B \heartsuit A = 1 \),
+hence \underline{not commutative}.
+\\
+
+Afterwards, let's compare the function tables of the \( \diamondsuit \) operator 
+to check commutativity,   
+
+\[
+\begin{array}{c|c}
+A \diamondsuit B & B \diamondsuit A \\
+\hline
+1 & 1 \\
+0 & 0 \\
+0 & 0 \\
+1 & 1 \\
+\end{array}
+\]
+
+The function tables are equivalent, i.e. \( A \diamondsuit B \equiv B \diamondsuit A \),
+because the \( \diamondsuit \) operator has no ordering dependency on the propositional symbols:
+swapping the order of the symbols for the operators does not change the function tables.
+E.g. for \( A = 0 \) and \( B = 1 \), \( A \diamondsuit B = 0 \) and \( B \diamondsuit A = 0 \),
+hence \underline{commutative}.
+
+
+\subsection*{b) (\(\star\))} 
 Prove or disprove that
 
 \[
@@ -131,7 +174,7 @@ Prove or disprove that
 and the right-hand-side formulas.
 \\\newline
 
-From the truth table of the 3 propositional symbols \( A \), \( B \), and \( C \),
+From the function table of the 3 propositional symbols \( A \), \( B \), and \( C \),
 
 \[
 \begin{array}{c|c|c}
@@ -215,7 +258,7 @@ we can see that \underline{they are not equivalent}, i.e.
 \]
 
     
-\subsection{c) (\(\star \star\))} 
+\subsection*{c) (\(\star \star\))} 
 Let \( F \) be a formula with the following function table:
 
 \[
@@ -240,7 +283,7 @@ No justification is required.
 \\\newline
 
 Let \( G \) be defined as \( G \coloneq (C \diamondsuit A) \heartsuit B \).
-Then, the truth table of \( G \) is as follows,
+Then, the function table of \( G \) is as follows,
 
 \[
 \begin{array}{c|c}
