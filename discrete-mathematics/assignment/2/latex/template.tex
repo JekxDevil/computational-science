@@ -112,48 +112,86 @@ where \( G  \coloneq \neg B \lor A \).
 
 \myex{}{ex2-3-proof}{
 F &= \left( 
-    \left(B \lor C \right) \rightarrow \left( \left(A \lor \neg B \right) \land C \right) 
+        \left(B \lor C \right) \rightarrow \left( \left(A \lor \neg B \right) \land C \right) 
     \right) 
-    \lor (A \land \neg C) \\
+    \lor \left( A \land \neg C \right) \\
 F &= \left( 
-    \mathcolorbox{yellow}{\neg \left(B \lor C \right) \lor \left( \left( A \lor \neg B \right) \land C \right)} 
+        \mathcolorbox{yellow}{\neg \left(B \lor C \right) \lor \left( \left( A \lor \neg B \right) \land C \right)} 
     \right) 
-    \lor (A \land \neg C) 
+    \lor \left( A \land \neg C \right) 
 &&&&&&&&&& \text{def of \(\rightarrow\)} \\
 F &= \left( 
-    \mathcolorbox{yellow}{\left( \neg B \land \neg C \right)} \lor \left( \left(A \lor \neg B \right) \land C \right) 
+        \mathcolorbox{yellow}{\left( \neg B \land \neg C \right)} \lor \left( \left(A \lor \neg B \right) \land C \right) 
     \right) 
-    \lor (A \land \neg C)
+    \lor \left( A \land \neg C \right)
 &&&&&&&&&& \text{def De Morgan} \\
+F &= \left( 
+        \left( \neg B \land \neg C \right) 
+        \lor \mathcolorbox{yellow}{\left( C \land \left( A \lor \neg B \right) \right)}
+    \right)
+    \lor \left( A \land \neg C \right)
+&&&&&&&&&& \text{def commutative} \\
+F &= \left( 
+        \left( \neg B \land \neg C \right) 
+        \lor \mathcolorbox{yellow}{\left( C \land A \right) \lor \left( C \land \neg B \right)}
+    \right)
+    \lor \left( A \land \neg C \right)
+&&&&&&&&&& \text{def 1st distributive law} \\
+F &= \left( 
+        \left( \neg B \land \neg C \right) 
+        \lor \mathcolorbox{yellow}{\left( C \land \neg B \right) \lor \left( C \land A \right)}
+    \right)
+    \lor \left( A \land \neg C \right)
+&&&&&&&&&& \text{def commutative} \\
+F &= \left( 
+        \mathcolorbox{yellow}{
+            \left( \neg B \land \left( C \lor \neg C \right) \right)  
+        }
+        \lor \left( C \land A \right)
+    \right)
+    \lor \left( A \land \neg C \right)
+&&&&&&&&&& \text{def 1st distributive law} \\
+F &= \left( 
+        \mathcolorbox{yellow}{
+            \left( \neg B \land \top \right)  
+        }
+        \lor \left( C \land A \right)
+    \right)
+    \lor \left( A \land \neg C \right)
+&&&&&&&&&& F \lor \neg F \equiv \top \\
+F &= \left( 
+        \mathcolorbox{yellow}{\neg B}
+        \lor \left( C \land A \right)
+    \right)
+    \lor \left( A \land \neg C \right)
+&&&&&&&&&& F \land \top \equiv F \\
+F &= \neg B 
+    \lor \left(
+    \mathcolorbox{yellow}{
+        \left( C \land A \right) \lor \left( A \land \neg C \right)
+    }
+    \right)
+&&&&&&&&&& \text{def associativity} \\
+F &= \neg B 
+    \lor \left(
+    \mathcolorbox{yellow}{
+        A \land \left( C \lor \neg C \right)
+    }
+    \right)
+&&&&&&&&&& \text{def 1st distributive law}  \\
+F &= \neg B 
+    \lor \left(
+    \mathcolorbox{yellow}{
+        A \land \top
+    }
+    \right)
+&&&&&&&&&& F \lor \neg F \equiv \top \\
+F &= \neg B \lor \mathcolorbox{yellow}{A}
+&&&&&&&&&& F \land \top \equiv F \\
 }
-\[
-F = [(\neg B \land \neg C) \vee (C \land (A \vee \neg B))] \vee (A \land \neg C)
-\]
-\[
-F = [(\neg B \land \neg C) \vee (C \land A) \vee (C \land \neg B)] \vee (A \land \neg C)
-\]
-\[
-F = (\neg B \land \neg C) \vee (C \land A) \vee (C \land \neg B) \vee (A \land \neg C)
-\]
-\[
-F = [\neg B \land (\neg C \vee C)] \vee [A \land (C \vee \neg C)]
-\]
-\[
-F = (\neg B \land T) \vee (A \land (C \vee \neg C))
-\]
-\[
-F = (\neg B \land T) \vee (A \land T)
-\]
-\[
-F = \neg B \vee (A \land T)
-\]
-\[
-F = \neg B \vee A
-\]
 
-\[
-G := \neg B \vee A \quad \text{Q.E.D.}
-\]
+Finally, for the formula \( G \) defined as \( G \coloneq \neg B \lor A \),
+we have shown that \( F \equiv G \) by applying a 12-step sequence of equivalence transformations.
 
 
 % We define two binary logical operators \( \heartsuit \) and \( \diamondsuit \) as follows:
