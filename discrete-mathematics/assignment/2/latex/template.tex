@@ -107,13 +107,10 @@ Each step of your proof should apply a \textit{single} rule \textit{once}
 and state \textit{which} rule was applied.
 \\
 
-The formula \( G \) equivalent to \( F \) is given by \( G = \neg B \lor A \), 
-where each propositional symbol appears at most once.
-I provide two proofs (\ref{ex2-3-proof}, \ref{ex2-3-proof-rigorous}), 
-the second one (\ref{ex2-3-proof-rigorous}) is a rigorous explanation of all correct steps done to follow
-\textbf{exactly} what Lemma 2.1 and the before-mentioned properties state. 
-The first proof (\ref{ex2-3-proof}) presented below is 12-steps long as requested: 
-it uses commutativity only to put expressions nearby to apply the rules. 
+The formula \( G \) equivalent to \( F \) is given by \( G = A \lor \neg B \), 
+where each propositional symbol appears at most once with \( C \) not comparing at all.
+The proof is presented below: 
+it is 12-steps long as requested and follows a sequence of equivalence transformations.
 
 \myex{true}{ex2-3-proof}{
 F &= \left( 
@@ -145,242 +142,109 @@ F &= \left(
     \lor \left( A \land \neg C \right)
 &&&&&&&&&& \text{def. De Morgan rule} \\
 &\equiv \left( 
-        \left( \neg B \land \neg C \right) 
-        \lor \left( 
-            \mathcolorbox{yellow}{\left( C \land A \right) \lor \left( C \land \neg B \right)}
-        \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. 1st distributive law} \\
-&\equiv \left( 
-        \left( \neg B \land \neg C \right) 
-        \lor \left( 
-            \mathcolorbox{yellow}{\left( C \land \neg B \right) \lor \left( C \land A \right)}
-        \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. commutative of } \lor \\
-&\equiv  % comment me
-    \left( 
-        \left( 
-            \mathcolorbox{yellow}{
-                \left( \neg B \land \neg C \right) 
-                \lor  
-                \left( C \land \neg B \right)
-            } 
-        \right) 
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. associativity of } \lor \\ % until here
-&\equiv  % comment me
-    \left( 
-        \left(
-            \mathcolorbox{yellow}{
-                \neg B \land \left( \neg C \lor C \right)   
-            }
-        \right)
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. 1st distributive law} \\
-&\equiv 
-    \left( 
-        \left(
-            \mathcolorbox{yellow}{
-                \neg B \land \top  
-            }
-        \right)
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& F \lor \neg F \equiv \top \\
-&\equiv \left( 
-        \mathcolorbox{yellow}{\neg B}
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& F \land \top \equiv F \\
-&\equiv \neg B 
-    \lor \left(
     \mathcolorbox{yellow}{
-        \left( C \land A \right) \lor \left( A \land \neg C \right)
-    }
-    \right)
-&&&&&&&&&& \text{def. associativity of } \lor \\
-}
-\myex{false}{ex2-3-proof-2}{
-&\equiv \neg B 
-    \lor \left(
-    \mathcolorbox{yellow}{
-        A \land \left( C \lor \neg C \right)
-    }
-    \right)
-&&&&&&&&&& \text{def. 1st distributive law}  \\
-&\equiv \neg B 
-    \lor \left(
-    \mathcolorbox{yellow}{
-        A \land \top
-    }
-    \right)
-&&&&&&&&&& F \lor \neg F \equiv \top \\
-&\equiv \neg B \lor \mathcolorbox{yellow}{A}
-&&&&&&&&&& F \land \top \equiv F \\
-}
-
-
-Finally, by applying a 16-step sequence of rigorous equivalence transformations
-as shown in Lemma 2.1 and in the assignment, 
-it is shown \( F \equiv G \).
-It is not possible to simplify the formula to 12 steps 
-and still be able to perform the equivalence transformations
-with the same order and precedence as reported in Lemma 2.1 and here-mentioned properties.
-
-% rigorous proof =========================================================================
-\myex{true}{ex2-3-proof-rigorous}{
-F &= \left( 
-        \left(B \lor C \right) 
-        \rightarrow 
         \left( 
             \left(A \lor \neg B \right) 
             \land C 
-        \right) 
-    \right) 
-    \lor \left( A \land \neg C \right) \\
-&\equiv \left( 
-        \mathcolorbox{yellow}{
-            \neg \left(B \lor C \right) 
-            \lor \left( \left( A \lor \neg B \right) \land C \right)
-        } 
-    \right) 
-    \lor \left( A \land \neg C \right) 
-&&&&&&&&&& \text{def. of implication \(\rightarrow\)} \\
-&\equiv \left( 
-        \left(
-            \mathcolorbox{yellow}{ \neg B \land \neg C} 
         \right) 
         \lor 
-        \left( 
-            \left(A \lor \neg B \right) 
-            \land C 
-        \right) 
+        \left( \neg B \land \neg C \right) 
+    }
     \right) 
     \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. De Morgan rule} \\
-&\equiv \left( 
-        \left( \neg B \land \neg C \right) 
-        \lor \left( \mathcolorbox{yellow}{ C \land \left( A \lor \neg B \right)} \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. commutative of } \land \\
-&\equiv \left( 
-        \left( \neg B \land \neg C \right) 
-        \lor \left( 
-            \mathcolorbox{yellow}{\left( C \land A \right) \lor \left( C \land \neg B \right)}
-        \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. 1st distributive law} \\
-&\equiv \left( 
-        \left( \neg B \land \neg C \right) 
-        \lor \left( 
-            \mathcolorbox{yellow}{\left( C \land \neg B \right) \lor \left( C \land A \right)}
-        \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. commutative of } \lor \\
-&\equiv  % comment me
+&&&&&&&&&& \text{def. commutativity of } \lor \\
+&\equiv  
     \left( 
-        \left( 
-            \mathcolorbox{yellow}{
-                \left( \neg B \land \neg C \right) 
-                \lor  
-                \left( C \land \neg B \right)
-            } 
-        \right) 
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. associativity of } \lor \\ % until here
-&\equiv 
-    \left( %comment me
-        \left(
-            \left( \neg B \land \neg C \right) 
-            \lor \left( \mathcolorbox{yellow}{  \neg B \land C } \right) 
-        \right)
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. commutative of } \land \\ % until here
-&\equiv  % comment me
-    \left( 
-        \left(
-            \mathcolorbox{yellow}{
-                \neg B \land \left( \neg C \lor C \right)   
-            }
-        \right)
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. 1st distributive law} \\
-&\equiv 
-    \left( 
-        \left(
-            \neg B \land \left( \mathcolorbox{yellow}{ C \lor \neg C } \right)   
-        \right)
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& \text{def. commutative of } \lor \\
-&\equiv 
-    \left( 
-        \left(
-            \mathcolorbox{yellow}{
-                \neg B \land \top  
-            }
-        \right)
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& F \lor \neg F \equiv \top \\
-&\equiv \left( 
-        \mathcolorbox{yellow}{\neg B}
-        \lor \left( C \land A \right)
-    \right)
-    \lor \left( A \land \neg C \right)
-&&&&&&&&&& F \land \top \equiv F \\
-&\equiv \neg B 
-    \lor \left(
-    \mathcolorbox{yellow}{
-        \left( C \land A \right) \lor \left( A \land \neg C \right)
-    }
-    \right)
-&&&&&&&&&& \text{def. associativity of } \lor \\
-&\equiv \neg B % comment me
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
     \lor 
     \left(
-        \left(
-            \mathcolorbox{yellow}{ A \land C }
-        \right)
+    \mathcolorbox{yellow}{
+        \left( \neg B \land \neg C \right) 
         \lor 
         \left( A \land \neg C \right)
-    \right)
-&&&&&&&&&& \text{def. commutative of } \land \\ %until here
-&\equiv \neg B 
-    \lor \left(
-    \mathcolorbox{yellow}{
-        A \land \left( C \lor \neg C \right)
     }
-    \right)
-&&&&&&&&&& \text{def. 1st distributive law}  \\
-&\equiv \neg B 
-    \lor \left(
+    \right) 
+&&&&&&&&&& \text{def. associativity of } \lor \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+        \left( \neg B \land \neg C \right) 
+        \lor 
+        \left( \mathcolorbox{yellow}{\neg C \land A} \right)
+    \right) 
+&&&&&&&&&& \text{def. commutativity of } \land \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+        \left( \mathcolorbox{yellow}{\neg C \land \neg B} \right) 
+        \lor 
+        \left( \neg C \land A \right)
+    \right) 
+&&&&&&&&&& \text{def. commutativity of } \land \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+        \mathcolorbox{yellow}{
+            \neg C 
+            \land \left( \neg B \lor A \right) 
+        }
+    \right) 
+&&&&&&&&&& \text{def. 1st distributivity law} \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+        \neg C 
+        \land \left( \mathcolorbox{yellow}{A \lor \neg B} \right) 
+    \right) 
+&&&&&&&&&& \text{def. commutativity of } \lor \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
     \mathcolorbox{yellow}{
-        A \land \top
+        \left( A \lor \neg B \right) 
+        \land 
+        \neg C 
     }
-    \right)
+    \right) 
+&&&&&&&&&& \text{def. commutativity of } \land \\
+&\equiv  
+    \mathcolorbox{yellow}{
+    \left(A \lor \neg B \right) 
+    \land 
+    \left( C \lor \neg C \right) 
+    }
+&&&&&&&&&& \text{def. 1st distributivity law} \\
+&\equiv  
+    \left(A \lor \neg B \right) 
+    \land 
+    \mathcolorbox{yellow}{
+    \top 
+    }
 &&&&&&&&&& F \lor \neg F \equiv \top \\
-&\equiv \neg B \lor \mathcolorbox{yellow}{A}
+&\equiv  
+    A \lor \neg B
 &&&&&&&&&& F \land \top \equiv F \\
 }
 
