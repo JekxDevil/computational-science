@@ -83,10 +83,10 @@ Express each of the following statements with a formula in predicate logic,
 in which the only predicates appearing are 
 \(divides(x, y)\), \(equals(x, y)\) and \(prime(x)\) 
 (instead of divides(x, y) and equals(x, y) you can write \(x | y\) and \(x = y\) accordingly). 
-You can also use the symbols \(+\) and \(cdot\) 
+You can also use the symbols \(+\) and \(\cdot\) 
 to denote the addition and multiplication functions, 
 and you can use constants (e.g., 0, 1, . . .). 
-You can also use \(\Leftrightarrow\). 
+You can also use \(\leftrightarrow\). 
 No justification is required.
 
 \begin{enumerate}[label=(\roman*)]
@@ -97,6 +97,71 @@ No justification is required.
         if and only if it divides at least one of them.
 \end{enumerate}
 
+\textbf{i)}
+\myex{false}{ex3-2-i}{
+    \forall x \; \forall y \; \forall z \; %\in U=\mathbb{N} \setminus \{0\} 
+    \left( 
+        \left(
+            \left( x \, | \, y \right) 
+            \land 
+            \left( x \, | \, z \right) 
+        \right)
+        \rightarrow 
+        \left( x \, | \left( y + z \right) \right) 
+    \right)
+}
+
+\textbf{ii)}
+\myex{false}{ex3-2-ii}{
+    \forall x \; \forall y \; %\in U=\mathbb{N} \setminus \{0\} 
+    \left( 
+        \left(
+            prime(x)
+            \land 
+            \left( y \, | \, x \right) 
+        \right)
+        \rightarrow 
+        \left(
+            \left( y = 1 \right) 
+            \lor
+            \left( y = x \right)
+        \right)
+    \right)
+}
+
+\textbf{iii)}
+\myex{false}{ex3-2-iii}{
+    \forall x \; \forall y \; %\in U=\mathbb{N} \setminus \{0\} 
+    \left( 
+        \left(
+            x \cdot y = 1
+        \right)
+        \rightarrow 
+        \left(
+            \left( x = 1 \right) 
+            \land
+            \left( y = 1 \right)
+        \right)
+    \right)
+}
+
+\textbf{iv)}
+\myex{false}{ex3-2-iv}{
+    \forall x \; \forall y \; \forall z \; %\in U=\mathbb{N} \setminus \{0\} 
+    \left( 
+        prime(x)
+        \rightarrow 
+        \left(
+            \left( x \, | \left( y \cdot z \right) \right) 
+            \leftrightarrow
+            \left(
+                \left( x \, | \, y \right)
+                \lor
+                \left( x \, | \, z \right)
+            \right)
+        \right)
+    \right)
+}
 
 
 \section*{Exercise 3.8, Proof by Contradiction (\(\star\)) \hfill (4 Points)}
