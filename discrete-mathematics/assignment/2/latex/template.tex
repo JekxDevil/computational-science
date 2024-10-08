@@ -17,7 +17,6 @@
 \usepackage{array} % for table
 \usepackage{mathtools} % for \coloneq
 \usepackage{xcolor, soul} % highlight
-\usepackage{enumitem} % custom enumeration in lists
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -64,7 +63,7 @@
 \begin{document}
 
 \setassignment
-\setduedate{Thursday, 10 October 2024, 23:59}
+\setduedate{Thursday, 3 October 2024, 23:59}
 
 \serieheader
 {Discrete Mathematics}
@@ -73,45 +72,180 @@
 \textbf{Student:} Jeferson Morales Mariciano 
 \href{mailto:jmorale@ethz.ch}{\(<\)jmorale@ethz.ch\(>\)} \\\\}
 {\vspace{-1cm}}%\textbf{Discussed with:} }
-{Assignment 3}{}
+{Assignment 2}{}
 
 %----------------------------------------------------------------------------------
-\section*{Exercise 3.2, From Natural Language to a Formula (\(\star\)) \hfill (4 Points)}
+\section*{Exercise 2.3, Simplifying a Formula (\(\star\)) \hfill (8 Points)}
 
-Consider the universe \(U = \mathbb{N} \setminus\{0\}\). 
-Express each of the following statements with a formula in predicate logic, 
-in which the only predicates appearing are 
-\(divides(x, y)\), \(equals(x, y)\) and \(prime(x)\) 
-(instead of divides(x, y) and equals(x, y) you can write \(x | y\) and \(x = y\) accordingly). 
-You can also use the symbols \(+\) and \(cdot\) 
-to denote the addition and multiplication functions, 
-and you can use constants (e.g., 0, 1, . . .). 
-You can also use \(\Leftrightarrow\). 
-No justification is required.
+Consider the propositional formula
 
-\begin{enumerate}[label=(\roman*)]
-    \item \((\star)\) If a number divides two numbers, then it also divides their sum.
-    \item \((\star)\) The only divisors of a prime number are 1 and the number itself.
-    \item \((\star)\) 1 is the only natural number which has an inverse.
-    \item \((\star)\) A prime number divides the product of two natural numbers 
-        if and only if it divides at least one of them.
-\end{enumerate}
-
-
-
-\section*{Exercise 3.8, Proof by Contradiction (\(\star\)) \hfill (4 Points)}
-
-Let \(n, m \in \mathbb{N}\) be arbitrary. 
-We say “n divides m” and write \(n | m\) 
-if there exists a \(k \in \mathbb{N}\) such that \(k \cdot n = m\). 
-Prove that the following statement is true, 
-using a proof by contradiction:
 \[
-n | m \;\text{ and }\; n |(m + 1) \Longrightarrow n = 1.
+F = \left( (B \lor C) \to ((A \lor \neg B) \land C) \right) \lor (A \land \neg C)
 \]
-You are allowed to invoke the statement 3.2 \textbf{iii)} from above to justify one step.
-You must use the same notation as in the lecture notes, 
-i.e. precisely state what your statements S and T are, 
-and justify each of your proof steps.
+
+\noindent Give a formula \( G \) that is equivalent to \( F \), but in which each atomic formula \( A \), \( B \), and \( C \)
+appears at most once. Prove that \( F \equiv G \) by providing a sequence of equivalence transformations 
+with \textit{at most} 12 steps.
+
+\noindent \textbf{Expectation.} 
+Your proof should be in the form of a sequence of steps, where each step
+consists of applying the definition of \( \to \) 
+(that is \( F \to G \equiv \neg F \lor G \)), 
+one of the rules given in Lemma 2.1 of the lecture notes 
+\footnote{Lemma 2.1 states rules involving propositional symbols, 
+but you may apply those rules at the level of formulas 
+(see Section 2.3.5 of the lecture notes).}, 
+or one of the following rules: 
+\( F \land \neg F \equiv \bot \), 
+\( F \land \bot \equiv \bot \), 
+\( F \lor \bot \equiv F \), 
+\( F \lor \neg F \equiv \top \), 
+\( F \land \top \equiv F \), 
+and \( F \lor \top \equiv \top \). 
+For this exercise, associativity is to be applied as in Lemma 2.1.3. 
+Each step of your proof should apply a \textit{single} rule \textit{once} 
+and state \textit{which} rule was applied.
+\\
+
+The formula \( G \) equivalent to \( F \) is given by \( G = A \lor \neg B \), 
+where each propositional symbol appears at most once with \( C \) not comparing at all.
+The proof is presented below: 
+it is 12-steps long as requested and follows a sequence of equivalence transformations.
+
+\myex{true}{ex2-3-proof}{
+F &= \left( 
+        \left(B \lor C \right) 
+        \rightarrow 
+        \left( 
+            \left(A \lor \neg B \right) 
+            \land C 
+        \right) 
+    \right) 
+    \lor \left( A \land \neg C \right) \\
+&\equiv \left( 
+        \mathcolorbox{yellow}{
+            \neg \left(B \lor C \right) \lor \left( \left( A \lor \neg B \right) \land C \right)
+        } 
+    \right) 
+    \lor \left( A \land \neg C \right) 
+&&&&&&&&&& \text{def. of implication \(\rightarrow\)} \\
+&\equiv \left( 
+        \left(
+            \mathcolorbox{yellow}{ \neg B \land \neg C} 
+        \right) 
+        \lor 
+        \left( 
+            \left(A \lor \neg B \right) 
+            \land C 
+        \right) 
+    \right) 
+    \lor \left( A \land \neg C \right)
+&&&&&&&&&& \text{def. De Morgan rule} \\
+&\equiv \left( 
+    \mathcolorbox{yellow}{
+        \left( 
+            \left(A \lor \neg B \right) 
+            \land C 
+        \right) 
+        \lor 
+        \left( \neg B \land \neg C \right) 
+    }
+    \right) 
+    \lor \left( A \land \neg C \right)
+&&&&&&&&&& \text{def. commutativity of } \lor \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+    \mathcolorbox{yellow}{
+        \left( \neg B \land \neg C \right) 
+        \lor 
+        \left( A \land \neg C \right)
+    }
+    \right) 
+&&&&&&&&&& \text{def. associativity of } \lor \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+        \left( \neg B \land \neg C \right) 
+        \lor 
+        \left( \mathcolorbox{yellow}{\neg C \land A} \right)
+    \right) 
+&&&&&&&&&& \text{def. commutativity of } \land \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+        \left( \mathcolorbox{yellow}{\neg C \land \neg B} \right) 
+        \lor 
+        \left( \neg C \land A \right)
+    \right) 
+&&&&&&&&&& \text{def. commutativity of } \land \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+        \mathcolorbox{yellow}{
+            \neg C 
+            \land \left( \neg B \lor A \right) 
+        }
+    \right) 
+&&&&&&&&&& \text{def. 1st distributivity law} \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+        \neg C 
+        \land \left( \mathcolorbox{yellow}{A \lor \neg B} \right) 
+    \right) 
+&&&&&&&&&& \text{def. commutativity of } \lor \\
+&\equiv  
+    \left( 
+        \left(A \lor \neg B \right) 
+        \land C 
+    \right) 
+    \lor 
+    \left(
+    \mathcolorbox{yellow}{
+        \left( A \lor \neg B \right) 
+        \land 
+        \neg C 
+    }
+    \right) 
+&&&&&&&&&& \text{def. commutativity of } \land \\
+&\equiv  
+    \mathcolorbox{yellow}{
+    \left(A \lor \neg B \right) 
+    \land 
+    \left( C \lor \neg C \right) 
+    }
+&&&&&&&&&& \text{def. 1st distributivity law} \\
+&\equiv  
+    \left(A \lor \neg B \right) 
+    \land 
+    \mathcolorbox{yellow}{
+    \top 
+    }
+&&&&&&&&&& F \lor \neg F \equiv \top \\
+&\equiv  
+    A \lor \neg B
+&&&&&&&&&& F \land \top \equiv F \\
+}
 
 \end{document}
