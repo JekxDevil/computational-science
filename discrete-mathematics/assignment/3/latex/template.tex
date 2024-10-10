@@ -58,6 +58,9 @@
     \end{figure}
 }
 
+% proof step
+\newcommand{\pstep}{\overset{.}{\Longrightarrow}}
+
 \def\ex2f{f(\mathbf{x}^*)}
 
 \input{assignment.sty}
@@ -98,7 +101,7 @@ No justification is required.
 \end{enumerate}
 
 \textbf{i)}
-\myex{false}{ex3-2-i}{
+\myex{true}{ex3-2-i}{
     \forall x \; \forall y \; \forall z \; %\in U=\mathbb{N} \setminus \{0\} 
     \left( 
         \left(
@@ -112,7 +115,7 @@ No justification is required.
 }
 
 \textbf{ii)}
-\myex{false}{ex3-2-ii}{
+\myex{true}{ex3-2-ii}{
     \forall x \; \forall y \; %\in U=\mathbb{N} \setminus \{0\} 
     \left( 
         \left(
@@ -130,7 +133,7 @@ No justification is required.
 }
 
 \textbf{iii)}
-\myex{false}{ex3-2-iii}{
+\myex{true}{ex3-2-iii}{
     \forall x \; \forall y \; %\in U=\mathbb{N} \setminus \{0\} 
     \left( 
         \left(
@@ -146,7 +149,7 @@ No justification is required.
 }
 
 \textbf{iv)}
-\myex{false}{ex3-2-iv}{
+\myex{true}{ex3-2-iv}{
     \forall x \;  %\in U=\mathbb{N} \setminus \{0\} 
     \left( 
         prime(x)
@@ -154,7 +157,7 @@ No justification is required.
         \forall y \; \forall z \;
         \left(
             \left( x \, | \left( y \cdot z \right) \right) 
-            \leftrightarrow
+            \longleftrightarrow
             \left(
                 \left( x \, | \, y \right)
                 \lor
@@ -179,5 +182,305 @@ You are allowed to invoke the statement 3.2 \textbf{iii)} from above to justify 
 You must use the same notation as in the lecture notes, 
 i.e. precisely state what your statements S and T are, 
 and justify each of your proof steps.
+\\
+
+\begin{proof}
+    From Definition 2.17, a proof by contradiction of a statement S proceeds in 3 steps:
+    \begin{enumerate}
+        \item Find a suitable mathematical statement \( T \).
+        \item Prove that \( T \) is false.
+        \item Assume that S is false and prove (from this assumption) 
+            that T is true (a contradiction).
+    \end{enumerate}
+
+    The general informal overview of the proof is to use the statement 3.2 
+    \textbf{iii)}~\ref{ex3-2-iii} 
+    i.e. the only natural number which has an inverse is 1.
+    It will be used to prove that statement T is false,
+    namely that there exist some pair(s) of number belonging to \( \mathbb{N} \) 
+    such that their product is \( 1 \) and at least one of them is not \( 1 \),
+    meaning that 1 is not the only natural number with an inverse.
+    Then, from assuming that \( \neg S \) is true, 
+    we will prove that T is true through composition of implications, 
+    which will lead to a contradiction. 
+    The statement provided to be proved will be our statement S,
+    namely that if a number \( n \) divides two other consecutive numbers, 
+    then it must be equal to \( 1 \).
+
+
+    The interpretation is fixed 
+    by remarking that the universe is \( U = \mathbb{N} \) of natural numbers, 
+    the predicates will be \( divides(x, y) \), \( equals(x, y) \), 
+    \( sum(x,y) \), \( multiplication(x,y) \).
+    Finally, the function symbols used will be \( | \,, = \,, + \,, \cdot \, \) 
+    for divisibility, equality, addition and multiplication, respectively.
+    Nevertheless, we stick to make mathematical statements about formulas.
+
+    From the statement 3.2 \textbf{iii)}~\ref{ex3-2-iii}: 
+    \myex{false}{ex8-iii}{
+        \forall x \; \forall y \; %\in U=\mathbb{N} \setminus \{0\} 
+        \left( 
+            \left(
+                x \cdot y = 1
+            \right)
+            \rightarrow 
+            \left(
+                \left( x = 1 \right) 
+                \land
+                \left( y = 1 \right)
+            \right)
+        \right)
+    }
+
+    its negation leads to state that there exists some pair of numbers which product is 1
+    and at least one of these numbers is not 1, 
+    meaning 1 is not the only natural number with an inverse as shown below:
+
+    \myex{false}{ex8-t-construction}{
+        & \neg \forall x \; \forall y \; %\in U=\mathbb{N} \setminus \{0\} 
+        \left( 
+            \left(
+                x \cdot y = 1
+            \right)
+            \rightarrow 
+            \left(
+                \left( x = 1 \right) 
+                \land
+                \left( y = 1 \right)
+            \right)
+        \right)
+        \\
+        \pstep \quad & \exists x \; \neg \forall y \; %\in U=\mathbb{N} \setminus \{0\} 
+        \left( 
+            \left(
+                x \cdot y = 1
+            \right)
+            \rightarrow 
+            \left(
+                \left( x = 1 \right) 
+                \land
+                \left( y = 1 \right)
+            \right)
+        \right)
+        \\
+        \pstep \quad & \exists x \; \exists y \; %\in U=\mathbb{N} \setminus \{0\} 
+        \neg \left( 
+            \left(
+                x \cdot y = 1
+            \right)
+            \rightarrow 
+            \left(
+                \left( x = 1 \right) 
+                \land
+                \left( y = 1 \right)
+            \right)
+        \right)
+        \\
+        \pstep \quad & \exists x \; \exists y \; %\in U=\mathbb{N} \setminus \{0\} 
+        \left( 
+            \left(
+                x \cdot y = 1
+            \right)
+            \land
+            \neg \left(
+                \left( x = 1 \right) 
+                \land
+                \left( y = 1 \right)
+            \right)
+        \right)
+        \\
+        \pstep \quad & \exists x \; \exists y \; %\in U=\mathbb{N} \setminus \{0\} 
+        \left( 
+            \left(
+                x \cdot y = 1
+            \right)
+            \land
+            \left(
+                \neg \left( x = 1 \right) 
+                \lor
+                \neg \left( y = 1 \right)
+            \right)
+        \right)
+    }
+
+    Hence, w.r.t. interpretation the clearly false statement T is 
+    "1 is not the only natural number which has an inverse".
+    Let \( n, k \in U \) 
+    \[ 
+        T \pstep \;\;
+         \exists n \; \exists k \; %\in U=\mathbb{N} \setminus \{0\} 
+        \left( 
+            \left(
+                n \cdot k = 1
+            \right)
+            \land
+            \left(
+                \neg \left( n = 1 \right) 
+                \lor
+                \neg \left( k = 1 \right)
+            \right)
+        \right)
+    \]
+
+    Now, the statement to be proved S is 
+    "given n dividing two consecutive numbers, then it must be equal to 1":
+
+    \[
+        S 
+        \pstep \forall n \; \forall m \; 
+        \left(
+            \left(
+                \left( n \, | \, m \right) 
+                \land  
+                \left( n \, | \left( m + 1 \right) \right) 
+            \right)
+            \longrightarrow 
+            n = 1
+        \right)
+    \]
+
+    Assuming that the statement S is false, 
+    meaning that there exist some \( n, m \) such that 
+    \( n \) divides \( m \) and \( n \) divides \( m+1 \), and \( n \) is not equal to 1:
+
+    \myex{false}{ex8-s-false}{
+        \neg S  
+        \pstep \quad & 
+        \neg \forall n \; \forall m \; 
+        \left(
+            \left(
+                \left( n \, | \, m \right) 
+                \land  
+                \left( n \, | \left( m + 1 \right) \right) 
+            \right)
+            \longrightarrow 
+            n = 1
+        \right)
+        \\
+        \pstep \quad & 
+        \exists n \; \neg \forall m \; 
+        \left(
+            \left(
+                \left( n \, | \, m \right) 
+                \land  
+                \left( n \, | \left( m + 1 \right) \right) 
+            \right)
+            \longrightarrow 
+            n = 1
+        \right)
+        \\
+        \pstep \quad & 
+        \exists n \; \exists m \; 
+        \neg \left(
+            \left(
+                \left( n \, | \, m \right) 
+                \land  
+                \left( n \, | \left( m + 1 \right) \right) 
+            \right)
+            \longrightarrow 
+            n = 1
+        \right)
+        \\
+        \pstep \quad & 
+        \exists n \; \exists m \; 
+        \neg \left(
+            \neg \left(
+                \left( n \, | \, m \right) 
+                \land  
+                \left( n \, | \left( m + 1 \right) \right) 
+            \right)
+            \lor
+            \left( n = 1 \right)
+        \right)
+        \\
+        \pstep \quad & 
+        \exists n \; \exists m \; 
+        \left(
+            \neg \neg \left(
+                \left( n \, | \, m \right) 
+                \land  
+                \left( n \, | \left( m + 1 \right) \right) 
+            \right)
+            \land
+            \neg \left( n = 1 \right)
+        \right)
+        \\
+        \pstep \quad & 
+        \exists n \; \exists m \; 
+        \left(
+            \left(
+                \left( n \, | \, m \right) 
+                \land  
+                \left( n \, | \left( m + 1 \right) \right) 
+            \right)
+            \land
+            \neg \left( n = 1 \right)
+        \right)
+    }
+
+    from definition of divisibility we have that:
+    
+    \myex{false}{ex8-def-divisibility}{
+        n \, | \, m 
+        \; \overset{\text{def}}{\Longleftrightarrow} \;
+        \exists k \; \left( k \cdot n = m \right)
+    }
+
+    so we can rewrite the statements \( n \, | \, m \) and \( n \, | \, \left(m+1\right) \) as:
+
+    \myex{false}{ex8-rewrite-nm}{
+        n \, | \, m 
+        \pstep \quad &     
+        k_1 \cdot n = m
+        \\
+        n \, | \left(m+1\right)
+        \pstep \quad &
+        k_2 \cdot n = m + 1
+        \; \pstep \; 
+        \left( k_2 \cdot n \right) - 1 = m
+    }
+
+    since \( m = m \), we can inject the first equation into the second one:
+
+    \myex{false}{ex8-m-inject}{
+        & k_1 \cdot n = \left( k_2 \cdot n \right) - 1
+        \\ \pstep \quad &
+        \left( k_1 \cdot n \right) - \left( k_2 \cdot n \right) = -1
+        \\ \pstep \quad &
+        n \cdot \left( k_1 - k_2 \right) = -1
+        \\ \pstep \quad &
+        n \cdot \left( k_2 - k_1 \right) = 1
+        \\ \pstep \quad &
+        n \cdot k = 1
+    }
+
+    By plugging all back into the formula derived from assumption of \( \neg S \), 
+    using composition of implications, 
+    we get a contradiction that \( n \) time \( k \) gives 1, meaning it has an inverse, 
+    but \( n \) is not equal to \( 1 \), 
+    meaning that there exists a number that has an inverse and is not 1. 
+    It corresponds to the form of the statement T already proved to be false,
+    as shown below:
+
+    \myex{false}{ex8-T-contradiction}{
+        \exists n \; \exists m \; \exists k \;
+        \left(
+            \left(
+                \left( n \, | \, m \right) 
+                \land  
+                \left( n \, | \left( m + 1 \right) \right) 
+            \right)
+            \land
+            \underbrace{
+            \neg \left( n = 1 \right)
+            \land
+            \left( \left( k \cdot n \right) = 1 \right)
+            }_{T \text{ false for arbitrary k and n}}
+        \right)
+    }
+
+    Therefore, the statement \( S \) must be true, it is satisfiable 
+    and holds for our interpretation, concluding the proof. 
+\end{proof}
 
 \end{document}
