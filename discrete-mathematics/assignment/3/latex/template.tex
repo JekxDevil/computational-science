@@ -109,7 +109,7 @@ No justification is required.
             \land 
             \left( x \, | \, z \right) 
         \right)
-        \rightarrow 
+        \longrightarrow 
         \left( x \, | \left( y + z \right) \right) 
     \right)
 }
@@ -123,7 +123,7 @@ No justification is required.
             \land 
             \left( y \, | \, x \right) 
         \right)
-        \rightarrow 
+        \longrightarrow 
         \left(
             \left( y = 1 \right) 
             \lor
@@ -139,7 +139,7 @@ No justification is required.
         \left(
             x \cdot y = 1
         \right)
-        \rightarrow 
+        \longrightarrow 
         \left(
             \left( x = 1 \right) 
             \land
@@ -153,7 +153,7 @@ No justification is required.
     \forall x \;  %\in U=\mathbb{N} \setminus \{0\} 
     \left( 
         prime(x)
-        \rightarrow 
+        \longrightarrow 
         \forall y \; \forall z \;
         \left(
             \left( x \, | \left( y \cdot z \right) \right) 
@@ -223,7 +223,7 @@ and justify each of your proof steps.
             \left(
                 x \cdot y = 1
             \right)
-            \rightarrow 
+            \longrightarrow 
             \left(
                 \left( x = 1 \right) 
                 \land
@@ -242,7 +242,7 @@ and justify each of your proof steps.
             \left(
                 x \cdot y = 1
             \right)
-            \rightarrow 
+            \longrightarrow 
             \left(
                 \left( x = 1 \right) 
                 \land
@@ -255,26 +255,60 @@ and justify each of your proof steps.
             \left(
                 x \cdot y = 1
             \right)
-            \rightarrow 
+            \longrightarrow 
             \left(
                 \left( x = 1 \right) 
                 \land
                 \left( y = 1 \right)
             \right)
         \right)
+        \hspace{1cm}
+        &(\text{from 2.4.8, } \neg \forall x P(x) \equiv \exists x \neg P(x))
         \\
         \pstep \quad & \exists x \; \exists y \; %\in U=\mathbb{N} \setminus \{0\} 
         \neg \left( 
             \left(
                 x \cdot y = 1
             \right)
-            \rightarrow 
+            \longrightarrow 
             \left(
                 \left( x = 1 \right) 
                 \land
                 \left( y = 1 \right)
             \right)
         \right)
+        \hspace{1cm}
+        &(\text{idem})
+        \\
+        \pstep \quad & \exists x \; \exists y \; %\in U=\mathbb{N} \setminus \{0\} 
+        \neg \left( 
+            \neg \left(
+                x \cdot y = 1
+            \right)
+            \lor 
+            \left(
+                \left( x = 1 \right) 
+                \land
+                \left( y = 1 \right)
+            \right)
+        \right)
+        \hspace{1cm}
+        &(A \rightarrow B \equiv \neg A \lor B)
+        \\
+        \pstep \quad & \exists x \; \exists y \; %\in U=\mathbb{N} \setminus \{0\} 
+        \left( 
+            \neg \neg \left(
+                x \cdot y = 1
+            \right)
+            \land
+            \neg \left(
+                \left( x = 1 \right) 
+                \land
+                \left( y = 1 \right)
+            \right)
+        \right)
+        \hspace{1cm}
+        &(\text{De Morgan})
         \\
         \pstep \quad & \exists x \; \exists y \; %\in U=\mathbb{N} \setminus \{0\} 
         \left( 
@@ -288,6 +322,8 @@ and justify each of your proof steps.
                 \left( y = 1 \right)
             \right)
         \right)
+        \hspace{1cm}
+        &(\text{double negation})
         \\
         \pstep \quad & \exists x \; \exists y \; %\in U=\mathbb{N} \setminus \{0\} 
         \left( 
@@ -301,10 +337,12 @@ and justify each of your proof steps.
                 \neg \left( y = 1 \right)
             \right)
         \right)
+        \hspace{1cm}
+        &(\text{De Morgan})
     }
 
-    Hence, w.r.t. interpretation the clearly false statement T is 
-    "1 is not the only natural number which has an inverse".
+    Hence, w.r.t. interpretation the clearly \textbf{false statement T is 
+    "1 is not the only natural number which has an inverse"}.
     Let \( n, k \in U \) 
     \[ 
         T \pstep \;\;
@@ -322,8 +360,8 @@ and justify each of your proof steps.
         \right)
     \]
 
-    Now, the statement to be proved S is 
-    "given n dividing two consecutive numbers, then it must be equal to 1":
+    Now, the \textbf{statement to be proved S is 
+    "given n dividing two consecutive numbers, then it must be equal to 1"}:
 
     \[
         S 
@@ -339,9 +377,9 @@ and justify each of your proof steps.
         \right)
     \]
 
-    Assuming that the statement S is false, 
+    \textbf{Assuming that the statement S is false, i.e. \( \neg S \), 
     meaning that there exist some \( n, m \) such that 
-    \( n \) divides \( m \) and \( n \) divides \( m+1 \), and \( n \) is not equal to 1:
+    \( n \) divides \( m \) and \( n \) divides \( m+1 \), and \( n \) is not equal to 1}:
 
     \myex{false}{ex8-s-false}{
         \neg S  
@@ -429,15 +467,17 @@ and justify each of your proof steps.
     so we can rewrite the statements \( n \, | \, m \) and \( n \, | \, \left(m+1\right) \) as:
 
     \myex{false}{ex8-rewrite-nm}{
-        n \, | \, m 
-        \pstep \quad &     
-        k_1 \cdot n = m
-        \\
-        n \, | \left(m+1\right)
-        \pstep \quad &
-        k_2 \cdot n = m + 1
-        \; \pstep \; 
-        \left( k_2 \cdot n \right) - 1 = m
+        \begin{cases}
+            n \, | \, m 
+            &\pstep \quad     
+            k_1 \cdot n = m
+            \\
+            n \, | \left(m+1\right)
+            &\pstep \quad 
+            k_2 \cdot n = m + 1
+            \; \pstep \; 
+            \left( k_2 \cdot n \right) - 1 = m
+        \end{cases}
     }
 
     since \( m = m \), we can inject the first equation into the second one:
@@ -456,7 +496,7 @@ and justify each of your proof steps.
 
     By plugging all back into the formula derived from assumption of \( \neg S \), 
     using composition of implications, 
-    we get a contradiction that \( n \) time \( k \) gives 1, meaning it has an inverse, 
+    we get a contradiction that \( n \) times \( k \) gives 1, meaning it has an inverse, 
     but \( n \) is not equal to \( 1 \), 
     meaning that there exists a number that has an inverse and is not 1. 
     It corresponds to the form of the statement T already proved to be false,
