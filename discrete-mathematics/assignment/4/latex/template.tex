@@ -145,24 +145,29 @@ To disprove a statement, provide a concrete counterexample.
 This is false and a counterexample follows:
 
 \myex{false}{ex4-5-a-counterexample}{
-    & 
+    &
     \left( 
         A \cup \left( B \setminus C \right) 
     \right) 
     \cap 
-    \left( B \setminus C \right) 
+    \left( B \cap C \right) 
     \quad \text{ for } \quad
-    A = \{ 2 \}, \quad B = \{ 2 \}, \quad C = \{ 3 \}
+    A = \{ 2 \}, \quad B = \{ 2 \}, \quad C = \{ 2 \}
     \\
     &
-    B \setminus C = \{ 2 \}
+    B \setminus C = \emptyset
     \; \pstep \;
     A \cup \left( B \setminus C \right) = \{ 2 \} 
     \; \pstep \;
+    B \cap C = \{ 2 \}
+    \\
+    & \quad \pstep \quad
     \left( A \cup \left( B \setminus C \right) \right) 
     \cap 
-    \left( B \setminus C \right) 
+    \left( B \cap C \right) 
     = 
+    \{ 2 \} \cap \{ 2 \}
+    =
     \{ 2 \}
     \neq \varnothing
 }
@@ -170,13 +175,13 @@ This is false and a counterexample follows:
 
 it can be proven as follows:
 
-\myex{false}{ex4-5-a-proof}{
+\myex{false}{ex4-5-a-proof-1}{
     &
     \left( 
         A \cup \left( B \setminus C \right) 
     \right) 
     \cap 
-    \left( B \setminus C \right) 
+    \left( B \cap C \right) 
     \\
     \pstep \quad & 
     x \in
@@ -184,7 +189,7 @@ it can be proven as follows:
         A \cup \left( B \setminus C \right) 
     \right) 
     \land 
-    x \in \left( B \setminus C \right) 
+    x \in \left( B \cap C \right) 
    \hspace{1cm}
     & \text{(intersection)}
     \\
@@ -193,7 +198,7 @@ it can be proven as follows:
         x \in A \lor x \in \left( B \setminus C \right) 
     \right) 
     \land 
-    x \in \left( B \setminus C \right) 
+    x \in \left( B \cap C \right) 
    \hspace{1cm}
     & \text{(union)}
     \\
@@ -206,20 +211,25 @@ it can be proven as follows:
         \right) 
     \right) 
     \land 
-    \left( 
-        x \in B 
-        \land 
-        \neg \left( x \in C \right) 
-    \right) 
+    x \in \left( B \cap C \right) 
    \hspace{1cm}
     & \text{(difference of sets)}
     \\
     \pstep \quad & 
     \left( 
-        x \in B 
-        \land 
-        \neg \left( x \in C \right) 
+        x \in A 
+        \lor 
+        \left( 
+            x \in B \land \neg \left( x \in C \right)
+        \right) 
     \right) 
+    \land 
+    \left( x \in B \land x \in C \right) 
+   \hspace{1cm}
+    & \text{(intersection)}
+    \\
+    \pstep \quad & 
+    \left( x \in B \land x \in C \right) 
     \land 
     \left( 
         x \in A 
@@ -229,94 +239,175 @@ it can be proven as follows:
         \right) 
     \right) 
    \hspace{1cm}
-    & \text{(commutativity of \(\land\))}
+    & \text{(commutativity of \( \land \))}
     \\
     \pstep \quad & 
     \left(
-        \left(
-            x \in B 
-            \land 
-            \neg \left( x \in C \right) 
-        \right)
-        \land
+        \left( x \in B \land x \in C \right) 
+        \land 
         x \in A
     \right)
     \lor
-    \\ & \qquad
     \left( 
-        \left(
-            x \in B 
-            \land 
-            \neg \left( x \in C \right) 
-        \right)
+        \left( x \in B \land x \in C \right) 
         \land
-        \left(
-            x \in B 
-            \land 
-            \neg \left( x \in C \right) 
-        \right)
-    \right)
+        \left( 
+            x \in B \land \neg \left( x \in C \right)
+        \right) 
+    \right) 
    \hspace{1cm}
     & \text{(1st distributivity law)}
     \\
     \pstep \quad & 
     \left(
-        \left(
-            x \in B 
-            \land 
-            \neg \left( x \in C \right) 
-        \right)
-        \land
+        \left( x \in B \land x \in C \right) 
+        \land 
         x \in A
     \right)
     \lor
-    \left(
-        x \in B 
-        \land 
-        \neg \left( x \in C \right) 
-    \right)
+    \left( 
+        \left( x \in B \land x \in C \right) 
+        \land
+        \left( 
+            \neg \left( x \in C \right)
+            \land
+            x \in B 
+        \right) 
+    \right) 
    \hspace{1cm}
-    & \text{(idempotence)}
+    & \text{(commutativity of \( \land \))}
     \\
     \pstep \quad & 
     \left(
-        x \in B 
+        \left( x \in B \land x \in C \right) 
         \land 
-        \neg \left( x \in C \right) 
-    \right)
-    \lor
-    \left(
-        \left(
-            x \in B 
-            \land 
-            \neg \left( x \in C \right) 
-        \right)
-        \land
         x \in A
     \right)
+    \lor
+    \left( 
+        x \in B 
+        \land 
+        \left( 
+            x \in C 
+            \land
+            \neg \left( x \in C \right)
+        \right)
+        \land
+        x \in B 
+    \right) 
    \hspace{1cm}
-    & \text{(commutativity of \(\lor\))}
+    & \text{(associativity of \( \land \))}
     \\
     \pstep \quad & 
     \left(
+        \left( x \in B \land x \in C \right) 
+        \land 
+        x \in A
+    \right)
+    \lor
+    \left( 
         x \in B 
         \land 
-        \neg \left( x \in C \right) 
+        \bot
+        \land
+        x \in B 
+    \right) 
+   \hspace{1cm}
+    & F \land \neg F \equiv \bot
+    \\
+    \pstep \quad & 
+    \left(
+        \left( x \in B \land x \in C \right) 
+        \land 
+        x \in A
     \right)
+    \lor
+    \left( 
+        \bot
+        \land
+        x \in B 
+    \right) 
    \hspace{1cm}
-    & \text{(absorption)}
+    & F \land \bot \equiv \bot
     \\
     \pstep \quad & 
-        B \setminus C
+    \left(
+        \left( x \in B \land x \in C \right) 
+        \land 
+        x \in A
+    \right)
+    \lor
+    \left( 
+        x \in B 
+        \land
+        \bot
+    \right) 
    \hspace{1cm}
-    & \text{(difference of sets)}
+    & \text{(commutativity of \( \land \))}
     \\
     \pstep \quad & 
-    B \setminus C
-    \neq \varnothing
-    & \qed
+    \left(
+        \left( x \in B \land x \in C \right) 
+        \land 
+        x \in A
+    \right)
+    \lor
+    \bot
+   \hspace{1cm}
+    & F \land \bot \equiv \bot
 }
 
+\myex{false}{ex4-5-a-proof-2}{
+    \pstep \quad & 
+    \left( x \in B \land x \in C \right) 
+    \land 
+    x \in A
+   \hspace{1cm}
+    & F \lor \bot \equiv F
+    \\
+    \pstep \quad & 
+    x \in A
+    \land 
+    \left( x \in B \land x \in C \right) 
+   \hspace{1cm}
+    & \text{(commutativity of \( \land \))}
+    \\
+    \pstep \quad & 
+    \left(
+        x \in A
+        \land 
+        x \in B
+    \right) 
+    \land 
+    x \in C
+   \hspace{1cm}
+    & \text{(associativity of \( \land \))}
+    \\
+    \pstep \quad & 
+    x \in
+    \left( A \cap B \right) 
+    \land 
+    x \in C
+   \hspace{1cm}
+    & \text{(intersection)}
+    \\
+    \pstep \quad & 
+    \left( A \cap B \right) 
+    \cap 
+    C
+   \hspace{1cm}
+    & \text{(intersection)}
+    \\
+    && \qed
+}
+
+Which is different from the empty set. 
+Thus the statement is not always valid, hence false given the counter example provided.
+I.e. it is not valid for all possible elements of \( A, B, C \).
+
+%------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------
 \subsection*{b)}
 
 \[ 
@@ -668,8 +759,13 @@ This is true and it can be proven as follows by working on the right hand side (
     A \cap \left( B \setminus C \right)
     \hspace{1cm}
     & \text{(intersection)}
+    \\
+    && \qed
 }
 
+%------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------
 \subsection*{c)}
 
 \[
