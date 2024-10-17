@@ -357,28 +357,28 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. difference of sets)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left( x \in A \land x \in B \right)
     \land 
     \neg \left( x \in \left( \left( A \cap B \right) \cap C \right) \right)
     \hspace{1cm}
     & \text{(def. intersection)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left( x \in A \land x \in B \right)
     \land 
     \neg \left( x \in \left( A \cap B \right) \land x \in C \right)
     \hspace{1cm}
     & \text{(def. intersection)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left( x \in A \land x \in B \right)
     \land 
     \neg \left( \left( x \in A \land x \in B \right) \land x \in C \right)
     \hspace{1cm}
     & \text{(def. intersection)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left( x \in A \land x \in B \right)
     \land 
     \left( 
@@ -389,7 +389,7 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. de morgan)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left( x \in A \land x \in B \right)
     \land 
     \left( 
@@ -404,7 +404,7 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. de morgan)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left( 
         \left( x \in A \land x \in B \right)
         \land
@@ -424,7 +424,7 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. 1st distributivity law)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
         \left( 
             \left( x \in A \land x \in B \right)
@@ -448,7 +448,7 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. 1st distributivity law)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
         \left( 
             \left( x \in A \land x \in B \right)
@@ -476,7 +476,7 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. associativity)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
         \left( 
             \left( x \in A \land x \in B \right)
@@ -500,7 +500,7 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & F \land \neg F \equiv \bot
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
         \left( 
             \left( x \in A \land x \in B \right)
@@ -520,16 +520,13 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & F \land \neg F \equiv \bot
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
-        \left( 
-            \left( x \in A \land x \in B \right)
-            \land
-            \neg \left( x \in A \right) 
-        \right)
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in A \right) 
     \right)
     \lor
-    \\ & \qquad \qquad \qquad \qquad
     \left( 
         \left( x \in A \land x \in B \right)
         \land
@@ -538,16 +535,13 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & F \lor \bot \equiv F
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
-        \left( 
-            \neg \left( x \in A \right) 
-            \land
-            \left( x \in A \land x \in B \right)
-        \right)
+        \neg \left( x \in A \right) 
+        \land
+        \left( x \in A \land x \in B \right)
     \right)
     \lor
-    \\ & \qquad \qquad \qquad \qquad
     \left( 
         \left( x \in A \land x \in B \right)
         \land
@@ -556,20 +550,17 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. commutativity of \(\land\))}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
-        \left( 
-            \left(
-                \neg \left( x \in A \right) 
-                \land
-                x \in A 
-            \right) 
-            \land 
-            x \in B
-        \right)
+        \left(
+            \neg \left( x \in A \right) 
+            \land
+            x \in A 
+        \right) 
+        \land 
+        x \in B
     \right)
     \lor
-    \\ & \qquad \qquad \qquad \qquad
     \left( 
         \left( x \in A \land x \in B \right)
         \land
@@ -578,20 +569,17 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. associativity of \(\land\))}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
-        \left( 
-            \left(
-                x \in A 
-                \land
-                \neg \left( x \in A \right) 
-            \right) 
-            \land 
-            x \in B
-        \right)
+        \left(
+            x \in A 
+            \land
+            \neg \left( x \in A \right) 
+        \right) 
+        \land 
+        x \in B
     \right)
     \lor
-    \\ & \qquad \qquad \qquad \qquad
     \left( 
         \left( x \in A \land x \in B \right)
         \land
@@ -600,16 +588,13 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. commutativity of \(\land\))}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
-        \left( 
-            \bot
-            \land 
-            x \in B
-        \right)
+        \bot
+        \land 
+        x \in B
     \right)
     \lor
-    \\ & \qquad \qquad \qquad \qquad
     \left( 
         \left( x \in A \land x \in B \right)
         \land
@@ -618,16 +603,13 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & F \land \neg F \equiv \bot
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left(
-        \left( 
-            x \in B
-            \land 
-            \bot
-        \right)
+        x \in B
+        \land 
+        \bot
     \right)
     \lor
-    \\ & \qquad \qquad \qquad \qquad
     \left( 
         \left( x \in A \land x \in B \right)
         \land
@@ -636,7 +618,7 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. commutativity of \(\land\))}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \bot
     \lor
     \left( 
@@ -647,7 +629,7 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & F \land \bot \equiv \bot
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left( 
         \left( x \in A \land x \in B \right)
         \land
@@ -658,14 +640,14 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. commutativity of \(\lor\))}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     \left( x \in A \land x \in B \right)
     \land
     \neg \left( x \in C \right) 
     \hspace{1cm}
     & F \lor \bot \equiv F
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     x \in A \land 
     \left( 
         x \in B
@@ -675,14 +657,14 @@ This is true and it can be proven as follows by working on the right hand side (
     \hspace{1cm}
     & \text{(def. associativity of \(\land\))}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     x \in A 
     \land 
     x \in \left( B \setminus C \right)
     \hspace{1cm}
     & \text{(def. difference of sets)}
     \\
-    & \qquad \pstep \quad
+    & \quad \pstep \quad
     A \cap \left( B \setminus C \right)
     \hspace{1cm}
     & \text{(def. intersection)}
@@ -817,7 +799,7 @@ Thus,
     2^{2^{n+1} \cdot 2^{n+1}}
     =
     2^{2^{n} \cdot 2^1 \cdot 2^{n} \cdot 2^1 }
-    \overset{I.H.}{=}
+    \overset{\text{(I.H.)}}{=}
     2^{2^{n} \cdot 2^1 \cdot 2^{n} \cdot 2^1 \geq 1}
     =
     2^{2^{2 \cdot \left( n + 1 \right)} \geq 1}
