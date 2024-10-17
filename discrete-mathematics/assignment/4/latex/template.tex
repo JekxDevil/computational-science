@@ -109,7 +109,9 @@ Prove or disprove the following statements.
         \(
             |
             \mathcal{P}\left(
-                \mathcal{P}\left( B \right)
+                    \mathcal{P}\left( A \right)
+                    \times
+                    \mathcal{P}\left( B \right)
                 \right)
             |
             \geq 2
@@ -126,7 +128,704 @@ as well as \( F \lor \bot \equiv F \) and \( F \land \top \equiv F\).
 You can apply several rules/results in one step, 
 but have to clearly state which rules/results you apply. 
 To disprove a statement, provide a concrete counterexample.
+\\
+
+\subsection*{a)} 
+
+\[ 
+    \left( 
+        A \cup 
+        \left( B \setminus C \right)
+    \right) 
+    \cap
+    \left( B \cap C \right) 
+    = \varnothing 
+\]
+        
+This is false and a counterexample follows:
+
+\myex{false}{ex4-5-a-counterexample}{
+    & 
+    \left( 
+        A \cup \left( B \setminus C \right) 
+    \right) 
+    \cap 
+    \left( B \setminus C \right) 
+    \quad \text{ for } \quad
+    A = \{ 2 \}, \quad B = \{ 2 \}, \quad C = \{ 3 \}
+    \\
+    &
+    B \setminus C = \{ 2 \}
+    \; \pstep \;
+    A \cup \left( B \setminus C \right) = \{ 2 \} 
+    \; \pstep \;
+    \left( A \cup \left( B \setminus C \right) \right) 
+    \cap 
+    \left( B \setminus C \right) 
+    = 
+    \{ 2 \}
+    \neq \varnothing
+}
 
 
+it can be proven as follows:
+
+\myex{false}{ex4-5-a-proof}{
+    &
+    \left( 
+        A \cup \left( B \setminus C \right) 
+    \right) 
+    \cap 
+    \left( B \setminus C \right) 
+    \\
+    \pstep \quad & 
+    x \in
+    \left( 
+        A \cup \left( B \setminus C \right) 
+    \right) 
+    \land 
+    x \in \left( B \setminus C \right) 
+   \hspace{1cm}
+    & \text{(def. intersection)}
+    \\
+    \pstep \quad & 
+    \left( 
+        x \in A \lor x \in \left( B \setminus C \right) 
+    \right) 
+    \land 
+    x \in \left( B \setminus C \right) 
+   \hspace{1cm}
+    & \text{(def. union)}
+    \\
+    \pstep \quad & 
+    \left( 
+        x \in A 
+        \lor 
+        \left( 
+            x \in B \land \neg \left( x \in C \right)
+        \right) 
+    \right) 
+    \land 
+    \left( 
+        x \in B 
+        \land 
+        \neg \left( x \in C \right) 
+    \right) 
+   \hspace{1cm}
+    & \text{(def. difference of sets)}
+    \\
+    \pstep \quad & 
+    \left( 
+        x \in B 
+        \land 
+        \neg \left( x \in C \right) 
+    \right) 
+    \land 
+    \left( 
+        x \in A 
+        \lor 
+        \left( 
+            x \in B \land \neg \left( x \in C \right)
+        \right) 
+    \right) 
+   \hspace{1cm}
+    & \text{(def. commutativity of \(\land\))}
+    \\
+    \pstep \quad & 
+    \left(
+        \left(
+            x \in B 
+            \land 
+            \neg \left( x \in C \right) 
+        \right)
+        \land
+        x \in A
+    \right)
+    \lor
+    \\ & \qquad
+    \left( 
+        \left(
+            x \in B 
+            \land 
+            \neg \left( x \in C \right) 
+        \right)
+        \land
+        \left(
+            x \in B 
+            \land 
+            \neg \left( x \in C \right) 
+        \right)
+    \right)
+   \hspace{1cm}
+    & \text{(def. 1st distributivity law)}
+    \\
+    \pstep \quad & 
+    \left(
+        \left(
+            x \in B 
+            \land 
+            \neg \left( x \in C \right) 
+        \right)
+        \land
+        x \in A
+    \right)
+    \lor
+    \left(
+        x \in B 
+        \land 
+        \neg \left( x \in C \right) 
+    \right)
+   \hspace{1cm}
+    & \text{(def. idempotence)}
+    \\
+    \pstep \quad & 
+    \left(
+        x \in B 
+        \land 
+        \neg \left( x \in C \right) 
+    \right)
+    \lor
+    \left(
+        \left(
+            x \in B 
+            \land 
+            \neg \left( x \in C \right) 
+        \right)
+        \land
+        x \in A
+    \right)
+   \hspace{1cm}
+    & \text{(def. commutativity of \(\lor\))}
+    \\
+    \pstep \quad & 
+    \left(
+        x \in B 
+        \land 
+        \neg \left( x \in C \right) 
+    \right)
+   \hspace{1cm}
+    & \text{(def. absorption)}
+    \\
+    \pstep \quad & 
+        B \setminus C
+   \hspace{1cm}
+    & \text{(def. difference of sets)}
+    \\
+    \pstep \quad & 
+    B \setminus C
+    \neq \varnothing
+    & \qed
+}
+
+\subsection*{b)}
+
+\[ 
+    A \cap \left( B \setminus C \right)
+    =
+    \left( A \cap B \right) 
+    \setminus 
+    \left( 
+        \left( A \cap B \right)
+        \cap C 
+    \right)
+\]
+
+This is true and it can be proven as follows by working on the right hand side (RHS):
+
+\myex{false}{ex4-5-b-proof}{
+    & 
+    A \cap \left( B \setminus C \right)
+    =
+    \left( A \cap B \right) 
+    \setminus 
+    \left( 
+        \left( A \cap B \right)
+        \cap C 
+    \right)
+    \\
+    &
+    \left( A \cap B \right) 
+    \setminus 
+    \left( 
+        \left( A \cap B \right)
+        \cap C 
+    \right)
+    \quad \pstep \quad 
+    x \in \left( A \cap B \right)
+    \land 
+    \neg \left( x \in \left( \left( A \cap B \right) \cap C \right) \right)
+    \hspace{1cm}
+    & \text{(def. difference of sets)}
+    \\
+    & \qquad \pstep \quad
+    \left( x \in A \land x \in B \right)
+    \land 
+    \neg \left( x \in \left( \left( A \cap B \right) \cap C \right) \right)
+    \hspace{1cm}
+    & \text{(def. intersection)}
+    \\
+    & \qquad \pstep \quad
+    \left( x \in A \land x \in B \right)
+    \land 
+    \neg \left( x \in \left( A \cap B \right) \land x \in C \right)
+    \hspace{1cm}
+    & \text{(def. intersection)}
+    \\
+    & \qquad \pstep \quad
+    \left( x \in A \land x \in B \right)
+    \land 
+    \neg \left( \left( x \in A \land x \in B \right) \land x \in C \right)
+    \hspace{1cm}
+    & \text{(def. intersection)}
+    \\
+    & \qquad \pstep \quad
+    \left( x \in A \land x \in B \right)
+    \land 
+    \left( 
+        \neg \left( x \in A \land x \in B \right) 
+        \lor 
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. de morgan)}
+    \\
+    & \qquad \pstep \quad
+    \left( x \in A \land x \in B \right)
+    \land 
+    \left( 
+        \left( 
+            \neg \left( x \in A \right) 
+            \lor 
+            \neg \left( x \in B \right) 
+        \right) 
+        \lor 
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. de morgan)}
+    \\
+    & \qquad \pstep \quad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \left( 
+            \neg \left( x \in A \right) 
+            \lor 
+            \neg \left( x \in B \right) 
+        \right) 
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. 1st distributivity law)}
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \left( x \in A \land x \in B \right)
+            \land
+            \neg \left( x \in A \right) 
+        \right)
+        \lor
+        \left( 
+            \left( x \in A \land x \in B \right)
+            \land
+            \neg \left( x \in B \right) 
+        \right) 
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. 1st distributivity law)}
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \left( x \in A \land x \in B \right)
+            \land
+            \neg \left( x \in A \right) 
+        \right)
+        \lor
+        \left( 
+            x \in A 
+            \land 
+            \left( 
+                x \in B
+                \land
+                \neg \left( x \in B \right)
+            \right)
+        \right) 
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. associativity)}
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \left( x \in A \land x \in B \right)
+            \land
+            \neg \left( x \in A \right) 
+        \right)
+        \lor
+        \left( 
+            x \in A 
+            \land 
+            \bot
+        \right) 
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & F \land \neg F \equiv \bot
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \left( x \in A \land x \in B \right)
+            \land
+            \neg \left( x \in A \right) 
+        \right)
+        \lor
+        \bot
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & F \land \neg F \equiv \bot
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \left( x \in A \land x \in B \right)
+            \land
+            \neg \left( x \in A \right) 
+        \right)
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & F \lor \bot \equiv F
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \neg \left( x \in A \right) 
+            \land
+            \left( x \in A \land x \in B \right)
+        \right)
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. commutativity of \(\land\))}
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \left(
+                \neg \left( x \in A \right) 
+                \land
+                x \in A 
+            \right) 
+            \land 
+            x \in B
+        \right)
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. associativity of \(\land\))}
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \left(
+                x \in A 
+                \land
+                \neg \left( x \in A \right) 
+            \right) 
+            \land 
+            x \in B
+        \right)
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. commutativity of \(\land\))}
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            \bot
+            \land 
+            x \in B
+        \right)
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & F \land \neg F \equiv \bot
+    \\
+    & \qquad \pstep \quad
+    \left(
+        \left( 
+            x \in B
+            \land 
+            \bot
+        \right)
+    \right)
+    \lor
+    \\ & \qquad \qquad \qquad \qquad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. commutativity of \(\land\))}
+    \\
+    & \qquad \pstep \quad
+    \bot
+    \lor
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & F \land \bot \equiv \bot
+    \\
+    & \qquad \pstep \quad
+    \left( 
+        \left( x \in A \land x \in B \right)
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \lor
+    \bot
+    \hspace{1cm}
+    & \text{(def. commutativity of \(\lor\))}
+    \\
+    & \qquad \pstep \quad
+    \left( x \in A \land x \in B \right)
+    \land
+    \neg \left( x \in C \right) 
+    \hspace{1cm}
+    & F \lor \bot \equiv F
+    \\
+    & \qquad \pstep \quad
+    x \in A \land 
+    \left( 
+        x \in B
+        \land
+        \neg \left( x \in C \right) 
+    \right)
+    \hspace{1cm}
+    & \text{(def. associativity of \(\land\))}
+    \\
+    & \qquad \pstep \quad
+    x \in A 
+    \land 
+    x \in \left( B \setminus C \right)
+    \hspace{1cm}
+    & \text{(def. difference of sets)}
+    \\
+    & \qquad \pstep \quad
+    A \cap \left( B \setminus C \right)
+    \hspace{1cm}
+    & \text{(def. intersection)}
+}
+
+\subsection*{c)}
+
+\[
+    |
+    \mathcal{P}\left(
+            \mathcal{P}\left( A \right)
+            \times
+            \mathcal{P}\left( B \right)
+        \right)
+    |
+    \geq 2
+\]
+
+This is true and it can be proven as follows:
+
+From Definition 3.7, the power set of a set \( A \), denoted \( \mathcal{P}(A) \),
+is the set of all subsets of \( A \):
+
+\myex{false}{ex4-5-c-def-powerset}{
+    \mathcal{P}(A) \overset{\text{def}}{=} \{ S \mid S \subseteq A \}
+}
+
+where for a finite set with cardinality \( |A| = k \), 
+the power set has cardinality \( 2^{|A|} = 2^k \).
+
+From Definition 3.8, the Cartesian product \( A \times B \) 
+of two sets \( A, B \) is the set of all ordered pairs 
+with the first component from \( A \) and the second component from \( B \):
+
+\myex{false}{ex4-5-c-def-cartesianproduct}{
+    A \times B \overset{\text{def}}{=} \{ (a, b) \mid a \in A \land b \in B \}
+}
+
+For finite sets, the cardinality of the Cartesian product of some sets 
+is the product of their cardinalities: 
+\( | A \times B | = |A| \cdot |B| \).
+
+Then, we want to show:
+
+\myex{false}{ex4-5-c-rewrite}{
+    |
+    \mathcal{P}
+    \left(
+        \mathcal{P}\left( A \right)
+        \times
+        \mathcal{P}\left( B \right)
+    \right)
+    |
+    =
+    2^{|\mathcal{P}(A) \times \mathcal{P}(B)|}
+    =
+    2^{2^{|A|} \cdot 2^{|B|}}
+    \geq 2
+}
+
+By induction, the base case is \( n = |A| = |B| = 0 \in \mathbb{N} \), 
+where both \( A = B = \emptyset \) 
+and \( \mathcal{P}(A) = \mathcal{P}(B) = \{ \emptyset \} \).
+
+Then,
+
+\myex{false}{ex4-5-c-example}{
+    \mathcal{P}
+    \left(
+        \mathcal{P}\left( A \right)
+        \times
+        \mathcal{P}\left( B \right)
+    \right)
+    = 
+    \mathcal{P}
+    \left(
+        \mathcal{P}\left( \emptyset \right)
+        \times
+        \mathcal{P}\left( \emptyset \right)
+    \right)
+    = 
+    \mathcal{P}
+    \left(
+        \{ \emptyset \}
+        \times
+        \{ \emptyset \}
+    \right)
+    = 
+    \mathcal{P}
+    \left(
+        \{ \left( \emptyset, \emptyset \right) \}
+    \right)
+    = 
+    \{ 
+        \emptyset, 
+        \{ \left( \emptyset, \emptyset \right) \}
+    \}
+}
+
+Which respects the inequality:
+
+\myex{false}{ex4-5-c-basecase}{
+    2^{2^{|A|} \cdot 2^{|B|}}
+    =
+    2^{2^{0} \cdot 2^{0}}
+    =
+    2^{1}
+    =
+    2
+    \geq 2
+}
+
+Then, the base cased holds.
+
+For the next inductive step, 
+the Inductive Hypothesis (I.H.) assume the statement holds for \( n = |A| = |B| \),
+we want to show it holds for \( |A| = |B| = n + 1 \).
+The cardinality of the sets \( A, B \) are independent, 
+we do not consider \( n \) to be the same number for both.
+Thus,
+
+\myex{false}{ex4-5-c-inductive}{
+    \mathcal{P}
+    \left(
+        \mathcal{P}\left( A \right)
+        \times
+        \mathcal{P}\left( B \right)
+    \right)
+    =
+    2^{2^{|A|} \cdot 2^{|B|}}
+    =
+    2^{2^{n+1} \cdot 2^{n+1}}
+    =
+    2^{2^{n} \cdot 2^1 \cdot 2^{n} \cdot 2^1 }
+    \overset{I.H.}{=}
+    2^{2^{n} \cdot 2^1 \cdot 2^{n} \cdot 2^1 \geq 1}
+    =
+    2^{2^{2 \cdot \left( n + 1 \right)} \geq 1}
+    =
+    2^{2^{2 \cdot \left( n + 1 \right)}}
+    \geq 2
+}
+
+the inductive step holds and the statement holds for all \( n \in \mathbb{N} \).
 
 \end{document}
