@@ -20,9 +20,18 @@
 \usepackage{enumitem} % custom enumeration in lists
 \usepackage{dsfont} % 1 for identity matrix
 \usepackage{blkarray, bigstrut} % block matrix with labels
+\usepackage{tikz} % for drawing
 
 \newcommand\topstrut[1][1.2ex]{\setlength\bigstrutjot{#1}{\bigstrut[t]}}
 \newcommand\botstrut[1][0.9ex]{\setlength\bigstrutjot{#1}{\bigstrut[b]}}
+
+\usetikzlibrary{positioning}
+\tikzset{
+    > = stealth,
+    every path/.append style = {
+        arrows = ->,
+    }
+}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -141,7 +150,8 @@ Note the universe \( \mathcal{U} \) is an arbitrary set \( A \) of elements.
 }
 
 So it is sufficient to find a relation \( \rho \) that is not symmetric, 
-which have \( c \neq d \). A visualization is provided in the following matrix:
+i.e. which have \( c \neq d \), satisfying the constraint of the composition of implications above. 
+A visualization is provided in the following matrix:
 
 \myex{false}{ex5-5-a-matrix}{
     M^{\rho^2} = 
@@ -154,8 +164,76 @@ which have \( c \neq d \). A visualization is provided in the following matrix:
         d & 0 & 0 & 1 & 0 \botstrut \\
     \end{block}
     \end{blockarray}
-    \,,\quad
+    =
+    M^{\rho} \cdot M^{\rho}
+    \,,\quad \text{ where } \quad
+    M^{\rho} =
+    \begin{blockarray}{l c c c c}
+        & a & b & c & d \\
+    \begin{block}{l [c c c c]}
+        a & 0 & 0 & 1 & 0 \topstrut \\
+        b & 0 & 0 & 0 & 1 \\
+        c & 0 & 1 & 0 & 0 \\
+        d & 1 & 0 & 0 & 0 \botstrut \\
+    \end{block}
+    \end{blockarray}
 }
+
+The matrices resemble the counterexample, where \( \rho^2 \) is symmetric,
+while \( \rho \) is clearly not, 
+i.e. \( M^{\rho} \neq (M^{\rho})^{\intercal} \iff \rho \neq \hat{\rho} \).
+
+A graph representation is provided for the sake of visualization, 
+where the composition of the same structure choosen by the matrices is visualize.
+The elements of \( \rho^2 \) are given by choosing a path with length 2,
+meaning a green edge and the subsequent black one on the right.
+Doing so for every vertex gives the \( \rho^2 \) relation. \\
+
+% left graph for rho
+\begin{minipage}{0.4\textwidth}
+\centering
+graph \( \rho \) \\
+\vspace{0.2cm}
+\tikz{
+    \node (a) {$a$};
+    \node (b) [below = of a] {$b$};
+    \node (c) [below = of b] {$c$};
+    \node (d) [below = of c] {$d$};
+
+    \path (a) edge [bend left=10, in=240] (c);
+    \path (c) edge (b);
+    \path (b) edge [bend left=30] (d);
+    \path (d) edge [bend left=20, in=135] (a);
+}
+\end{minipage}
+%
+% right graph for rho composition
+\begin{minipage}{0.4\textwidth}
+\centering
+graph of \( \rho^2 \) \\
+\vspace{0.2cm}
+\tikz{
+    \node (al) {$a$};
+    \node (bl) [below = of al] {$b$};
+    \node (cl) [below = of bl] {$c$};
+    \node (dl) [below = of cl] {$d$};
+    \node (ar) [right = of al] {$a$};
+    \node (br) [below = of ar] {$b$};
+    \node (cr) [below = of br] {$c$};
+    \node (dr) [below = of cr] {$d$};
+
+    \path (al) edge [green!70!black] (cr);
+    \path (bl) edge [green!70!black] (dr);
+    \path (cl) edge [green!70!black] (br);
+    \path (dl) edge [green!70!black] (ar);
+
+    \path (ar) edge [bend left=10, in=240] (cr);
+    \path (cr) edge (br);
+    \path (br) edge [bend left=30] (dr);
+    \path (dr) edge [bend left=20, in=135] (ar);
+}
+\end{minipage}
+
 
 %-----------------------------------------------------------------------------------
 \subsection*{b)}
