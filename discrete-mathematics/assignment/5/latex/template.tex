@@ -101,17 +101,39 @@ Prove or disprove the following claims:
 
 \subsection*{a)}
 
-The claim is 
+The claim is false, a counterexample follows:
+
+\myex{false}{ex5-5-a-counterexample}{
+    \rho = \{ (a, c), (b, d), (c, b), (d, a) \}
+    \\
+    \rho^2 = \{ (a, b), (b, a), (c, d), (d, c) \}
+}
+
+The relation \( \rho^2 \) is symmetric, but \( \rho \) is not, 
+which disprove the claim if and only if (\( \iff \)) from the right to left part 
+(\( \Longleftarrow \)). 
 
 %-----------------------------------------------------------------------------------
 \subsection*{b)}
 
-The claim is 
+The claim is false, a counterexample follows:
+
+\myex{false}{ex5-5-b-counterexample}{
+    \rho = \emptyset \neq \textsf{id}_A
+}
+
+The relation \( \rho \) is both symmetric and antisymmetric.
+However, \( \rho \) is not the identity relation as the claim states.
 
 %-----------------------------------------------------------------------------------
 \subsection*{c)}
 
-The claim is 
+The claim is true, and it can be proven as follows:
+
+we will decompose the claim through composition of implications from which will lead
+to a clear satisfiability problem that show is satisfiable using a proof by case distinction.
+
+
 
 
 \end{document}
