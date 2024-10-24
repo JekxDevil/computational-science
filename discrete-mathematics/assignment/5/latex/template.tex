@@ -104,7 +104,7 @@ Prove or disprove the following claims:
 
     \item If \( \rho \) is a relation on a set \( A \) 
         that is symmetric and antisymmetric,
-        then it musta hold \( \rho = \textsf{id}_A \).
+        then it must hold \( \rho = \textsf{id}_A \).
 
     \item Define the relations \( \rho_1 \) and \( rho_2 \) on \( \mathbb{Z} \) as
     \[
@@ -246,6 +246,42 @@ The claim is false, a counterexample follows:
 
 The relation \( \rho \) is both symmetric and antisymmetric.
 However, \( \rho \) is not the identity relation as the claim states.
+
+The satisfiability conditions for the relation 
+being both symmetric and antisymmetric are explained as follows.
+The matrix for the counterexample is the all-zeros matrix \( \mathbf{0} \) given by:
+
+\myex{false}{ex5-5-b-matrix}{
+    M^{\rho} = 
+    \mathbf{0} =
+    \myvec{
+        0       & \cdots    & 0         \\
+        \vdots  & 0         & \vdots    \\
+        0       & \cdots    & 0
+    }
+}
+
+It is clear that the relation is symmetric by Definition 3.15,
+\( \forall a \forall b \in A \;\; a \, \rho \, b \iff b \, \rho \, a \),
+i.e. the matrix is symmetric 
+\( M^{\rho} = (M^{\rho})^{\intercal} \iff \rho = \hat{\rho} \).
+
+Moreover, the relation is antisymmetric by Definition 3.16,
+\( \forall a \forall b \in A \;\; a \, \rho \, b \, \land \, b \, \rho \, a \implies a = b \),
+i.e. the intersection between the relation and its inverse is a subset of the indentity relation,
+\( \rho \cap \hat{\rho} \subseteq \textsf{id}_A \).
+Notice that for the counterexample, the intersection is the empty set,
+which is a subset of every set by Lemma 3.6, including the identity relation.
+
+\myex{false}{ex5-5-b-antisymmetric}{
+    \rho = \emptyset \subseteq \left( A \times A \right),
+    \quad 
+    \rho \cap \hat{\rho} = \emptyset \subseteq \textsf{id}_{A}
+    \quad \because \quad 
+    \emptyset \in \mathcal{P(\mathsf{id}_A)}
+}
+
+In general symmetry and antisymmetry are independent properties of a relation.
 
 %-----------------------------------------------------------------------------------
 \subsection*{c)}
