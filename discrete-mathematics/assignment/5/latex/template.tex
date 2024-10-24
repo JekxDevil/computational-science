@@ -18,6 +18,7 @@
 \usepackage{mathtools} % for \coloneq
 \usepackage{xcolor, soul} % highlight
 \usepackage{enumitem} % custom enumeration in lists
+\usepackage{dsfont} % 1 for identity matrix
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -133,7 +134,32 @@ The claim is true, and it can be proven as follows:
 we will decompose the claim through composition of implications from which will lead
 to a clear satisfiability problem that show is satisfiable using a proof by case distinction.
 
+\subsubsection*{Composition of Implications}
 
+\subsubsection*{Case Distinction}
+
+Check that the statement is always satisfiable for all cases of \( a, b \),
+i.e. that there always exist some suitable \( c \) in the universe to satisfy the claim.
+
+The cases are represented by the following matrix:
+
+\[
+    \begin{array}{|cc|c|}
+        \hline
+        a & b & c \\
+        \hline
+        0 & 0 & 0    \\
+        0 & 1 & s(b) \\
+        1 & 0 & s(a) \\
+        1 & 1 & 1    \\
+        \hline
+    \end{array}
+\]
+
+where \( s(x) \) is the successor of \( x \) in the universe.
+Finally, it follows that the claim is always satisfiable, 
+meaning is true for all cases of \( a, b \in \mathcal{U} = \mathbb{Z} \times \mathbb{Z} \).
+Concluding, \( \rho^2 = \mathds{1} = \mathbb{Z} \times \mathbb{Z} \).
 
 
 \end{document}
