@@ -19,6 +19,10 @@
 \usepackage{xcolor, soul} % highlight
 \usepackage{enumitem} % custom enumeration in lists
 \usepackage{dsfont} % 1 for identity matrix
+\usepackage{blkarray, bigstrut} % block matrix with labels
+
+\newcommand\topstrut[1][1.2ex]{\setlength\bigstrutjot{#1}{\bigstrut[t]}}
+\newcommand\botstrut[1][0.9ex]{\setlength\bigstrutjot{#1}{\bigstrut[b]}}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -45,6 +49,7 @@
 
 % vector shortcut
 \newcommand{\myvec}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newcommand{\mymat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
 
 % 1: letter of vector, 2: 
 \newcommand\vibar[2]{\mathbf{\overline{#1}}_#2}
@@ -113,6 +118,44 @@ The claim is false, a counterexample follows:
 The relation \( \rho^2 \) is symmetric, but \( \rho \) is not, 
 which disprove the claim if and only if (\( \iff \)) from the right to left part 
 (\( \Longleftarrow \)). 
+
+The intuition behind the counterexample is given by expanding the right hand side (\( \Longleftarrow \))  
+of the claim into a composition of implications as follows. 
+Note the universe \( \mathcal{U} \) is an arbitrary set \( A \) of elements.
+
+\myex{false}{ex5-5-a-proof}{
+    & \rho^2 \text{ symmetric on } A 
+    \\ & \pstep \; 
+    \forall a \forall b \left( a \, \rho^2 \, b \Longleftrightarrow b \, \rho^2 \, a \right)
+    \hspace{1cm} & \text{(def 3.15 symmetry)}
+    \\ & \pstep \; 
+    \forall a \forall b \left( (a, b) \in \rho^2 \land (b,a) \in \rho^2 \right)
+    \hspace{1cm} & \text{(def 3.9 relation)}
+    \\ & \pstep \; 
+    \forall a \forall b \left( 
+        \exists c \left( (a, c) \in \rho \land (c,b) \in \rho \right)
+        \land
+        \exists d \left( (b, d) \in \rho \land (d,a) \in \rho \right)
+    \right)
+    \hspace{1cm} & \text{(def 3.12 composition)}
+}
+
+So it is sufficient to find a relation \( \rho \) that is not symmetric, 
+which have \( c \neq d \). A visualization is provided in the following matrix:
+
+\myex{false}{ex5-5-a-matrix}{
+    M^{\rho^2} = 
+    \begin{blockarray}{l c c c c}
+        & a & b & c & d \\
+    \begin{block}{l [c c c c]}
+        a & 0 & 1 & 0 & 0 \topstrut \\
+        b & 1 & 0 & 0 & 0 \\
+        c & 0 & 0 & 0 & 1 \\
+        d & 0 & 0 & 1 & 0 \botstrut \\
+    \end{block}
+    \end{blockarray}
+    \,,\quad
+}
 
 %-----------------------------------------------------------------------------------
 \subsection*{b)}
