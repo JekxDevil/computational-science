@@ -19,10 +19,24 @@
 \usepackage{xcolor, soul} % highlight
 \usepackage{enumitem} % custom enumeration in lists
 \usepackage{dsfont} % 1 for identity matrix
+\usepackage{blkarray, bigstrut} % block matrix with labels
+\usepackage{tikz} % for drawing
+
+\newcommand\topstrut[1][1.2ex]{\setlength\bigstrutjot{#1}{\bigstrut[t]}}
+\newcommand\botstrut[1][0.9ex]{\setlength\bigstrutjot{#1}{\bigstrut[b]}}
+
+\usetikzlibrary{positioning}
+\tikzset{
+    > = stealth,
+    every path/.append style = {
+        arrows = ->,
+    }
+}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \def\N{\mathbb{N}}
 \def\Z{\mathbb{Z}}
+\def\semiinfbinseq{\{0,1\}^\infty}
 
 \newtheorem{theorem}{Theorem}[section]
 % 1: title, 2: label, 3: content
@@ -96,6 +110,110 @@ is uncountable.\\
 \textbf{Hint:} %Use Cantor's diagonal argument.
 For all \( l \geq 1 \), explicitly write an injection 
 from a known uncountable set into \( A_l \).
+\\\newline
 
+\noindent Following the hint, an injection from an uncountable set to \( A_l \) is going to be built.
+Notice that to belong to \( A_l \; \forall l \, \geq 1 \), 
+it is sufficient that the function \( f \) satisfies the following conditions:
+yielding either always 0 for any input or a limited number of 1s following the bound pattern.
+
+\myex{false}{ex6-5-bound-pattern}{
+    \begin{blockarray}{l}
+        n \\
+    \begin{block}{l}
+       f(n)  \\
+    \end{block}
+    \end{blockarray}
+    \underbrace{
+    \begin{blockarray}{c c c c}
+        0 & 1 & 2 & 3 \\
+    \begin{block}{c c c c}
+       0 & 1 & 0 & 0 \\
+    \end{block}
+    \end{blockarray}
+    }_{l}
+    \underbrace{
+    \begin{blockarray}{c c c}
+        4 & 5 & \dots \\
+    \begin{block}{c c c}
+       1 & 0 & \dots \\
+    \end{block}
+    \end{blockarray}
+    }_{l}
+}
+
+So, imagining the string presented above divided in chuncks of lenght \( l \), 
+every \( l \) characters there can be a \( f(n)=1 \) for some \( n \) indexed within the chunk.
+Since this holds for any size of \( k \), the condition of \( A_l \) 
+stating \( \sum_{i=0}^{k} f(i) \leq \frac{k}{l} + 1 \;\; \forall k \in \N \) is satisfied. 
+This means that \textbf{at most} 1 of \( (f(0), f(1), \dots, f(m \cdot l)) \) can be 1, 
+\( \forall m \in \N \) in order for all such function to belong to \( A_l \).
+
+The construction of binary sequences denoting results of \( f(i) \; \forall i \in \N \) 
+satisfying the above condition are a valid candidate for the injection construction into \( A_l \):
+it allows for the function to yield \( 1s \) for the i-th positions with \( i \equiv_l 0 \). 
+Such binary construction can be graphically denoted as:
+
+\myex{false}{ex6-5-binary-construction}{
+    \underbrace{
+    \begin{blockarray}{c c c c}
+        0 & 1 & \dots & l-1 \\
+    \begin{block}{c c c c}
+        \alpha_0 & 0 & \dots & 0 \\
+    \end{block}
+    \end{blockarray}
+    }_{l}
+    \underbrace{
+    \begin{blockarray}{c c c c}
+        l & l+1 & \dots & 2 \cdot l-1 \\
+    \begin{block}{c c c c}
+        \alpha_1 & 0 & \dots & 0 \\
+    \end{block}
+    \end{blockarray}
+    }_{l}
+    \begin{blockarray}{c}
+    \begin{block}{c}
+       \dots \\
+    \end{block}
+    \end{blockarray}
+    \\\\
+    (\alpha_i 0^{l-1})^m \quad \alpha_i \in \{0,1\}, \; \forall i \in \N, \; \forall m \in \N
+}
+Thus, encoding the possible image of a valid function \( f \in A_l \) along arbitrary 
+\( m \cdot l \) sized input.
+\\
+
+From Theorem 3.23, the set \( \semiinfbinseq \) is uncountable.
+Building an injection from \( \semiinfbinseq \) to such above construction econding \( f \) functions 
+in \( A_l \) is proposed.
+Let's define the function \( g \):
+%  \( g: \semiinfbinseq \to A_l \) with \( \alpha \in \semiinfbinseq, \) 
+\myex{false}{ex6-5-g}{
+    g: \semiinfbinseq \to A_l, 
+    \quad \alpha \in \semiinfbinseq, 
+    \quad f \in A_l,
+    \quad \alpha_i \in \{0,1\}\\
+    \alpha \mapsto f, \quad \forall j \in \N : \; 
+    f(j) = 
+    \begin{cases}
+        \alpha_i, & \text{if } j = l \cdot i \quad i \in \N \\
+        0, & \text{otherwise}    
+    \end{cases}
+}
+So we have \( \alpha \) corresponding to a semi infinite binary string, 
+and \( \alpha_i \) denoting the i-th bit of the string.
+Hence, using the mapping defined, 
+every possible semi infinite binary sequence has a valid function \( f \) mapping in \( A_l \).
+\\
+
+To prove the injectivity of the function, 
+let \( \alpha, \beta \in \semiinfbinseq \) be two different semi infinite binary sequences.
+Let \( i \) be the position where \( \alpha_i \neq \beta_i \).
+Let \( g(\alpha) = f_{\alpha}, \; g(\beta) = f_{\beta} \).
+\\
+By construction of  \( f_{\alpha}, \, f_{\beta}: \;
+f_{\alpha}(l \cdot i) = \alpha_i \neq \beta_i = f_{\beta}(l \cdot i)
+\;\; \implies \;
+f_{\alpha} \neq f_{\beta}\)
 
 \end{document}
