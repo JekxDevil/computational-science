@@ -104,5 +104,34 @@ and don't use the results from Section 4.3.3 in the lecture.
     \]
 \end{enumerate}
 
+\subsection*{a)}
+
+The claim is false, a counterexample follows:
+
+\myex{false}{ex7-3-a-counterexample}{
+    & a = 6,\; b = 10, \\ 
+    & \gcd(6, 10) = \gcd(2 \cdot 3, 2 \cdot 5) = 2 \\
+    & (2) = \{ u \cdot 2 \mid u \in \Z \} 
+        = \{0, \pm 2, \pm 4, \pm 6, \pm 8, \pm 10, \pm 12, \pm 14, \pm 16, \pm 18, \pm 20, \ldots\} \\
+    & (6) \cup (10) = \{ v \cdot 6 \mid v \in \Z \} \cup \{ w \cdot 10 \mid w \in \Z \} 
+        = \{ 0, \pm 6, \pm 10, \pm 12, \pm 18, \pm 20, \ldots \} \\
+    & (6) \cup (10) \subseteq (2) \quad \land \quad (2) \nsubseteq (6) \cup (10)
+        \implies (6) \cup (10) \neq (2).
+}
+
+The ideals in \( (2) \) have multiples of \( 2 \) which are all even numbers as \( 4, 8, 14 \) 
+which are not multiples of \( 6 \) or \( 10 \),
+hence there cannot be in the union of \( (6) \) and \( (10) \).
+
+
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
+\subsection*{b)}
+
+The claim is true, and it can be proven as follows:
+
+
+
 
 \end{document}
