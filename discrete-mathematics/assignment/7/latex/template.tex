@@ -19,10 +19,24 @@
 \usepackage{xcolor, soul} % highlight
 \usepackage{enumitem} % custom enumeration in lists
 \usepackage{dsfont} % 1 for identity matrix
+\usepackage{blkarray, bigstrut} % block matrix with labels
+\usepackage{tikz} % for drawing
+
+\newcommand\topstrut[1][1.2ex]{\setlength\bigstrutjot{#1}{\bigstrut[t]}}
+\newcommand\botstrut[1][0.9ex]{\setlength\bigstrutjot{#1}{\bigstrut[b]}}
+
+\usetikzlibrary{positioning}
+\tikzset{
+    > = stealth,
+    every path/.append style = {
+        arrows = -,
+    }
+}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \def\N{\mathbb{N}}
 \def\Z{\mathbb{Z}}
+\def\Zp{\mathbb{Z}^+}
 \def\gcd{\textrm{gcd}}
 \def\lcm{\textrm{lcm}}
 
@@ -123,15 +137,204 @@ The ideals in \( (2) \) have multiples of \( 2 \) which are all even numbers as 
 which are not multiples of \( 6 \) or \( 10 \),
 hence there cannot be in the union of \( (6) \) and \( (10) \).
 
+Other examples can be any relatively prime pair of numbers \( a, b \) will have \( \gcd(a, b) = 1 \),
+and \( (1) \) will span all the integers \( \Z \),
+which won't likely be the case for the union of \( (a) \) and \( (b) \) if none of them is \( 1 \).
+
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 \subsection*{b)}
 
-The claim is true, and it can be proven as follows:
+The claim is true, and it can be proven as follows: \\
+by Definition 4.5 of Least Common Multiple, 
+in order for the \( \lcm(a, b) \) to exists, \( a, b \) must be positive integers,
+as stated in the exercise, so \( a, b \in \Zp \), that is because division by \( 0 \) is undefined.
 
+\[
+    (a) \cap (b) 
+    \pstep 
+    \{ v \cdot a \mid v \in \Z \} \cap \{ w \cdot b \mid w \in \Z \}
+    \pstep
+    \{ m \mid m, v, w \in \Z \; 
+        \left( 
+            m = v \cdot a  
+            \; \land \; 
+            m = w \cdot b
+        \right) 
+    \}
+\]
 
+The ideals of \( (a) \) and \( (b) \) are the multiples of \( a \) and \( b \) respectively,
+Their intersection is the set of all common multiples to both \( a \) and \( b \), 
+i.e. \( va = wb \) for some \( v, w \in \Z \),
+as shown in the step above. 
 
+Notice that the defined \( m \) is a common multiple of \( a \) and \( b \),
+thus we can rewrite the expression in terms of divisibility with the \( | \) operator 
+impliying that there exists some \( v \) and \( w \) 
+such that \( m \) is divisible by both \( a \) and \( b \) by Definition 4.1 of Divisors:
+
+\[
+    \{ m \mid m, v, w \in \Z \; 
+        \left( 
+            m = v \cdot a  
+            \; \land \; 
+            m = w \cdot b
+        \right) 
+    \}
+    \pstep
+    \{ m \mid m \in \Z \; 
+        \left( 
+            a \, | \, m  
+            \; \land \; 
+            b \, | \, m
+        \right) 
+    \}
+\]
+
+Since \( a, b \) are positive numbers, then their ideals contain positive multiples of \( a \) and \( b \),
+and their intersection contains positive common multiples of both \( a \) and \( b \).\\
+Let 
+\( 
+A \coloneq 
+\{ m \mid m \in \Z \; 
+    \left( 
+        a \, | \, m  
+        \; \land \; 
+        b \, | \, m
+    \right) 
+\}
+\),
+then let \( A^+ \coloneq \{ m \mid m \in A \; \left( m > 0 \right) \} \), 
+hence all the positive elements in \( A \) which are the positive common multiples of both \( a, b \).
+Recall that from Exercise 3.50, for the poset \( (\Zp; |) \) there is a least element \( 1 \) 
+(thought no greatest element);
+and from Exercise 3.51, the poset \( (\N \setminus \{0\}; |) \) is a lattice, 
+where the join of \( a \lor b \) and be seen as their least common multiple.
+From Definition 3.30, any subset of \( N \), as \( A^+ \), is also well-ordered by the same order relation,
+in this case \( | \).
+Finally, by Definition 3.30, the  Well-Ordering Principle for poset \( (A^+; |) \) ensures that 
+there exists a least element in \( A^+ \), that is \( l = least(A^+) \),
+which is the least positive common multiple of \( a \) and \( b \).
+Recall the before mentioned poset is created thanks to the properties of \( | \) relation:
+reflexibility, antisymmetry, transitivity. 
+So the relation \( | \) of divisibility is \textbf{transitive} over \( A^+ \) 
+and, in general within the scope of the assignment, in \( \Z \).
+so the least positive common multiple \( l \) satisfy the following properties:
+
+\myex{true}{ex7-3-b-division-transitivity}{
+    & 
+    a \, | \, l
+    \; \land \;
+    b \, | \, l
+    \; \land \;
+    \forall m \in A^+ \; \left( l \, | \, m \right)
+    \\
+    \pstep \quad
+    & 
+    a \, | \, l
+    \; \land \;
+    b \, | \, l
+    \; \land \;
+    \forall m \; 
+    \left( 
+        \left(
+        a \, | \, m 
+        \; \land \;
+        b \, | \, m
+        \right)
+        \longrightarrow
+        \left( l \, | \, m \right)
+    \right)
+    &\hspace{1cm} \hfill \text{(transitivity over \(\Z\))}
+}
+
+It can be represented graphically as follows for \( a,b \) which are not multiple of each other:\\
+
+\begin{minipage}{\textwidth}
+\centering
+Visualizing least common multiple \( l \) of \( a,b \) \\
+\vspace{0.2cm}
+\tikz{
+    \node (l) {$l$};
+    \node (m) [above = of l] {$m = x \cdot l$};
+    \node (mb) [above = of m] {};
+    \node (a) [below left = of l]{$a$};
+    \node (b) [below right = of l] {$b$};
+    \node (ab) [below = of a] {};
+    \node (bb) [below = of b] {};
+
+    \path (mb) edge [dotted] (m);
+    \path (m) edge [dotted] (l);
+    \path (l) edge (a);
+    \path (l) edge (b);
+    \path (a) edge [dotted] (ab);
+    \path (b) edge [dotted] (bb);
+}
+\end{minipage}
+
+Since the relation of divisibility is transitive,
+every \( x \cdot l \) is a multiple of \( l \) and \( l \) is a multiple of \( a \) and \( b \),
+and \( x \cdot l \in A^+ \) for all \( x \in \Zp \).
+Thus, every \( x \cdot l \in A \) for all \( x \in \Z \) 
+because of transitivity of divisibility over \( \Z \).
+
+This means that \( (l) \), the ideal of \( l \), can be defined from:
+
+\myex{false}{ex7-3-b-ideal-l}{
+    A = & 
+    \{ m \mid m \in \Z \; 
+    \left( 
+        a \, | \, m  
+        \; \land \; 
+        b \, | \, m
+    \right) 
+    \}
+    \\ \pstep & \quad
+    \{
+        m \mid m \in \Z \;
+        \left(
+            l = least(A^+) \in \Zp
+            \; \land \;
+            \forall x \in \Z \;
+            \left( m = x \cdot l \right)
+        \right)
+    \}
+    &\hspace{1cm} \hfill \text{(transitivity over \(\Z\))}
+    \\ \pstep & \quad
+    \{
+        x \cdot l \mid x \in \Z \; l \in \Zp
+        \left(
+            l = least(A^+)
+        \right)
+    \}
+    \\ \pstep & \quad
+    \{
+        x \cdot l \mid x \in \Z, \, l \in \Zp \;
+        \left(
+            a \, | \, l
+            \; \land \;
+            b \, | \, l
+            \; \land \;
+            \forall m \; 
+            \left( 
+                \left(
+                a \, | \, m 
+                \; \land \;
+                b \, | \, m
+                \right)
+                \longrightarrow
+                \left( l \, | \, m \right)
+            \right)
+        \right)
+    \}
+    &\hspace{1cm} \hfill \text{(properties of \( l \) (\ref{ex7-3-b-division-transitivity}))}
+    \\ \pstep & \quad
+    (\lcm(a,b))
+}
+
+Therefore, the statement is true.
 
 \end{document}
