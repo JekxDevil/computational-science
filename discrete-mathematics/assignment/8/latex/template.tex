@@ -39,6 +39,7 @@
 \def\Zp{\mathbb{Z}^+}
 \def\gcd{\textrm{gcd}}
 \def\lcm{\textrm{lcm}}
+\newcommand{\Zgmult}[1]{\mathbb{Z}_{#1}^{\ast}}
 
 
 \newtheorem{theorem}{Theorem}[section]
@@ -123,11 +124,159 @@
 
 \subsection*{a)}
 
+By the exercise statement, all the elements of \( G \) can be written as 
+\( h \ast k \) for some \( h \in H \) and \( k \in K \) 
+by the first condition \( (i) \),
+thus all the elements of \( H \) and \( K \) are in \( G \) as well because 
+\( \forall \, h \in H, \, h \ast e \in G \) and \( \forall \, k \in K, \, e \ast k \in G \).
+The group \( G \) is stated to be abelian, 
+so \( H \) and \( K \) are abelian as well 
+and recall \( \ast \) is associative by Definition 5.7 of Group.
+
+For the subgroups \( \langle H; \ast, \widehat{\ }, e \rangle \) 
+and \( \langle K; \ast, \widehat{\ }, e \rangle \) of \( G \),
+their direct product \( H \times K \) is defined as algebra 
+\( \langle H \times K; \star, \widehat{\ }, e \rangle \).
+where the component wise operation \( \star \) is defined as
+
+\myex{false}{ex8-5-star}{
+( a_1, b_1 ) \, \star \, ( a_2, b_2 ) =  ( a_1 \ast a_2, \, b_1 \ast b_2 )
+\quad a_1, a_2 \in H, \, b_1, b_2 \in K
+\qquad &\text{(Definition 5.9)} \\
+\pstep \;
+( h_1, k_1 ) \, \star \, ( h_2, k_2 ) =  ( h_1 \ast h_2, \, k_1 \ast k_2 )
+\quad \, (h_1, k_1), (h_2, k_2) \in H \times K &
+}.
+
+From Lemma 5.4 \( \langle G_1 \times \dots \times G_n; \ast \rangle \) is a group where the neutral element 
+and the inversion operation are component wise in the respective groups, but by Definition 5.11 of Subgroups,
+\( H, K \) and group \( G \) share the same neutral element \( e \), inverse operation \( \widehat{\ } \), 
+and are closed under the operation \( \ast \).
+
+Let's define the mapping function \( \psi \).
+\myex{false}{ex8-5-psi}{
+    \psi : G \to H \times K \qquad 
+    h \ast k \mapsto (h, k)
+    \quad \forall \, h \ast k \in G
+}
+
+The group homomorphism property of \( \psi \) is check as follows
+\myex{false}{ex8-5-homo}{
+&\psi(a \ast b) 
+    = \psi(a) \, \star \, \psi(b) 
+    \quad \forall \, a, b \in G 
+& \hspace{1cm} \hfill \text{(CHECK Definition 5.10)}
+\\
+&\psi((h_1 \ast k_1) \, \ast \, (h_2 \ast k_2) ) 
+    = \psi(h_1 \ast k_1) \, \star \, \psi(h_2 \ast k_2) 
+    = ( (h_1, h_2), \, (k_1, k_2) ) 
+& \hspace{1cm} \hfill \text{(group elems notation)}
+\\
+&\psi((h_1 \ast k_1) \, \ast \, (h_2 \ast k_2) ) 
+\; \pstep \; 
+\psi(h_1 \ast (k_1 \, \ast \, h_2) \ast k_2 )  
+& \hspace{1cm} \hfill \text{(associativity)}
+\\
+& \; \pstep \; 
+\psi(h_1 \ast (h_2 \, \ast \, k_1) \ast k_2 )  
+& \hspace{1cm} \hfill \text{(commutativity)}
+\\
+& \; \pstep \; 
+\psi((h_1 \ast h_2) \, \ast \, (k_1 \ast k_2) )  
+& \hspace{1cm} \hfill \text{(associativity)}
+\\
+& \; \pstep \; 
+\psi(h \, \ast \, k )  
+& \hspace{1cm} \hfill h = h_1 \ast h_2, \; k = k_1 \ast k_2
+\\
+& \; \pstep \; 
+(h, k)
+\; \pstep \; 
+( (h_1 \ast h_2), \, (k_1 \ast k_2) )
+\; \pstep \; 
+( (h_1, k_1) \, \star \, (h_2, k_2) )
+\\ 
+& \; \pstep \; 
+\psi(h_1 \ast k_1) \, \star \, \psi(h_2 \ast k_2)
+\; \pstep \; 
+\psi(a) \, \star \, \psi(b)
+& \hspace{1cm} \hfill \qed
+}
+
+From \( G \) to direct product of 2 subgroups of \( G \).\\
+
+Injectivity: let \( \psi(a) = \psi(b) \) for some \( a, b \in G \), then
+\myex{false}{ex8-5-inj}{
+    \psi(a) = \psi(b) 
+    \; \pstep \; 
+    (h_a, k_a) = (h_b, k_b) 
+    \; \pstep \; 
+    h_a = h_b, \, k_a = k_b
+    \\
+    \; \pstep \; 
+    a = b
+    \; \pstep \; 
+    \psi(a) = \psi(b)
+    \; \pstep \; 
+    \psi \text{ is injective}
+}
+
+For any \( (h, k) \in H \times K \), it exists an element \( a \) in \( G \) 
+by definition \( (i) \) such that \( a = h \ast k \) and \( \psi(a) = (h, k) \).
+Thus, \( \psi \) is surjective.
+Finally, \( psi \) is bijective, then the homomorphism \( \psi \) is an isomorphism
+and \( G \simeq H \times K \),
+where \( G \) is the inner direct product of \( H \) and \( K \).
+
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 \subsection*{b)}
+
+The group \( \Z^{\ast}_{15} \) is the set of all integers \( a \) 
+such that \( a \in Z_{15} \, \land \, \gcd(a, 15) = 1 \) by Definition 5.16.
+Hence, the group \( \Z^{\ast}_{15} = \{ 1, 2, 4, 7, 8, 11, 13, 14 \} \) and
+\( | \Zgmult{15} | = 8 \) which is the order of \( \Zgmult{15} \) due to Definition 5.13.
+By Definition 5.15, such group is not cyclic.
+
+Then, the group \( \Z_2 \times \Z_4 \) is closed under modular addition \( \oplus \) 
+because for modular multiplication \( \odot \) 
+in general the group \( \Z_n \) may have elements without the multiplication inverse, as 
+\( \Z_{12} \) with the element \( 8 \) which has no inverse. 
+Such group \( \Z_2 \times \Z_4 \) can be seen as the direct product of the groups \( \Z_2 \) and \( \Z_4 \) 
+from the previous subtask.
+From Theorem 5.7, \( \langle \Z_n; \oplus \rangle \) is the standard notation for the cyclic group of order \( n \).
+The definition is \( \Z_2 \times \Z_4  = \{ (0, 0), (0, 1), (0, 2), (0, 3), (1, 0), (1, 1), (1, 2), (1, 3) \} \).
+So we know that \( \Z_2, \Z_4 \) are cyclic groups.
+
+Notice \( | \Z_2 \times \Z_4 | = 8 = | \Z^{\ast}_{15} | \)
+so a totally well defined mapping \( \psi \) could be defined as in the previous subtask,
+and it can be shown that it is both injective and surjective, hence bijective and an isomorphism.
+
+The order of elements from \( \Z^{\ast}_{15} \) are as follows:
+\( ord = 2 \) for \( 4, 11, 14 \),
+\( ord = 4 \) for \( 2, 7, 8, 13 \),
+and \( ord = 1 \) for \( 1 \) as it is the multiplicative inverse and also self inverse.
+
+The cyclic subgroups of \( \Zgmult{15} \) generated by generator elements \( 2, 4 \) 
+are \( \langle 2 \rangle = \{ 1, 2, 4, 8 \} \) with \( ord( \langle 2 \rangle ) = 4\) 
+and \( \langle 4 \rangle = \{ 1, 4 \} \) with \( ord( \langle 4 \rangle ) = 2 \) respectively
+using Definition 5.14.
+
+By Theorem 5.7, a cyclic group of order \( n \) is isomorphic to \( \langle \Z_n ; \oplus \rangle \) 
+and abelian.
+So \( \langle 2 \rangle, \langle 4 \rangle \) are isomorphic to \( \Z_4, \Z_2 \) w.r.t. their order,
+i.e. \( \langle 2 \rangle \simeq \langle \Z_4; \oplus \rangle 
+\,, \, \langle 4 \rangle \simeq \langle \Z_2 ; \oplus \rangle \). 
+
+Hence, from the previous subtask \textbf{a)},
+the group \( G \) can be seen as \( \Zgmult{15} \) and the direct product of \( H \times K \)
+would be the direct product of the cyclic subgroups
+\( \langle 2 \rangle, \langle 4 \rangle \), which are isomorphic to \( \Z_2 \times \Z_4 \),
+i.e. \( \Zgmult{15} \, \simeq \, \langle 2 \rangle \times \langle 4 \rangle \, \simeq \, \Z_2 \times \Z_4 \).
+The proof is complete and a direct isomorphism is not needed from the exercise statement.
+
 
 
 \end{document}
