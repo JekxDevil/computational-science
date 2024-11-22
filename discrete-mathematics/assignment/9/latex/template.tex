@@ -40,6 +40,8 @@
 \def\gcd{\textrm{gcd}}
 \def\lcm{\textrm{lcm}}
 \newcommand{\Zgmult}[1]{\mathbb{Z}_{#1}^{\ast}}
+\def\Ring{R}
+\def\RingUnits{R^*}
 
 
 \newtheorem{theorem}{Theorem}[section]
@@ -81,6 +83,7 @@
 
 % proof step
 \newcommand{\pstep}{\overset{.}{\Longrightarrow}}
+\newcommand{\spstep}{\overset{.}{\Longleftrightarrow}}
 
 \def\ex2f{f(\mathbf{x}^*)}
 
@@ -122,11 +125,169 @@ Prove the following statements:
 \end{enumerate}
 
 \subsection*{a)}
+Assumption: \( R \) is an integral domain and 
+    \( \exists m, n \in \Z^+, \; a^m = b^m \; \land \; a^n = b^n \; \land \; \gcd(m,n) = 1 \). 
+    \newline
+Claim: \( a = b \). \newline
+Proof: \newline
+Distinguish two main cases for the proof, where \( a = 0 \) and \( a \neq 0 \). \newline
+Thanks to the integral domain property, 
+whenever \( a = 0 \), then also \( b = 0 \) since \( 0^m = 0^n = 0 \). \newline
+For \( a \neq 0 \), 
+recall from Corollary 4.5, for \( a, b \in \Z \) not both 0, \( \exists u, v \in \Z \) such that
+\( \gcd(a, b) = ua + vb \).
+\( \gcd(a, b) = 1 = um + vn \) , where \( m, n \in \Z^+ \) 
+since the assumption states they are positive integers. \newline
+It means that either \( u < 0 \) or \( v < 0 \) but not both,
+in order to comply for \( 1 = um + vn \). \newline
+Without loss of generality (w.l.o.g.), assume \( u < 0 \) and \( v > 0 \).
+Then, \( -u > 0 \).
+
+\myex{false}{ex9-5-a}{
+    a 
+    & \; \spstep \; 
+    a^1
+    \\
+    & \; \spstep \; 
+    a^{um + vn}
+    & \hspace{1cm} \hfill \text{(Corollary 4.5)}
+    \\
+    & \; \spstep \; 
+    a^{um} \cdot a^{vn}
+    & \hspace{1cm} \hfill \text{(multiplicative associativity)}
+    \\
+    & \; \spstep \; 
+    (a^{m})^{u} \cdot (a^{n})^{v}
+    & \hspace{1cm} \hfill \text{(multiplicative commutativity over \( \Z \))}
+    \\
+    & \; \spstep \; 
+    (b^{m})^{u} \cdot (b^{n})^{v}
+    & \hspace{1cm} \hfill \text{(assumption \( a^m = b^m, a^n = b^n \))}
+    \\
+    & \; \spstep \; 
+    (b^{um}) \cdot (b^{vn})
+    & \hspace{1cm} \hfill \text{(associativity and commutativity of \( \cdot \))}
+    \\
+    & \; \spstep \; 
+    b^{um + vn} 
+    & \hspace{1cm} \hfill \text{(multiplicative associativity)}
+    \\
+    & \; \spstep \; 
+    b^{1} 
+    & \hspace{1cm} \hfill \text{(Corollary 4.5)}
+    \\
+    & \; \spstep \; 
+    b 
+}
+
+A symmetrical reasoning proves the case where \( u > 0 \) and \( v < 0 \).
+The statement is therefore true and \( a = b \).
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 \subsection*{b)}
+
+Assumption: \( \exists u_1 \in \RingUnits, u_1 = 1 - ab \), i.e. it is a unit. \newline
+Claim: \( \exists u_2 \in \RingUnits, u_2 = 1 - ba \), it is also a unit. \newline
+Proof: \newline
+by Definition 5.20 of Units, \( u_1 \) is invertible,
+meaning \( \exists v_1 \in \RingUnits,  u_1 \cdot v_1 = v_1 \cdot u_1 = 1 \). \newline
+Let \( v_1 = (1 - ab)^{-1} \), be the multiplicative inverse of \( u_1 \). 
+Then, \( u_1 \cdot v_1 = v_1 \cdot u_1 = 1 \). \newline 
+
+From the Hint, consider the ring element \( w \in \Ring, w = 1 + b v_1 a \), 
+where \( v_1 = (1 - ab)^{-1} \). \newline
+In order for \( u_2 \) to be a unit,
+check if it is invertible, 
+i.e. \( \exists v_2 \in \RingUnits, u_2 \cdot v_2 = v_2 \cdot u_2 = 1 \). \newline 
+
+Clearly, both \( v_2, w \in \Ring \), so let's check if \( u_2 \) is invertible
+by assigning \( v_2 = w \). 
+
+\myex{false}{ex9-5-b-proof}{
+    u_2 \cdot v_2 
+    & \; \pstep \; 
+    (1 - ba) \cdot (1 + b v_1 a) 
+    \\
+    & \; \pstep \; 
+    (1 - ba) \cdot 1 + (1-ba) \cdot b v_1 a 
+    & \hspace{1cm} \hfill \text{(left distributivity)}
+    \\
+    & \; \pstep \; 
+    1 - ba + b v_1 a - ba b v_1 a
+    & \hspace{1cm} \hfill \text{(right distributivity)}
+    \\
+    & \; \pstep \; 
+    1 - ba + b \cdot (v_1 a - ab v_1 a)
+    & \hspace{1cm} \hfill \text{(left distributivity)}
+    \\
+    & \; \pstep \; 
+    1 - ba + b \cdot ((1 - ab) \cdot v_1 a)
+    & \hspace{1cm} \hfill \text{(right distributivity)}
+    \\
+    & \; \pstep \; 
+    1 - ba + b \cdot ((1 - ab) \cdot (1 - ab)^{-1} \cdot a)
+    & \hspace{1cm} \hfill \text{(def \( v_1 \))}
+    \\
+    & \; \pstep \; 
+    1 - ba + b \cdot (1 \cdot a)
+    & \hspace{1cm} \hfill \text{(assumption \( u_1 \cdot v_1 = 1 \) )} 
+    \\
+    & \; \pstep \; 
+    1 - ba + ba
+    & \hspace{1cm} \hfill \text{(multiplicative identity)}
+    \\
+    & \; \pstep \; 
+    1
+    & \hspace{1cm} \hfill \text{(abelian additive group inverse)} 
+}
+
+Symmetrically, \( v_2 \cdot u_2 = 1 \).
+
+\myex{false}{ex9-5-b-proof}{
+    v_2 \cdot u_2 
+    & \; \pstep \; 
+    (1 + b v_1 a) \cdot (1 - ba)  
+    \\
+    & \; \pstep \; 
+    1 \cdot (1 - ba) + b v_1 a \cdot (1 - ba)
+    & \hspace{1cm} \hfill \text{(right distributivity)}
+    \\
+    & \; \pstep \; 
+    1 - ba + b v_1 a - b v_1 a ba
+    & \hspace{1cm} \hfill \text{(left distributivity)}
+    \\
+    & \; \pstep \; 
+    1 - ba + (b v_1 - b v_1 ab) \cdot a
+    & \hspace{1cm} \hfill \text{(right distributivity)}
+    \\
+    & \; \pstep \; 
+    1 - ba + (b v_1 \cdot (1 - ab)) \cdot a
+    & \hspace{1cm} \hfill \text{(left distributivity)}
+    \\
+    & \; \pstep \; 
+    1 - ba + (b \cdot (1 - ab)^{-1} \cdot (1 - ab)) \cdot a
+    & \hspace{1cm} \hfill \text{(def \( v_1 \))}
+    \\
+    & \; \pstep \; 
+    1 - ba + (b \cdot 1) \cdot a
+    & \hspace{1cm} \hfill \text{(assumption \( v_1 \cdot u_1 = 1 \) )} 
+    \\
+    & \; \pstep \; 
+    1 - ba + ba
+    & \hspace{1cm} \hfill \text{(multiplicative identity)} 
+    \\
+    & \; \pstep \; 
+    1
+    & \hspace{1cm} \hfill \text{(abelian additive group inverse)} 
+}
+
+Thus, \( w \) satifies the definition of the inverse of the unit \( u_2 \),
+therefore \( u_1, v_1, u_2, v_2 \in \RingUnits \), 
+the statement is true and \( 1 - ba \) is also a unit. \newline
+
+
 
 
 \end{document}
