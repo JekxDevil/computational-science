@@ -45,6 +45,9 @@
 \def\Ring{R}
 \def\RingUnits{R^*}
 
+% specific assignment 11 
+\def\myp{\mathcal{P}}
+\def\mys{\mathcal{S}}
 
 \newtheorem{theorem}{Theorem}[section]
 % 1: title, 2: label, 3: content
@@ -123,15 +126,15 @@ be a complete and sound proof system.
     \[
     \mathcal{\tau'}((s_1, s_2, s_3)) = 1 
     \iff 
-    \text{at least } 2 \text{ among } \tau(s_1), \tau(s_2), \tau(s_3) 
-    \text{are equal to} 1
+    \text{ at least } 2 \text{ among } \tau(s_1), \tau(s_2), \tau(s_3) 
+    \text{ are equal to } 1
     \]
 
     \item 
     Let 
     \[
-    \overline{\Sigma} = (\mathcal{S^2}, \overline{\mathcal{P}}, 
-        \overline{\tau}, \overline{\phi})
+    \overline{\Sigma} = (\mathcal{S}^2, 
+        \overline{\mathcal{P}}, \overline{\tau}, \overline{\phi})
     \]
     be a complete and sound proof system with
     \myex{true}{ex11-4-b-cond}{
@@ -156,5 +159,60 @@ be a complete and sound proof system.
 %----------------------------------------------------------------------------------
 \subsection*{a)}
 
+Remark \( \mys' = \mys \times \mys \times \mys 
+    = \{ (s_1, s_2, s_3) \mid \forall i \in \{ 1, 2, 3 \} \; s_i \in \mys \} \), 
+    where \( | \mys' | = | \mys |^3 \). \\
+Let 
+\myex{false}{ex11-4-a-defs}{ 
+    &
+    \myp' = \myp \times \myp \times \myp
+        = \{ (p_1, p_2, p_3) \mid \forall i \in \{ 1, 2, 3 \}  \; p_i \in \myp  \}  \\
+    &
+    \phi' : \mys' \times \myp' \to \{ 0, 1 \}, \quad  
+    s' = (s_1, s_2, s_3) \in \mys', \; p' = (p_1, p_2, p_3) \in \myp' \\
+    &
+    (s', p')  \mapsto
+    \begin{cases}
+        1 & \text{ if } \forall i \in \{ 1, 2, 3 \} 
+            \; \left( \phi(s_i, p_i) = 1 \; \land \; \text{at least 2 of } \tau(s_i) = 1 \right) \\
+        0 & \text{ otherwise}
+    \end{cases}
+}
+
+\noindent\textbf{Completeness}: \\
+\noindent Assume \( \tau'(s') = 1 \). 
+Then, at least \( 2 \) of \( \tau(s_1), \tau(s_2), \tau(s_3) \) 
+must equal \( 1 \) by definition of \( \tau' \) in \textbf{a)}.  \\
+By completeness of proof system 
+\( \Sigma\), every true statement has a proof, 
+i.e. \( \forall i \in \{ 1, 2, 3 \}, \; \exists p_i \in \myp, \; \phi(s_i, p_i) = 1 \). \\
+Hence, by grouping any 3 arbitrary statements in 3-tuples there must exist at least 
+a corresponding arbitrary grouping of proofs in 3-tuples proving (at least 2) such statements,
+i.e. \( \forall s' \in \mys', \; s' = (s_1, s_2, s_3), \; \exists p' \in \myp', 
+    \; p' = (p_1, p_2, p_3) \; \land \; \phi'(s', p') = 1 \). \\
+Thus, \( \Sigma' \) is complete.
+
+\noindent \textbf{Soundness}:
+\noindent Assume \( \phi'(s', p') = 1 \).
+Then, \( \forall i \in \{ 1, 2, 3 \} \; \phi(s_i, p_i) = 1 \)  
+and at least \( 2 \) of \( \tau(s_1), \tau(s_2), \tau(s_3) \) equal 1 
+by definition of \( \phi' \). \\
+By soundness of proof system \( \Sigma \), 
+no false statement has a valid proof proving it true, 
+i.e. \( \forall i \in \{ 1, 2, 3 \}, \; \forall p_i \in \myp, \; \forall s_i \in \mys, 
+    \; \phi(s_i, p_i) = 1 \implies \tau(s_i) = 1 \). \\
+Hence, no proof for false statement exists, specifically satisfying \( \tau' \) definition 
+of having at least \( 2 \) of \( \tau(s_i) = 1 \). \\
+Thus, \( \Sigma' \) is sound.
+
+
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
+\subsection*{b)}
+
+
+\textbf{Completeness}:
+\textbf{Soundness}:
 
 \end{document}
