@@ -173,8 +173,8 @@ Let
     &
     (s', p')  \mapsto
     \begin{cases}
-        1 & \text{ if } \forall i \in \{ 1, 2, 3 \} 
-            \; \left( \phi(s_i, p_i) = 1 \; \land \; \text{at least 2 of } \tau(s_i) = 1 \right) \\
+        1 & \text{ if } \forall i \forall j \in \{ 1, 2, 3 \} 
+            \; \phi(s_i, p_i) = 1 \; \land \; \phi(s_j, p_j) = 1 \; \land \; i \neq j \\
         0 & \text{ otherwise}
     \end{cases}
 }
@@ -185,20 +185,31 @@ Then, at least \( 2 \) of \( \tau(s_1), \tau(s_2), \tau(s_3) \)
 must equal \( 1 \) by definition of \( \tau' \) in \textbf{a)}.  \\
 By completeness of proof system 
 \( \Sigma\), every true statement has a proof, 
-i.e. \( \forall i \in \{ 1, 2, 3 \}, \; \exists p_i \in \myp, \; \phi(s_i, p_i) = 1 \). \\
-Hence, by grouping any 3 arbitrary statements in 3-tuples there must exist at least 
-a corresponding arbitrary grouping of proofs in 3-tuples proving (at least 2) such statements,
-i.e. \( \forall s' \in \mys', \; s' = (s_1, s_2, s_3), \; \exists p' \in \myp', 
-    \; p' = (p_1, p_2, p_3) \; \land \; \phi'(s', p') = 1 \). \\
-Thus, \( \Sigma' \) is complete.
+i.e. \( \forall i \in \{ 1, 2, 3 \}, \; \forall s_i \in \mys, 
+    \; \tau(s_i) = 1 \implies \exists p_i \in \myp, \; \phi(s_i, p_i) = 1 \). \\
+Since \( 2 \) among \( s_1, s_2, s_3 \) satisfy \( \tau(s_i) = 1  \; \land \; \tau(s_j) = 1 \)
+by definition of \( \phi' \) 
+(assuming the exercise required distinct elements, thus \( i \neq j \), 
+which is a stronger case than repeated ones),
+it is possible to contruct the proof to verify correctness of at least 2 of such statements,
+i.e. \( \forall s' \in \mys', \; s' = (s_1, s_2, s_3), \; \tau'(s') = 1 \implies 
+    \; \exists p' \in \myp', \; p' = (p_1, p_2, p_3) \; \land \; \phi'(s', p') = 1 \),
+where \( 2 \) statements are verified by the before mentioned completeness of \( \Sigma \).
+Moreover, there are at least as many proofs as true statements since 
+for each true statement there exist at least a proof.
+The definition of the proof system \( \Sigma' \) ensures it has at least \( 2 \) truth statements.
+When 2 true statements with their proofs and 1 false is proposed, then the third proof is just
+one of the already present, as the distinct elements required are only 2, 
+the verification function will just yield false.  \\
+Thus, \( \Sigma' \) is complete. \newline
 
 \noindent \textbf{Soundness}:
 \noindent Assume \( \phi'(s', p') = 1 \).
-Then, \( \forall i \in \{ 1, 2, 3 \} \; \phi(s_i, p_i) = 1 \)  
-and at least \( 2 \) of \( \tau(s_1), \tau(s_2), \tau(s_3) \) equal 1 
-by definition of \( \phi' \). \\
+Then, \( \forall i \forall j \in \{ 1, 2, 3 \} \; \phi(s_i, p_i) = 1 \; \land \; \phi(s_j, p_j) = 1 
+    \; \land \; i \neq j \) by defintion of \( \phi' \). \\
 By soundness of proof system \( \Sigma \), 
-no false statement has a valid proof proving it true, 
+no false statement has a valid proof proving it true,
+or equivalently, if a statement does not have a proof, it must be false,
 i.e. \( \forall i \in \{ 1, 2, 3 \}, \; \forall p_i \in \myp, \; \forall s_i \in \mys, 
     \; \phi(s_i, p_i) = 1 \implies \tau(s_i) = 1 \). \\
 Hence, no proof for false statement exists, specifically satisfying \( \tau' \) definition 
@@ -211,8 +222,62 @@ Thus, \( \Sigma' \) is sound.
 %----------------------------------------------------------------------------------
 \subsection*{b)}
 
+Let 
+\myex{false}{ex11-4-b-defs}{ 
+    &
+    \myp^* = \myp \times \myp
+        = \{ (p_1, p_2) \mid \forall i \in \{ 1, 2 \}  \; p_i \in \myp  \}  \\
+    &
+    \phi' : \mys \times \myp^* \to \{ 0, 1 \}, \quad  
+    s \in \mys', \; p^* = \overline{p} = (p_1, p_2) \in \myp^* \\
+    &
+    (s, p^*)  \mapsto
+    \begin{cases}
+        1 & \text{ if } 
+            \left( 
+            \exists t \in \mys, \; \exists \overline{p} \in \overline{\myp}, 
+            \; \overline{\phi}((s, t), \overline{p}) = 1 
+            \right)
+            \; \land \; 
+            \left( \exists i \in \{ 1, 2 \}, \; \phi(t, \overline{p_i}) = 1 \right) \\
+        0 & \text{ otherwise}
+    \end{cases}
+}
 
-\textbf{Completeness}:
-\textbf{Soundness}:
+Clarifying that the definition of the complete proof system \( \overline{\Sigma} \)
+ensures that there is at least 1 true statement in order to use its \( \overline{\tau} \),
+\( t \in \mys \) wants to be such a \textbf{true} statement we use to distinguish
+our statement \( s \) from the proof system \( \Sigma^* \) in order to be able to verify,
+together with \( \overline{\phi} \), 
+if our statement w.r.t. its truth function is either true or false.
+Such true statement is found in polynomial time by a linear scan among the statements and proofs
+and checking with \( \phi(t, p) \).
+Otherwise, a tautology can be used as such in the set of rules admit so.
+Recall there are at least as many proofs as true statements from completeness of \( \Sigma \).
+
+\noindent \textbf{Completeness}:
+\noindent Assume  \( \tau^*(s) = 1 \). 
+Then, \( \tau(s) = 0 \) by definition of \( \tau^* \). \\
+By soundness of \( \Sigma \), no false statements have a proof.
+Using the clarified true statement \( t \) by checking \( \phi(t, p) = 1 \),
+we use it within \( \overline{\phi}((s, t), \overline{p}) = 1 \),
+By soundness of \( \overline{\Sigma} \), \( \forall p \forall s, \; 
+    \overline{\phi}((s, t), \overline{p}) = 1 \implies \overline{\tau}((s, t)) = 1 \).
+By definition of \( \overline{\tau} \), only one of \( s, t \) is true,
+and since we known from assumption premises that \( s \) is false because \( \tau(s) = 0 \),
+then \( t \) must be true. \\
+Hence, we can construct \( \overline{p} = p^* \) for \( \phi^*(s, p^*) = 1 \) 
+because \( p^* \) for sure is not a proof for \( s \). 
+Thus, \( \Sigma^* \) is complete. \newline
+
+\noindent \textbf{Soundness}:
+\noindent Assuming \( \phi^*(s, p^*) = 1 \). 
+Then, \( \overline{\phi}((s, t), \overline{p}) = 1 \; \land \; \phi(t, \overline{p_i}) = 1 \) for 
+some \( i \). \\
+By soundness of \( \Sigma \), \(\phi(t, \overline{p_i}) = 1 \implies \tau(t) = 1 \). \\
+By soundness of \( \overline{\Sigma} \), \( \overline{\phi}((s, t), \overline{p}) = 1 \) 
+and \( \tau(t) = 1 \) implies \( \tau(s) = 0 \). \\
+Hence, by definition of \( \tau^* \), \( \tau(s) = 0 \iff \tau^*(s) = 1 \).
+Thus, \( \Sigma^* \) is sound.
 
 \end{document}
