@@ -45,9 +45,8 @@
 \def\Ring{R}
 \def\RingUnits{R^*}
 
-% specific assignment 11 
-\def\myp{\mathcal{P}}
-\def\mys{\mathcal{S}}
+% specific assignment 12 
+\def\struct{\mathcal{A}}
 
 \newtheorem{theorem}{Theorem}[section]
 % 1: title, 2: label, 3: content
@@ -109,14 +108,16 @@
 
 %----------------------------------------------------------------------------------
 \section*{Exercise 12.6, Semantics of Predicate Logic \hfill (8 Points)}
-
+\textbf{Prove} the following statements using the semantics of predicate logic 
+(Definition 6.36).
+Do not use other results from the lecture notes.
 
 \begin{enumerate}[label=\textbf{\alph*)}]
     \item 
-    \( \exists x \forall y P(x,y) \models \exists x P(x,f(x)) \).
+    \( \exists x \, \forall y \, P(x,y) \models \exists x \, P(x,f(x)) \).
 
     \item 
-    \( \neg (\forall x P(x)) \models \exists x \neg P(x) \).
+    \( \neg (\forall x \; P(x)) \models \exists x \, \neg P(x) \).
 
 \end{enumerate}
 
@@ -125,10 +126,115 @@
 %----------------------------------------------------------------------------------
 \subsection*{a)}
 
+Let \( \struct = (U, \phi, \psi, \xi) \) be an arbitrary suitable structure for the formulas.
+Assume \( \struct \) is a model for the first formula, 
+i.e. \( \struct \models \exists x \, \forall y \, P(x,y) \).
+There are no free variables in the formula since all are bound, hence it is a closed formula. 
+The \( P^\struct \) is omitted for simplicity, as it remains a free predicate symbol 
+not involved in the proof.
+% For structure \( \struct \) to be suitable, defining the free symbols \( P, f \) of both formulas 
+% is required (Definition 6.35). \\
+By Definition 6.9 of suitable interpretation for a formula:
+
+\[
+\struct \models \exists x \, \forall y \, P(x,y) 
+\implies 
+\struct\left( 
+    \exists x \, \forall y \, P(x,y) 
+\right) = 1
+\]
+
+\noindent Recall the semantics of \( \exists \), 
+\( \struct(\exists x \, G) = 1 \) if \( \struct_{[x \to u]}(G) = 1 \) for some \( u \in U \)
+(Definition 6.36).
+Since the formula \( \forall y \, P(u,y) \) is true for some \( u \in U^\struct \), 
+applying the semantics results in overriding \( \xi(x) = u \) for:
+
+\[
+\struct_{[x \to u]} 
+\left(
+    \forall y \, P(x,y)
+\right) = 1 \quad \text{for some } u \in U^\struct
+\]
+
+\noindent Recall the semantics of \( \forall \),
+\( \struct(\forall x \, G) = 1 \) if \( \struct_{[x \to u]}(G) = 1 \) for all \( u \in U \)
+(Definition 6.36).
+Since the formula \( P(u,w) \) is true (for some \( u \in U^\struct \) and) for all \( w \in U^\struct \),
+applying the semantics results in overriding also \( \xi(y) = w \) for:
+
+\[
+\struct_{[x \to u][y \to w]} \left(
+    P(x,y)
+\right) = 1 
+\quad \text{for some } u \in U^\struct
+\text{ and for all } w \in U^\struct 
+\]
+
+\noindent Notice that the contraint on \( w \) is very loose,
+and most importantly, that it is satisfied by definition of \( \phi : U^k \to U \) 
+with \( k = 1 \) for any arbitrary unary function symbol \( f \) in the structure
+(Definition 6.36).
+Specifically, \( \phi : U \to U \) 
+where \( w = \phi(f)(\struct(x)) = \phi(f)(\xi(x)) = \phi(f)(u) \) 
+with \( u \in U^\struct \) and \( f \) arbitrary. 
+Instead of \( \phi(f) \), the notation \( f^\struct \) is used for simplicity.
+Thus:
+
+\[
+\struct_{[x \to u][y \to f^\struct (x)]} \left(
+    P(x,y)
+\right) = 1 
+\quad \text{for some } u \in U^\struct
+\text{ and arbitrary } f^\struct
+\]
+
+\noindent By using the recursivity of the semantics of Predicate Logic,
+the unary function symbols is embedded as a term in the formula
+(Definition 6.36). 
+The superscript \( \struct \) is omitted for simplicity on unary function symbol \( f \) of 
+arbitrary suitable structure \( \struct \).
+
+\[
+\struct_{[x \to u]} \left(
+    P(x, f(x))
+\right) = 1 
+\quad \text{for some } u \in U^\struct
+\]
+
+\noindent Thus, by applying the semantics of \( \exists \) again,
+since the formula \( P(u, f(u)) \) is true for some \( u \in U^\struct \),
+the proof to show that the structure \( \struct \) is a model for the second formula is completed:
+
+\[
+\struct (\exists x \, P(x, f(x))) = 1 
+\]
+
+\noindent Finally,
+
+\[
+\exists x \, \forall y \, P(x,y) \models \exists x \, P(x,f(x))
+\]
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 \subsection*{b)}
+
+Let \( \struct = (U, \phi, \psi, \xi) \) be an arbitrary suitable structure for the formulas.
+Assume \( \struct \) is a model for the first formula, 
+i.e. \( \struct \models \neg (\forall x \, P(x)) \).
+There are no free variables in the formula since all are bound, hence it is a closed formula. 
+The \( P^\struct \) is omitted for simplicity, as it remains a free predicate symbol 
+not involved in the proof.
+By Definition 6.9 of suitable interpretation for a formula:
+
+\[
+\struct \models \neg (\forall x \, P(x)) 
+\implies 
+\struct\left( 
+     \neg (\forall x \, P(x))
+\right) = 1
+\]
 
 \end{document}
