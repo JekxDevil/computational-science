@@ -253,7 +253,7 @@ Since \( \struct(\neg F) = 1 \iff \struct(F) = 0 \), recursively decoupling the 
 \( \struct(\forall x \, G) = 1 \) if \( \struct_{[x \to u]}(G) = 1 \) for all \( u \in U \),
 otherwise \( \struct(\forall x \, G) = 0 \) 
 (Definition 6.36).
-Since the formula \( P(u) \) is not true for all \( u \in U^\struct \),
+Since the formula \( P(u) \) is \textbf{not} true for all \( u \in U^\struct \),
 applying the semantics results in overriding \( \xi(x) = u \) for:
 
 \[
@@ -261,11 +261,11 @@ applying the semantics results in overriding \( \xi(x) = u \) for:
     P(x)
 \right) = 0
 \quad
-\text{ for all } u \in U^\struct
+\text{ for \textbf{not} all } u \in U^\struct
 \]
 
 \noindent Reasoning about the formula \( P(u) \) not being true for all \( u \in U^\struct \),
-means that there is some, at least one, \( P(u) \) that is false.
+means that there is some, at least one, \( u \) in the Universe for which \( P(u) \) is false.
 Rephrasing the statement, \( P(u) \) is false for some \( u \in U^\struct \),
 or equivalently, \( \neg P(u) \) is true for some \( u \in U^\struct \) 
 by semantics of \( \neg \)
